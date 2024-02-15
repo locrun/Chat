@@ -1,0 +1,27 @@
+.container {
+  padding: 10px 16px;
+  margin-top: 13px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 2px 4px 15px 0px #b0b0b026;
+  border-radius: 8px;
+}
+.flex {
+  gap: 10px;
+}
+.button {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  border: 1px solid #efefef;
+  gap: 10px;
+  //   background-color: #49c2bb;
+  cursor: pointer;
+}
+.history {
+  background: #49c2bb;
+  border: none;
+}
