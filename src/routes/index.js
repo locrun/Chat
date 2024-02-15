@@ -196,6 +196,7 @@ import QuickLinks from 'components/app/support-desk/quick-links/QuickLinks';
 import Reports from 'components/app/support-desk/reports/Reports';
 import InputMaskExample from 'components/doc-components/InputMaskExample';
 import RangeSlider from 'components/doc-components/RangeSlider';
+import Example from 'components/pages/user/example/Example';
 
 const FalconRoutes = () => {
   return (
@@ -401,6 +402,7 @@ const FalconRoutes = () => {
         <Route path="pages/starter" element={<Starter />} />
         <Route path="user/profile" element={<Profile />} />
         <Route path="user/settings" element={<Settings />} />
+        <Route path="user/example" element={<Example />} />
         <Route path="miscellaneous/associations" element={<Associations />} />
         <Route path="faq/faq-alt" element={<FaqAlt />} />
         <Route path="faq/faq-basic" element={<FaqBasic />} />
