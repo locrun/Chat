@@ -1,9 +1,7 @@
 import React, { FC, useState } from 'react';
 import { nanoid } from 'nanoid'
 import * as ReactBootstrap from 'react-bootstrap';
-import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { LiveEditor, LiveError, LivePreview, LiveProvider } from 'react-live';
+import s from './dropdown.module.scss';
 import { Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
 
 
@@ -14,6 +12,7 @@ import { Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
 *    eventKey?: string;
 *    active?: boolean;
 *    itemAs?: 'button' | 'text';
+*    quantity: number;
 * } | { hr: boolean }} TItems
 */
 
@@ -28,6 +27,7 @@ import { Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
 *    header?: string;
 *    align?: { lg: 'start' } | { lg: 'end' };
 *    title: string;
+*    quantity: number;
 * }} DropdownsProps
 */
 
@@ -38,25 +38,35 @@ import { Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
  * @returns {React.ReactNode} - Возвращает узел React.
  */
 
-const Dropdowns = ({ type, items, ButtonGroup, variant = 'falcon-default', sizing, direction, header, align, title }) => {
+const Dropdowns = ({ type, items, ButtonGroup, variant = 'falcon-default', sizing, direction, header, align, title, quantity }) => {
     const [dropdown, setDropdown] = useState(null)
     React.useEffect(() => {
         switch (type) {
             case 'dropdownBtnCode': setDropdown(
                 <DropdownButton
                     id="dropdown-basic-button"
-                    title="Dropdown button"
+                    title={title + ' ' + quantity}
                     variant='falcon-default'
-
+                    className={s.Dropdown}
                 >
                     {header && <Dropdown.Header>{header}</Dropdown.Header>}
                     {
                         items.map(elm => {
-                            if ('href' in elm) {
-                                return <Dropdown.Item key={nanoid()} href={elm.href}>{elm.item}</Dropdown.Item>
-                            } else if ('hr' in elm) {
-                                return <Dropdown.Divider key={nanoid()} />
-                            } else return
+                            if (!('hr' in elm)) {
+                                return (
+                                    <Dropdown.Item key={nanoid()} href={elm.href} className='pt-0 pb-0'>
+                                        <div className="d-flex justify-content-between pt-0 pb-0">
+                                            <span className={s.items_conent}>
+                                                {elm.item}
+                                            </span>
+                                            <span className={s.items_number}>
+                                                {elm?.quantity}
+                                            </span>
+                                        </div>
+                                        <hr className={s.item_hr} />
+                                    </Dropdown.Item>
+                                )
+                            }
                         })
                     }
                 </DropdownButton>

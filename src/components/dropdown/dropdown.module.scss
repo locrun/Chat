@@ -1,0 +1,32 @@
+.item_hr {
+    margin: 6px 0
+}
+
+.Dropdown button {
+    background-color: rgba(239, 239, 239, 1) !important;
+    border-radius: 8px;
+
+    &:hover {
+        background-color: rgba(239, 239, 239, 1);
+    }
+
+    &:active {
+        background-color: rgba(239, 239, 239, 1);
+    }
+}
+
+.items_number {
+    color: rgba(73, 194, 187, 1);
+    font-size: 12px;
+    font-family: 'Actor';
+}
+
+.items_conent {
+    font-family: 'Actor';
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 13px;
+    letter-spacing: 0em;
+    text-align: center;
+
+}

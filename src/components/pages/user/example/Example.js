@@ -1,18 +1,20 @@
 import React from 'react';
 import * as ReactBootstrap from 'react-bootstrap';
-import { Button, Row, Col } from 'react-bootstrap';
+import { Button, Row, Col, Form } from 'react-bootstrap';
 
 import { Dropdowns } from 'components/dropdown';
 
 const Example = () => {
 
   const DROPDOWNITEMS/*: TItems[]*/ = [
-    { item: 'Link 1', href: 'google.com', active: true },
-    { item: 'Custom Text', eventKey: '1', itemAs: 'button' },
+    { item: 'Link 1', href: 'google.com', active: true, quantity: 2 },
+    { item: 'Custom Text', eventKey: '1', itemAs: 'button', quantity: 45 },
     { hr: true },
-    { item: 'Text', itemAs: 'text' },
-    { item: 'Another Text', eventKey: '2', itemAs: 'button' },
+    { item: 'Text', itemAs: 'text', quantity: 32 },
+    { item: 'Another Text', eventKey: '2', itemAs: 'button', quantity: 77 },
   ];
+
+  const [month, setMonth] = React.useState(0);
 
   return (
     <div>
@@ -46,6 +48,20 @@ const Example = () => {
           <Dropdowns type={'btnVariantCode'} items={DROPDOWNITEMS} title='Right aligned' align={'end'} />
           <h4 className='mb-1'>Dropwdown Headers</h4>
           <Dropdowns type={'btnVariantCode'} items={DROPDOWNITEMS} title='Dropwdown Button' header={'Dropdown Header'} />
+          <Form.Select
+            size="sm"
+            value={month}
+            onChange={e => setMonth(e.target.value)}
+            className="me-2"
+          >
+            {DROPDOWNITEMS.map((month, index) => (
+              <option value={index} key={month.item}>
+                {month.item}
+              </option>
+            ))}
+          </Form.Select>
+          <h4>Dropdown from figma</h4>
+          <Dropdowns type={'dropdownBtnCode'} items={DROPDOWNITEMS} title='Chat theme' quantity={124} />
         </Col>
       </Row>
     </div>
