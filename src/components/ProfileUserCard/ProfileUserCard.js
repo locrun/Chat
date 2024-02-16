@@ -6,11 +6,12 @@ import s from './ProfileUserCard.module.scss';
 import { MenuPanel } from 'components/ProfileUserCard/MenuPanel/MenuPanel';
 import HeaderProfile from './HeaderProfile/HeaderProfile';
 import BodyProfile from './BodyProfile/BodyProfile';
+import { OrderStatusCard } from 'components/OrderStatusCard/OrderStatusCard';
 
 const ProfileUserCard = () => {
   const userInfoList = [
     { id: 0, key: 'E-mail:', value: 'sybekker@gmail.com' },
-    { id: 1, key: 'Telegram::', value: '@rkasha' },
+    { id: 1, key: 'Telegram:', value: '@rkasha' },
     { id: 2, key: 'Баланс:', value: '70 ₽' },
     { id: 3, key: 'Телефон:', value: '+9 (725) 268-96-98' },
     { id: 4, key: 'Местное время:', value: '14:13' },
@@ -33,6 +34,7 @@ const ProfileUserCard = () => {
         </Button>
         <MenuPanel />
       </div>
+      <OrderStatusCard />
     </Flex>
   );
 };
