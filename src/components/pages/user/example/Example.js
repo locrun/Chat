@@ -1,4 +1,5 @@
 import ProfileUserCard from 'components/ProfileUserCard/ProfileUserCard';
+import { ServiceCard } from 'components/ServiceCard/ServiceCard';
 import React from 'react';
 
 const Example = () => {
@@ -6,6 +7,7 @@ const Example = () => {
     <>
       <h1>Example Page</h1>
       <ProfileUserCard />
+      <ServiceCard />
     </>
   );
 };
