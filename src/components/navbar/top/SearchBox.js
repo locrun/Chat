@@ -10,6 +10,8 @@ import { isIterableArray } from 'helpers/utils';
 import Flex from 'components/common/Flex';
 import FalconCloseButton from 'components/common/FalconCloseButton';
 import SubtleBadge from 'components/common/SubtleBadge';
+import s from './SearchBox.module.scss';
+import cn from 'classnames';
 
 const MediaSearchContent = ({ item }) => {
   return (
@@ -36,7 +38,7 @@ const MediaSearchContent = ({ item }) => {
   );
 };
 
-const SearchBox = ({ autoCompleteItem }) => {
+const SearchBox = ({ autoCompleteItem, className = '' }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchInputValue, setSearchInputValue] = useState('');
   const [resultItem, setResultItem] = useState(autoCompleteItem);
@@ -84,12 +86,12 @@ const SearchBox = ({ autoCompleteItem }) => {
       onToggle={() => setDropdownOpen(!dropdownOpen)}
     >
       <Dropdown.Toggle as="div" className="dropdown-caret-none">
-        <Form className="position-relative">
+        <Form className={cn('position-relative', className)}>
           <Form.Control
             type="search"
-            placeholder="Search..."
+            placeholder="Поиск"
             aria-label="Search"
-            className="rounded-pill search-input"
+            className={cn('rounded-pill search-input', s.input)}
             value={searchInputValue}
             onChange={({ target }) => setSearchInputValue(target.value)}
           />
