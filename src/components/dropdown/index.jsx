@@ -2,8 +2,12 @@ import React, { FC, useState } from 'react';
 import { nanoid } from 'nanoid'
 import * as ReactBootstrap from 'react-bootstrap';
 import s from './dropdown.module.scss';
+import cn from 'classnames';
 import { Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
 
+const Title = ({ title, quantity }) => {
+    return (<div className={cn("text-12", s.btn_title_wrapp)}>{title}<div className={s.btn_title_quantity}>{quantity}</div></div>)
+}
 
 /**
 * @typedef {{
@@ -45,7 +49,7 @@ const Dropdowns = ({ type, items, ButtonGroup, variant = 'falcon-default', sizin
             case 'dropdownBtnCode': setDropdown(
                 <DropdownButton
                     id="dropdown-basic-button"
-                    title={title + ' ' + quantity}
+                    title={<Title title={title} quantity={quantity} />}
                     variant='falcon-default'
                     className={s.Dropdown}
                 >
