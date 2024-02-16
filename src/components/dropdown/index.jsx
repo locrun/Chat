@@ -44,6 +44,7 @@ const Title = ({ title, quantity }) => {
 
 const Dropdowns = ({ type, items, ButtonGroup, variant = 'falcon-default', sizing, direction, header, align, title, quantity }) => {
     const [dropdown, setDropdown] = useState(null)
+    const [dropdownWidth, setDropdownWidth] = useState(undefined)
     React.useEffect(() => {
         switch (type) {
             case 'dropdownBtnCode': setDropdown(
@@ -58,7 +59,7 @@ const Dropdowns = ({ type, items, ButtonGroup, variant = 'falcon-default', sizin
                         items.map(elm => {
                             if (!('hr' in elm)) {
                                 return (
-                                    <Dropdown.Item key={nanoid()} href={elm.href} className='pt-0 pb-0'>
+                                    <Dropdown.Item key={nanoid()} href={elm.href} className="pt-0 pb-0">
                                         <div className="d-flex justify-content-between pt-0 pb-0">
                                             <span className={s.items_conent}>
                                                 {elm.item}
@@ -73,6 +74,7 @@ const Dropdowns = ({ type, items, ButtonGroup, variant = 'falcon-default', sizin
                             }
                         })
                     }
+                    <div style={{ width: dropdownWidth, padding: 0, margin: 0 }}></div>
                 </DropdownButton>
             ); break;
             case 'btnVariantCode': setDropdown(
@@ -139,9 +141,14 @@ const Dropdowns = ({ type, items, ButtonGroup, variant = 'falcon-default', sizin
                 </SplitButton>
             ); break;
         }
-    }, [type, items, ButtonGroup, variant, sizing, direction, header, align, title])
+
+    }, [type, items, ButtonGroup, variant, sizing, direction, header, align, title, dropdownWidth])
+
+    React.useEffect(() => {
+        setDropdownWidth(document.getElementById('dropdown-basic-button')?.offsetWidth)
+    }, [dropdownWidth, dropdown])
+
     return dropdown
 }
 
 export { Dropdowns };
-/*export type { TItems }*/
