@@ -1,3 +1,5 @@
+@import '../../assets/scss/theme/colors';
+
 .wrapper {
   width: 100%;
   height: 100%;
@@ -20,7 +22,7 @@
   bottom: 70px;
   left: 45%;
   transform: translateX(-50%);
-  background-color: #49c2bb !important;
+  background-color: $turquoise !important;
   border: none !important;
   width: 183px;
   height: 47px;

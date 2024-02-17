@@ -1,5 +1,5 @@
 import React from 'react';
-
+import MessageStarting from '../../../message-starting/MessageStarting';
 import * as ReactBootstrap from 'react-bootstrap';
 
 const Example = () => {
@@ -25,6 +25,7 @@ const Example = () => {
           </ReactBootstrap.Dropdown.Item>
         </ReactBootstrap.Dropdown.Menu>
       </ReactBootstrap.Dropdown>
+      <MessageStarting />
     </div>
   );
 };
