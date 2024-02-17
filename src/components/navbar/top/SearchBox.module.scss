@@ -1,5 +1,7 @@
+@import '../../../assets/scss/theme/colors';
+
 .input {
-  background-color: #f7f6f4 !important;
+  background-color: $gray-light !important;
   padding-left: 2rem !important;
   padding-right: 2rem !important;
   line-height: 1.7;

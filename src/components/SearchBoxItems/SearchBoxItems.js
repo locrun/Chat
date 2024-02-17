@@ -7,10 +7,16 @@ import avatar from '../../assets/img/icons/testAvatar.svg';
 import s from './searchItems.module.scss';
 
 const SearchItems = () => {
+  const handleMessageClick = () => {};
+  const handleTipsClick = () => {};
   return (
     <div className={s.items}>
-      <img src={messageIcon} className={s.messageIcon} />
-      <img src={tips} className={s.tips} />
+      <img
+        src={messageIcon}
+        className={s.messageIcon}
+        onClick={handleMessageClick}
+      />
+      <img src={tips} className={s.tips} onClick={handleTipsClick} />
       <Avatar src={avatar} className={s.avatar} />
     </div>
   );

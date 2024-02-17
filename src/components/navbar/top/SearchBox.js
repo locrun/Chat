@@ -11,7 +11,7 @@ import Flex from 'components/common/Flex';
 import FalconCloseButton from 'components/common/FalconCloseButton';
 import SubtleBadge from 'components/common/SubtleBadge';
 import s from './SearchBox.module.scss';
-import cn from 'classnames';
+import classnames from 'classnames';
 
 const MediaSearchContent = ({ item }) => {
   return (
@@ -86,12 +86,12 @@ const SearchBox = ({ autoCompleteItem, className = '' }) => {
       onToggle={() => setDropdownOpen(!dropdownOpen)}
     >
       <Dropdown.Toggle as="div" className="dropdown-caret-none">
-        <Form className={cn('position-relative', className)}>
+        <Form className={classnames('position-relative', className)}>
           <Form.Control
             type="search"
             placeholder="Поиск"
             aria-label="Search"
-            className={cn('rounded-pill search-input', s.input)}
+            className={classnames('rounded-pill search-input', s.input)}
             value={searchInputValue}
             onChange={({ target }) => setSearchInputValue(target.value)}
           />

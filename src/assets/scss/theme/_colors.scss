@@ -11,6 +11,7 @@ $gray-800: #4d5969 !default;
 $gray-900: #344050 !default;
 $gray-1000: #232e3c !default;
 $gray-1100: #0b1727 !default;
+$gray-light: #f7f6f4 !default;
 $black: #000 !default;
 
 // gray-colors-map
@@ -25,7 +26,7 @@ $grays: (
   '800': $gray-800,
   '900': $gray-900,
   '1000': $gray-1000,
-  '1100': $gray-1100,
+  '1100': $gray-1100
 ) !default;
 
 // color-variables
@@ -59,7 +60,7 @@ $theme-colors: (
   'warning': $warning,
   'danger': $danger,
   'light': $light,
-  'dark': $dark,
+  'dark': $dark
 ) !default;
 
 // brand-color-variables
@@ -71,13 +72,13 @@ $github: #333333 !default;
 $youtube: #ff0001 !default;
 
 // brand-color-map
-$brand-colors:(
+$brand-colors: (
   'facebook': $facebook,
   'google-plus': $google-plus,
   'twitter': $twitter,
   'linkedin': $linkedin,
   'youtube': $youtube,
-  'github': $github,
+  'github': $github
 ) !default;
 
 // icon-circle-color-map
@@ -85,7 +86,7 @@ $icon-circle-colors: (
   'primary': $primary,
   'success': $success,
   'info': $info,
-  'warning': $warning,
+  'warning': $warning
 ) !default;
 
 // scss-docs-start theme-text-variables
