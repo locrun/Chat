@@ -24,7 +24,11 @@ export const OrderStatusCard = () => {
         </div>
 
         <div className={s.changedStatus}>
-          <Avatar src={'https://perfecto-web.com/uploads/uifaces/ui-3.jpg'} />
+          <Avatar
+            className={s.avatar}
+            size="24"
+            src={'https://perfecto-web.com/uploads/uifaces/ui-3.jpg'}
+          />
           <div className={s.flexCol}>
             <span className={s.status}>Статус изменен</span>
             <span className={s.statusName}>Новый → Завершен</span>
@@ -33,7 +37,11 @@ export const OrderStatusCard = () => {
         </div>
 
         <div className={s.createdOrder}>
-          <Avatar src={'https://perfecto-web.com/uploads/uifaces/ui-3.jpg'} />
+          <Avatar
+            className={s.avatar}
+            size="24"
+            src={'https://perfecto-web.com/uploads/uifaces/ui-3.jpg'}
+          />
           <div className={s.flexCol}>
             <span className={s.orderStatus}>Заказ создан</span>
             <span className={s.orderName}>
@@ -49,7 +57,11 @@ export const OrderStatusCard = () => {
       </div>
 
       <div className={s.addGroup}>
-        <Avatar src={'https://perfecto-web.com/uploads/uifaces/ui-3.jpg'} />
+        <Avatar
+          className={s.avatar}
+          size="24"
+          src={'https://perfecto-web.com/uploads/uifaces/ui-3.jpg'}
+        />
         <div className={s.flexCol}>
           <span className={s.status}>Пользователь добавлен в группу</span>
           <span className={s.statusName}>
