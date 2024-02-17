@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
 
 const Title = ({ title, quantity }) => {
-    return (<div className={cn("text-12", s.btn_title_wrapp)}>{title}<div className={s.btn_title_quantity}>{quantity}</div></div>)
+    return (<div className={cn("text-12", s.btn_title_wrapp)}>{title}{quantity && <div className={s.btn_title_quantity}>{quantity}</div>}</div>)
 }
 
 /**
@@ -32,6 +32,7 @@ const Title = ({ title, quantity }) => {
 *    align?: { lg: 'start' } | { lg: 'end' };
 *    title: string;
 *    quantity: number;
+*    onSelect: () => void;
 * }} DropdownsProps
 */
 
@@ -42,24 +43,25 @@ const Title = ({ title, quantity }) => {
  * @returns {React.ReactNode} - Возвращает узел React.
  */
 
-const Dropdowns = ({ type, items, ButtonGroup, variant = 'falcon-default', sizing, direction, header, align, title, quantity }) => {
+const Dropdowns = ({ type, items, ButtonGroup, variant = 'falcon-default', sizing, direction, header, align, title, quantity, onSelect }) => {
     const [dropdown, setDropdown] = useState(null)
     const [dropdownWidth, setDropdownWidth] = useState(undefined)
     React.useEffect(() => {
         switch (type) {
             case 'dropdownBtnCode': setDropdown(
                 <DropdownButton
+                    onSelect={onSelect}
                     id="dropdown-basic-button"
                     title={<Title title={title} quantity={quantity} />}
                     variant='falcon-default'
-                    className={s.Dropdown}
+                    className={cn(s.Dropdown, 'border-0 container-fluid')}
                 >
                     {header && <Dropdown.Header>{header}</Dropdown.Header>}
                     {
                         items.map(elm => {
                             if (!('hr' in elm)) {
                                 return (
-                                    <Dropdown.Item key={nanoid()} href={elm.href} className="pt-0 pb-0">
+                                    <Dropdown.Item key={nanoid()} href={elm.href} eventKey={elm.eventKey} itemsAs={elm.itemAs} active={elm.active} className="pt-0 pb-0">
                                         <div className="d-flex justify-content-between pt-0 pb-0">
                                             <span className={s.items_conent}>
                                                 {elm.item}
@@ -79,6 +81,7 @@ const Dropdowns = ({ type, items, ButtonGroup, variant = 'falcon-default', sizin
             ); break;
             case 'btnVariantCode': setDropdown(
                 <DropdownButton
+                    onSelect={onSelect}
                     as={ButtonGroup}
                     key={variant}
                     id={'dropdown-variants-' + variant}
@@ -111,6 +114,7 @@ const Dropdowns = ({ type, items, ButtonGroup, variant = 'falcon-default', sizin
             ); break;
             case 'splitBtnCode': setDropdown(
                 <SplitButton
+                    onSelect={onSelect}
                     as={ButtonGroup}
                     key={variant}
                     id={'dropdown-variants-' + variant}

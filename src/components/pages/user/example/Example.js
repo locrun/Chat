@@ -61,7 +61,7 @@ const Example = () => {
             ))}
           </Form.Select>
           <h4>Dropdown from figma</h4>
-          <Dropdowns type={'dropdownBtnCode'} items={DROPDOWNITEMS} title='Chat theme' quantity={124} />
+          <Dropdowns type={'dropdownBtnCode'} items={DROPDOWNITEMS} title='Chat theme' quantity={124} onSelect={console.log} />
         </Col>
       </Row>
     </div>

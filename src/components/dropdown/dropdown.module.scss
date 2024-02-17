@@ -5,7 +5,12 @@
 .Dropdown button {
     background-color: rgba(239, 239, 239, 1) !important;
     border-radius: 8px;
-    display: block ruby;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    border: none;
+    width: 100%;
+    box-shadow: none;
 
 
     &:hover {
@@ -15,6 +20,24 @@
     &:active {
         background-color: rgba(239, 239, 239, 1);
     }
+
+    &::after {
+        position: absolute;
+        right: 16px;
+        top: 24%;
+        background-image: url('../../assets/img/icons/dropdown_arrow.svg');
+        width: 16px;
+        height: 16px;
+        border: 0;
+        background-size: cover;
+        transition: transform 0.3s ease;
+    }
+
+    &[aria-expanded="true"]::after {
+        transform: rotate(180deg);
+        transition: transform 0.3s ease;
+    }
+
 }
 
 .items_number {
