@@ -1,14 +1,11 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
-import PageHeader from 'components/common/PageHeader';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FalconComponentCard from 'components/common/FalconComponentCard';
 import SearchBox from 'components/navbar/top/SearchBox';
 import autoCompleteInitialItem from 'data/autocomplete/autocomplete';
 import SearchItems from '../SearchBoxItems/SearchBoxItems';
-import s from './search.module.scss';
+import s from './searchPanel.module.scss';
 
-const Search = ({ className = '' }) => (
+const SearchPanel = ({ className = '' }) => (
   <>
     <FalconComponentCard>
       <FalconComponentCard.Body className={s.body}>
@@ -24,4 +21,4 @@ const Search = ({ className = '' }) => (
   </>
 );
 
-export default Search;
+export default SearchPanel;

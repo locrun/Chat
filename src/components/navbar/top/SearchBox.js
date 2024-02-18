@@ -12,6 +12,7 @@ import FalconCloseButton from 'components/common/FalconCloseButton';
 import SubtleBadge from 'components/common/SubtleBadge';
 import s from './SearchBox.module.scss';
 import classnames from 'classnames';
+import useWindowSize from 'hooks/useWindowSize';
 
 const MediaSearchContent = ({ item }) => {
   return (
@@ -42,6 +43,7 @@ const SearchBox = ({ autoCompleteItem, className = '' }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchInputValue, setSearchInputValue] = useState('');
   const [resultItem, setResultItem] = useState(autoCompleteItem);
+  const windowSize = useWindowSize();
 
   const fuseJsOptions = {
     includeScore: true,
@@ -79,11 +81,17 @@ const SearchBox = ({ autoCompleteItem, className = '' }) => {
     // eslint-disable-next-line
   }, [searchInputValue]);
 
+  const toogleHandler = () => {
+    //if (windowSize.innerWidth > 428) {
+    setDropdownOpen(!dropdownOpen);
+    // }
+  };
+
   return (
     <Dropdown
       show={dropdownOpen}
       className="search-box"
-      onToggle={() => setDropdownOpen(!dropdownOpen)}
+      onToggle={toogleHandler}
     >
       <Dropdown.Toggle as="div" className="dropdown-caret-none">
         <Form className={classnames('position-relative', className)}>

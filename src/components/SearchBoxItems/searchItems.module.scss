@@ -12,9 +12,19 @@
   .avatar {
     height: 50px;
     width: 50px;
+  }
+}
+
+@media (max-width: 428px) {
+  .items {
+    gap: 15.79px;
     img {
-      height: 50px;
-      width: 50px;
+      width: 13px;
+      height: 13px;
+    }
+    .avatar {
+      height: 18px;
+      width: 18px;
     }
   }
 }

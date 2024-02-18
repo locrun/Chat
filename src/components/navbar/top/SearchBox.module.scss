@@ -9,3 +9,9 @@
   box-shadow: none !important;
   border: none !important;
 }
+
+@media (max-width: 428px) {
+  .input {
+    display: none !important;
+  }
+}
