@@ -1,4 +1,5 @@
 import React from 'react';
+import MessageStarting from '../../../message-starting/MessageStarting';
 import * as ReactBootstrap from 'react-bootstrap';
 import { Button, Row, Col, Form } from 'react-bootstrap';
 
@@ -64,6 +65,7 @@ const Example = () => {
           <Dropdowns type={'dropdownBtnCode'} items={DROPDOWNITEMS} title='Chat theme' quantity={124} onSelect={console.log} />
         </Col>
       </Row>
+      <MessageStarting />
     </div>
   );
 };
