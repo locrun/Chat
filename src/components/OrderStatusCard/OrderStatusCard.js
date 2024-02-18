@@ -7,6 +7,7 @@ import s from './OrderStatusCard.module.scss';
 
 const OrderStatusCard = ({
   statusId,
+  avatar,
   currentStatus,
   name,
   price,
@@ -37,53 +38,39 @@ const OrderStatusCard = ({
         </div>
 
         <div className={s.changedStatus}>
-          <Avatar
-            className={s.avatar}
-            size="24"
-            src={'https://perfecto-web.com/uploads/uifaces/ui-3.jpg'}
-          />
+          <Avatar className={s.avatar} size="24" src={avatar} />
           <div className={s.flexCol}>
-            <span className={s.status}>Статус изменен</span>
-            <span className={s.statusName}>Новый → Завершен</span>
+            <span className={s.status}>{statusChanged.statusName}</span>
+            <span className={s.statusName}>
+              {statusChanged.statusTransition}
+            </span>
           </div>
-          <div className={s.time}>22:22</div>
+          <div className={s.time}>{statusChanged.time}</div>
         </div>
 
         <div className={s.createdOrder}>
-          <Avatar
-            className={s.avatar}
-            size="24"
-            src={'https://perfecto-web.com/uploads/uifaces/ui-3.jpg'}
-          />
+          <Avatar className={s.avatar} size="24" src={avatar} />
           <div className={s.flexCol}>
-            <span className={s.orderStatus}>Заказ создан</span>
-            <span className={s.orderName}>
-              Мышление в консультативном процессе
-            </span>
+            <span className={s.orderStatus}>{orderCreated.statusName}</span>
+            <span className={s.orderName}>{orderCreated.name}</span>
           </div>
 
           <div className={classnames(s.flexCol, s.date)}>
-            <span>15:00</span>
-            <span>10.10.23 г.</span>
+            <span>{orderCreated.time}</span>
+            <span>{orderCreated.date} г.</span>
           </div>
         </div>
       </div>
 
       <div className={s.userAddedToGroup}>
-        <Avatar
-          className={s.avatar}
-          size="24"
-          src={'https://perfecto-web.com/uploads/uifaces/ui-3.jpg'}
-        />
+        <Avatar className={s.avatar} size="24" src={avatar} />
         <div className={s.flexCol}>
-          <span className={s.status}>Пользователь добавлен в группу</span>
-          <span className={s.statusName}>
-            Техника «Мышление в консультативном процессе»
-          </span>
+          <span className={s.status}>{userAddedToGroup.statusName}</span>
+          <span className={s.statusName}>{userAddedToGroup.name}</span>
         </div>
         <div className={classnames(s.flexCol, s.date)}>
-          <span>15:00</span>
-          <span>10.10.23 г.</span>
+          <span>{orderCreated.time}</span>
+          <span>{orderCreated.date} г.</span>
         </div>
       </div>
     </div>
@@ -100,6 +87,7 @@ const statusPropTypes = PropTypes.shape({
 
 OrderStatusCard.propTypes = {
   statusId: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
   currentStatus: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,

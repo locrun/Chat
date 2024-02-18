@@ -19,7 +19,7 @@ const ProfileUserCard = () => {
         </Button>
         <MenuPanel />
       </div>
-      <OrderStatusCard orderStatusInfo={orderStatusInfo} />
+      <OrderStatusCard {...orderStatusInfo} />
     </Flex>
   );
 };

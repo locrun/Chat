@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ReactBootstrap from 'react-bootstrap';
 import ProfileUserCard from 'components/ProfileUserCard/ProfileUserCard';
-import { ServiceCard } from 'components/ServiceCard/ServiceCard';
+import { ServiceCards } from 'components/ServiceCards/ServiceCards';
 import MessageStarting from '../../../message-starting/MessageStarting';
 
 const Example = () => {
@@ -30,7 +30,7 @@ const Example = () => {
       </ReactBootstrap.Dropdown>
       <MessageStarting />
       <ProfileUserCard />
-      <ServiceCard />
+      <ServiceCards />
     </div>
   );
 };

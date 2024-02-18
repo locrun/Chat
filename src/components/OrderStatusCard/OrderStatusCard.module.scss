@@ -1,8 +1,10 @@
+@import '../../assets/scss/theme/colors';
+
 .container {
   margin: 0 12px 10px 12px;
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid #efefef;
+  border: 1px solid $smoky-white;
 }
 
 .flex {
@@ -19,7 +21,7 @@
 
 .header {
   padding: 9px 11px;
-  background-color: #fafafa;
+  background-color: $white;
   border-radius: 8px;
 }
 
@@ -28,7 +30,7 @@
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;
-  color: #49c2bb;
+  color: $turquoise;
 }
 .currentStatus {
   padding: 2px 9px 2px 9px;
@@ -37,15 +39,15 @@
   font-family: Arial;
   font-size: 9px;
   font-weight: 400;
-  color: #49c2bb;
-  border: 0.5px solid #49c2bb;
+  color: $turquoise;
+  border: 0.5px solid $turquoise;
   border-radius: 12px;
 
   .check {
     width: 13px;
     height: 13px;
     margin-right: 6px;
-    background-color: #49c2bb;
+    background-color: $turquoise;
     border-radius: 50%;
   }
 }
@@ -55,14 +57,14 @@
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;
-  color: #242424;
+  color: $black-brown;
 }
 .price {
   font-family: Actor;
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;
-  color: #242424;
+  color: $black-brown;
 }
 .date {
   display: flex;
@@ -72,14 +74,13 @@
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;
-  color: #c9c9c9;
+  color: $light-telegray;
   text-align: right;
 }
 
 .orderStatus {
   display: flex;
   justify-content: space-between;
-  //align-items: center;
 }
 
 .infoBlock {
@@ -101,16 +102,14 @@
   padding: 10px 12px 10px 8px;
   display: flex;
   align-items: flex-start;
-  border-bottom: 1px solid #efefef;
-  //align-items: center;
-  //justify-content: space-between;
+  border-bottom: 1px solid $smoky-white;
   .status {
     margin-bottom: 3px;
     font-family: Arial;
     font-size: 10px;
     font-weight: 400;
     line-height: 11px;
-    color: #8e8e8e;
+    color: $telegrey;
   }
   .statusName {
     font-family: Arial;
@@ -126,7 +125,7 @@
     font-size: 10px;
     font-weight: 400;
     line-height: 11px;
-    color: #8e8e8e;
+    color: $telegrey;
   }
 }
 
@@ -141,7 +140,7 @@
     font-size: 10px;
     font-weight: 400;
     line-height: 11px;
-    color: #8e8e8e;
+    color: $telegrey;
   }
 
   .orderName {
@@ -164,7 +163,7 @@
   margin: 0 auto;
   display: flex;
   align-items: flex-start;
-  border: 1px solid #efefef;
+  border: 1px solid $smoky-white;
   border-radius: 8px;
 
   .flexCol {
@@ -177,7 +176,7 @@
     font-size: 10px;
     font-weight: 400;
     line-height: 11px;
-    color: #8e8e8e;
+    color: $telegrey;
   }
   .statusName {
     max-width: 130px;
@@ -198,6 +197,6 @@
     font-size: 10px;
     font-weight: 400;
     line-height: 11px;
-    color: #8e8e8e;
+    color: $telegrey;
   }
 }

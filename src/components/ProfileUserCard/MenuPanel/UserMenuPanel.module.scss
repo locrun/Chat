@@ -1,9 +1,11 @@
+@import '../../../assets/scss/theme/colors';
+
 .container {
   padding: 10px 16px;
   margin-top: 13px;
   display: flex;
   justify-content: space-between;
-  box-shadow: 2px 4px 15px 0px #b0b0b026;
+  box-shadow: 2px 4px 15px 0px $aluminum;
   border-radius: 8px;
 }
 .flex {
@@ -16,12 +18,11 @@
   align-items: center;
   justify-content: center;
   border-radius: 50px;
-  border: 1px solid #efefef;
+  border: 1px solid $smoky-white;
   gap: 10px;
-  //   background-color: #49c2bb;
   cursor: pointer;
 }
 .history {
-  background: #49c2bb;
+  background: $turquoise;
   border: none;
 }

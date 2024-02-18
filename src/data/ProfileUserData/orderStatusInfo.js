@@ -1,5 +1,6 @@
 const orderStatusInfo = {
   statusId: '#349363',
+  avatar: 'https://perfecto-web.com/uploads/uifaces/ui-3.jpg',
   currentStatus: 'Завершено',
   name: 'Мышление в консультативном процессе',
   price: 10,

@@ -1,8 +1,8 @@
 import React from 'react';
-import s from './ServiceCard.module.scss';
+import s from './ServiceCards.module.scss';
 import cards from '../../data/serviceCard/serviceCard';
 
-export const ServiceCard = () => {
+export const ServiceCards = () => {
   return (
     <div className={s.flex}>
       {cards.map(card => {
