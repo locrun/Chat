@@ -1,26 +1,39 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Avatar from '../common/Avatar';
 import { CgCheck } from 'react-icons/cg';
-import cn from 'classnames';
+import classnames from 'classnames';
 import s from './OrderStatusCard.module.scss';
 
-export const OrderStatusCard = () => {
+const OrderStatusCard = ({
+  statusId,
+  currentStatus,
+  name,
+  price,
+  date,
+  time,
+  statusChanged,
+  orderCreated,
+  userAddedToGroup
+}) => {
   return (
     <div>
       <div className={s.container}>
         <div className={s.header}>
           <div className={s.orderStatus}>
-            <span className={s.orderNumber}>Заказ #349363</span>
+            <span className={s.orderNumber}>Заказ {statusId}</span>
             <span className={s.currentStatus}>
               <CgCheck color="ffffff" className={s.check} />
-              <span>Завершен</span>
+              <span>{currentStatus}</span>
             </span>
           </div>
           <div className={s.infoBlock}>
-            <span className={s.name}>Мышление в консультативном процессе</span>
-            <span className={s.price}>10 ₽</span>
+            <span className={s.name}>{name}</span>
+            <span className={s.price}>{price} ₽</span>
           </div>
-          <span className={s.date}>10.10.2023 г. 15:00</span>
+          <span className={s.date}>
+            {date} г. {time}
+          </span>
         </div>
 
         <div className={s.changedStatus}>
@@ -49,14 +62,14 @@ export const OrderStatusCard = () => {
             </span>
           </div>
 
-          <div className={cn(s.flexCol, s.date)}>
+          <div className={classnames(s.flexCol, s.date)}>
             <span>15:00</span>
             <span>10.10.23 г.</span>
           </div>
         </div>
       </div>
 
-      <div className={s.addGroup}>
+      <div className={s.userAddedToGroup}>
         <Avatar
           className={s.avatar}
           size="24"
@@ -68,7 +81,7 @@ export const OrderStatusCard = () => {
             Техника «Мышление в консультативном процессе»
           </span>
         </div>
-        <div className={cn(s.flexCol, s.date)}>
+        <div className={classnames(s.flexCol, s.date)}>
           <span>15:00</span>
           <span>10.10.23 г.</span>
         </div>
@@ -76,3 +89,24 @@ export const OrderStatusCard = () => {
     </div>
   );
 };
+
+const statusPropTypes = PropTypes.shape({
+  statusName: PropTypes.string.isRequired,
+  time: PropTypes.string.isRequired,
+  statusTransition: PropTypes.string,
+  name: PropTypes.string,
+  date: PropTypes.string
+});
+
+OrderStatusCard.propTypes = {
+  statusId: PropTypes.string.isRequired,
+  currentStatus: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  date: PropTypes.string.isRequired,
+  time: PropTypes.string.isRequired,
+  statusChanged: statusPropTypes.isRequired,
+  orderCreated: statusPropTypes.isRequired,
+  userAddedToGroup: statusPropTypes.isRequired
+};
+export default OrderStatusCard;
