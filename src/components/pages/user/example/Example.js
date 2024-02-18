@@ -2,7 +2,6 @@ import React from 'react';
 import SearchPanel from '../../../SearchPanel/SearchPanel';
 
 import * as ReactBootstrap from 'react-bootstrap';
-import s from './example.module.scss';
 
 const Example = () => {
   return (
@@ -27,7 +26,7 @@ const Example = () => {
           </ReactBootstrap.Dropdown.Item>
         </ReactBootstrap.Dropdown.Menu>
       </ReactBootstrap.Dropdown>
-      <SearchPanel className={s.search} />
+      <SearchPanel />
     </div>
   );
 };

@@ -10,8 +10,28 @@
   border: none !important;
 }
 
+.search {
+  width: 562px !important;
+}
+
+@media (max-width: 768px) {
+  .input {
+    font-size: 10px !important;
+    line-height: 12px !important;
+  }
+  .search {
+    width: 306px !important;
+  }
+  svg {
+    left: 11px !important;
+  }
+}
+
 @media (max-width: 428px) {
   .input {
+    display: none !important;
+  }
+  .resultMenu {
     display: none !important;
   }
 }
