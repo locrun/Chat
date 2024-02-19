@@ -14,7 +14,8 @@ const Avatar = ({
   className,
   mediaClass,
   isExact,
-  icon
+  icon,
+  onClick
 }) => {
   const classNames = ['avatar', `avatar-${size}`, className].join(' ');
   const mediaClasses = [
@@ -37,7 +38,9 @@ const Avatar = ({
           </div>
         );
       } else {
-        return <img className={mediaClasses} src={src} alt="" />;
+        return (
+          <img className={mediaClasses} src={src} alt="" onClick={onClick} />
+        );
       }
     }
 

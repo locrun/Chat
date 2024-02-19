@@ -1,0 +1,202 @@
+@import '../../assets/scss/theme/colors';
+
+.container {
+  margin: 0 12px 10px 12px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid $smoky-white;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flexCol {
+  margin-left: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 9px 11px;
+  background-color: $white;
+  border-radius: 8px;
+}
+
+.orderNumber {
+  font-family: Actor;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  color: $turquoise;
+}
+.currentStatus {
+  padding: 2px 9px 2px 9px;
+  display: flex;
+  align-items: center;
+  font-family: Arial;
+  font-size: 9px;
+  font-weight: 400;
+  color: $turquoise;
+  border: 0.5px solid $turquoise;
+  border-radius: 12px;
+
+  .check {
+    width: 13px;
+    height: 13px;
+    margin-right: 6px;
+    background-color: $turquoise;
+    border-radius: 50%;
+  }
+}
+.name {
+  max-width: 140px;
+  font-family: Arial;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  color: $black-brown;
+}
+.price {
+  font-family: Actor;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  color: $black-brown;
+}
+.date {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  font-family: Actor;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  color: $light-telegray;
+  text-align: right;
+}
+
+.orderStatus {
+  display: flex;
+  justify-content: space-between;
+}
+
+.infoBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.statusItem {
+  padding: 10px 12px 13px 8px;
+}
+.avatar {
+  width: 24px;
+  height: 24px;
+  margin-right: 3px;
+  border-radius: 50%;
+}
+.changedStatus {
+  padding: 10px 12px 10px 8px;
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 1px solid $smoky-white;
+  .status {
+    margin-bottom: 3px;
+    font-family: Arial;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 11px;
+    color: $telegrey;
+  }
+  .statusName {
+    font-family: Arial;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 11px;
+  }
+
+  .time {
+    align-self: flex-start;
+    margin-left: auto;
+    font-family: Arial;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 11px;
+    color: $telegrey;
+  }
+}
+
+.createdOrder {
+  padding: 8px 12px 8px 8px;
+  display: flex;
+  align-items: flex-start;
+
+  .orderStatus {
+    margin-bottom: 3px;
+    font-family: Arial;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 11px;
+    color: $telegrey;
+  }
+
+  .orderName {
+    max-width: 120px;
+    font-family: Arial;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 11px;
+  }
+  .date {
+    margin: 0;
+    display: flex;
+    align-items: flex-end;
+    margin-left: auto;
+  }
+}
+.userAddedToGroup {
+  max-width: 260px;
+  padding: 10px 8px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  border: 1px solid $smoky-white;
+  border-radius: 8px;
+
+  .flexCol {
+    margin-top: 0;
+  }
+
+  .status {
+    margin-bottom: 3px;
+    font-family: Arial;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 11px;
+    color: $telegrey;
+  }
+  .statusName {
+    max-width: 130px;
+    font-family: Arial;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 11px;
+  }
+
+  .date {
+    margin-left: auto;
+  }
+
+  .time {
+    align-self: flex-start;
+    margin-left: auto;
+    font-family: Arial;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 11px;
+    color: $telegrey;
+  }
+}

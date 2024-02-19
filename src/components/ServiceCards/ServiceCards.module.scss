@@ -1,0 +1,96 @@
+@import '../../assets/scss/theme/colors';
+
+.flex {
+  display: flex;
+  max-width: 1146px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  margin: 0 auto;
+  gap: 30px;
+}
+.card {
+  padding: 20px;
+  grid-column: span 12;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 2px 4px 15px 0px $aluminum;
+  border-radius: 8px;
+  background-color: $white;
+
+  @media (min-width: 768px) {
+    grid-column: span 6;
+  }
+  @media (min-width: 1450px) {
+    grid-column: span 4;
+  }
+}
+
+.flex2 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  background-color: $white;
+  border-radius: 50%;
+  box-shadow: 1.17px 2.35px 8.82px 0px $aluminum;
+}
+.title {
+  margin: 0;
+  display: contents;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 23px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+
+.text {
+  display: inline-block;
+  min-width: 310px;
+  margin-top: 10px;
+  max-width: 300px;
+  font-size: 12px;
+  font-weight: 400;
+  color: $black-brown;
+  letter-spacing: -0.5px;
+  line-height: 14px;
+}
+.list {
+  margin: 10px 0 0 15px;
+  padding: 0;
+}
+.listItem {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 5px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+  color: $black-brown;
+  letter-spacing: -0.5px;
+}
+.image {
+  width: 40px;
+  height: 40px;
+}
+
+.button {
+  width: 133px;
+  height: 47px;
+  margin-top: 14px;
+  padding: 15px, 35px, 15px, 35px;
+  border-radius: 4px;
+  background-color: $turquoise;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  color: $white;
+}

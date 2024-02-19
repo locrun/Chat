@@ -10,6 +10,8 @@ import { isIterableArray } from 'helpers/utils';
 import Flex from 'components/common/Flex';
 import FalconCloseButton from 'components/common/FalconCloseButton';
 import SubtleBadge from 'components/common/SubtleBadge';
+import s from './SearchBox.module.scss';
+import classnames from 'classnames';
 
 const MediaSearchContent = ({ item }) => {
   return (
@@ -36,7 +38,7 @@ const MediaSearchContent = ({ item }) => {
   );
 };
 
-const SearchBox = ({ autoCompleteItem }) => {
+const SearchBox = ({ autoCompleteItem, className = '' }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchInputValue, setSearchInputValue] = useState('');
   const [resultItem, setResultItem] = useState(autoCompleteItem);
@@ -80,16 +82,16 @@ const SearchBox = ({ autoCompleteItem }) => {
   return (
     <Dropdown
       show={dropdownOpen}
-      className="search-box"
+      className={'search-box'}
       onToggle={() => setDropdownOpen(!dropdownOpen)}
     >
       <Dropdown.Toggle as="div" className="dropdown-caret-none">
-        <Form className="position-relative">
+        <Form className={classnames('position-relative', s.search)}>
           <Form.Control
             type="search"
-            placeholder="Search..."
+            placeholder="Поиск"
             aria-label="Search"
-            className="rounded-pill search-input"
+            className={classnames('rounded-pill search-input', s.input)}
             value={searchInputValue}
             onChange={({ target }) => setSearchInputValue(target.value)}
           />
@@ -98,7 +100,12 @@ const SearchBox = ({ autoCompleteItem }) => {
             className="position-absolute text-400 search-box-icon"
           />
           {(dropdownOpen || searchInputValue) && (
-            <div className="search-box-close-btn-container">
+            <div
+              className={classnames(
+                'search-box-close-btn-container',
+                s.resultMenu
+              )}
+            >
               <FalconCloseButton
                 size="sm"
                 noOutline
@@ -112,7 +119,7 @@ const SearchBox = ({ autoCompleteItem }) => {
           )}
         </Form>
       </Dropdown.Toggle>
-      <Dropdown.Menu>
+      <Dropdown.Menu className={s.resultMenu}>
         <div className="scrollbar py-3" style={{ maxHeight: '24rem' }}>
           {isIterableArray(recentlyBrowsedItems) && (
             <>

@@ -398,7 +398,6 @@ const FalconRoutes = () => {
         <Route path="/support-desk/reports" element={<Reports />} />
 
         {/*Pages*/}
-
         <Route path="pages/starter" element={<Starter />} />
         <Route path="user/profile" element={<Profile />} />
         <Route path="user/settings" element={<Settings />} />

@@ -1,0 +1,28 @@
+@import '../../../assets/scss/theme/colors';
+
+.container {
+  padding: 10px 16px;
+  margin-top: 13px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 2px 4px 15px 0px $aluminum;
+  border-radius: 8px;
+}
+.flex {
+  gap: 10px;
+}
+.button {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  border: 1px solid $smoky-white;
+  gap: 10px;
+  cursor: pointer;
+}
+.history {
+  background: $turquoise;
+  border: none;
+}
