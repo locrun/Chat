@@ -1,9 +1,13 @@
 import React from 'react';
-import MessageStarting from '../../../message-starting/MessageStarting';
+import Search from '../../../doc-components/Search';
+
 import * as ReactBootstrap from 'react-bootstrap';
 import { Button, Row, Col, Form } from 'react-bootstrap';
-
 import { Dropdowns } from 'components/dropdown';
+import ProfileUserCard from 'components/ProfileUserCard/ProfileUserCard';
+import { ServiceCards } from 'components/ServiceCards/ServiceCards';
+import MessageStarting from '../../../message-starting/MessageStarting';
+
 
 const Example = () => {
 
@@ -19,6 +23,7 @@ const Example = () => {
 
   return (
     <div>
+      <h1>Example Page</h1>
       <Row className="g-lg-3 bg-white p-3 rounded">
         <Col lg={6}>
           <h2 className="mb-4">Dropwdown</h2>
@@ -66,6 +71,9 @@ const Example = () => {
         </Col>
       </Row>
       <MessageStarting />
+      <ProfileUserCard />
+      <ServiceCards />
+      <Search />
     </div>
   );
 };
