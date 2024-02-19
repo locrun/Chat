@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchPanel from '../../../SearchPanel/SearchPanel';
+import Search from '../../../doc-components/Search';
 
 import * as ReactBootstrap from 'react-bootstrap';
 import ProfileUserCard from 'components/ProfileUserCard/ProfileUserCard';
@@ -33,7 +33,7 @@ const Example = () => {
       <MessageStarting />
       <ProfileUserCard />
       <ServiceCards />
-      <SearchPanel />
+      <Search />
     </div>
   );
 };
