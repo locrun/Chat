@@ -1,10 +1,13 @@
 import React from 'react';
-import MessageStarting from '../../../message-starting/MessageStarting';
 import * as ReactBootstrap from 'react-bootstrap';
+import ProfileUserCard from 'components/ProfileUserCard/ProfileUserCard';
+import { ServiceCards } from 'components/ServiceCards/ServiceCards';
+import MessageStarting from '../../../message-starting/MessageStarting';
 
 const Example = () => {
   return (
     <div>
+      <h1>Example Page</h1>
       <ReactBootstrap.Dropdown>
         <ReactBootstrap.Dropdown.Toggle variant="falcon-default">
           Dropdown
@@ -26,6 +29,8 @@ const Example = () => {
         </ReactBootstrap.Dropdown.Menu>
       </ReactBootstrap.Dropdown>
       <MessageStarting />
+      <ProfileUserCard />
+      <ServiceCards />
     </div>
   );
 };
