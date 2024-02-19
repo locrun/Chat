@@ -1,4 +1,6 @@
 import React from 'react';
+import Search from '../../../doc-components/Search';
+
 import * as ReactBootstrap from 'react-bootstrap';
 import ProfileUserCard from 'components/ProfileUserCard/ProfileUserCard';
 import { ServiceCards } from 'components/ServiceCards/ServiceCards';
@@ -31,6 +33,7 @@ const Example = () => {
       <MessageStarting />
       <ProfileUserCard />
       <ServiceCards />
+      <Search />
     </div>
   );
 };
