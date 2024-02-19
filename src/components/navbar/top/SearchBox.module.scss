@@ -20,7 +20,7 @@
     line-height: 12px !important;
   }
   .search {
-    width: 306px !important;
+    width: 275px !important;
   }
   svg {
     left: 11px !important;
@@ -30,6 +30,9 @@
 @media (max-width: 428px) {
   .input {
     display: none !important;
+  }
+  .search {
+    width: auto !important;
   }
   .resultMenu {
     display: none !important;
