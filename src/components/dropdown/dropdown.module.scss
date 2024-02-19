@@ -1,0 +1,72 @@
+.item_hr {
+    margin: 6px 0
+}
+
+.Dropdown button {
+    background-color: rgba(239, 239, 239, 1) !important;
+    border-radius: 8px;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    border: none;
+    width: 100%;
+    box-shadow: none;
+
+
+    &:hover {
+        background-color: rgba(239, 239, 239, 1);
+    }
+
+    &:active {
+        background-color: rgba(239, 239, 239, 1);
+    }
+
+    &::after {
+        position: absolute;
+        right: 16px;
+        top: 24%;
+        background-image: url('../../assets/img/icons/dropdown_arrow.svg');
+        width: 16px;
+        height: 16px;
+        border: 0;
+        background-size: cover;
+        transition: transform 0.3s ease;
+    }
+
+    &[aria-expanded="true"]::after {
+        transform: rotate(180deg);
+        transition: transform 0.3s ease;
+    }
+
+}
+
+.items_number {
+    color: rgba(73, 194, 187, 1);
+    font-size: 12px;
+    font-family: 'Actor';
+}
+
+.items_conent {
+    font-family: 'Actor';
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 13px;
+    letter-spacing: 0em;
+    text-align: center;
+}
+
+.btn_title_wrapp {
+    display: flex;
+    font-family: 'Actor';
+}
+
+.btn_title_quantity {
+    padding: 4px;
+    margin-left: 10px;
+    font-size: 12px;
+    color: rgba(73, 194, 187, 1);
+    background-color: rgba(255, 255, 255, 1);
+    min-width: 37px;
+    min-height: 21px;
+    border-radius: 12px;
+}
