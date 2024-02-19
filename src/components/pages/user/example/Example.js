@@ -2,10 +2,14 @@ import React from 'react';
 import SearchPanel from '../../../SearchPanel/SearchPanel';
 
 import * as ReactBootstrap from 'react-bootstrap';
+import ProfileUserCard from 'components/ProfileUserCard/ProfileUserCard';
+import { ServiceCards } from 'components/ServiceCards/ServiceCards';
+import MessageStarting from '../../../message-starting/MessageStarting';
 
 const Example = () => {
   return (
     <div>
+      <h1>Example Page</h1>
       <ReactBootstrap.Dropdown>
         <ReactBootstrap.Dropdown.Toggle variant="falcon-default">
           Dropdown
@@ -26,6 +30,9 @@ const Example = () => {
           </ReactBootstrap.Dropdown.Item>
         </ReactBootstrap.Dropdown.Menu>
       </ReactBootstrap.Dropdown>
+      <MessageStarting />
+      <ProfileUserCard />
+      <ServiceCards />
       <SearchPanel />
     </div>
   );
