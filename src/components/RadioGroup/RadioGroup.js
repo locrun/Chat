@@ -16,8 +16,8 @@ const RadioGroup = ({ button, selected, handleChange, name = 'Все' }) => {
   );
 };
 RadioGroup.propTypes = {
-  button: PropTypes.string.isRequired,
-  selected: PropTypes.bool.isRequired,
+  button: PropTypes.string,
+  selected: PropTypes.bool,
   handleChange: PropTypes.func.isRequired,
   name: PropTypes.string
 };

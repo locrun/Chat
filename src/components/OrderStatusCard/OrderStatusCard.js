@@ -38,7 +38,7 @@ const OrderStatusCard = ({
         </div>
 
         <div className={s.changedStatus}>
-          <Avatar className={s.avatar} size="24" src={avatar} />
+          <Avatar className={s.avatar} size="m" src={avatar} />
           <div className={s.flexCol}>
             <span className={s.status}>{statusChanged.statusName}</span>
             <span className={s.statusName}>
@@ -49,7 +49,7 @@ const OrderStatusCard = ({
         </div>
 
         <div className={s.createdOrder}>
-          <Avatar className={s.avatar} size="24" src={avatar} />
+          <Avatar className={s.avatar} size="m" src={avatar} />
           <div className={s.flexCol}>
             <span className={s.orderStatus}>{orderCreated.statusName}</span>
             <span className={s.orderName}>{orderCreated.name}</span>
@@ -63,7 +63,7 @@ const OrderStatusCard = ({
       </div>
 
       <div className={s.userAddedToGroup}>
-        <Avatar className={s.avatar} size="24" src={avatar} />
+        <Avatar className={s.avatar} size="m" src={avatar} />
         <div className={s.flexCol}>
           <span className={s.status}>{userAddedToGroup.statusName}</span>
           <span className={s.statusName}>{userAddedToGroup.name}</span>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { propTypes } from 'react-bootstrap/esm/Image';
+import PropTypes from 'prop-types';
 import FalconComponentCard from 'components/common/FalconComponentCard';
 import SearchBox from 'components/navbar/top/SearchBox';
 import autoCompleteInitialItem from 'data/autocomplete/autocomplete';
@@ -23,7 +23,6 @@ const Search = ({ className }) => (
 );
 
 Search.propTypes = {
-  className: propTypes.string.isRequired
+  className: PropTypes.string
 };
-
 export default Search;

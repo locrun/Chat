@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import Chat from 'components/app/chat/Chat';
-import CheckBoxGroup from '../components/CheckBoxGroup/CheckBoxGroup';
+import CheckBoxGroup from '../../components/CheckBoxGroup/CheckBoxGroup';
 import RadioGroup from 'components/RadioGroup/RadioGroup';
 import ProfileUserCard from 'components/ProfileUserCard/ProfileUserCard';
 import MessageStarting from 'components/message-starting/MessageStarting';

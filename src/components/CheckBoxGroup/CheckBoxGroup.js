@@ -16,8 +16,15 @@ const CheckBoxGroup = ({ checkboxes, handleChange }) => {
     </form>
   );
 };
+
+const objShape = {
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  isChecked: PropTypes.bool.isRequired
+};
 CheckBoxGroup.propTypes = {
-  checkboxes: PropTypes.string.isRequired,
+  checkboxes: PropTypes.arrayOf(PropTypes.shape(objShape)).isRequired,
   handleChange: PropTypes.func.isRequired
 };
 export default CheckBoxGroup;

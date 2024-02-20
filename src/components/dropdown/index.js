@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { propTypes } from 'react-bootstrap/esm/Image';
+import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 
 import s from './dropdown.module.scss';
@@ -247,8 +247,8 @@ const Dropdowns = ({
   return dropdown;
 };
 Title.propTypes = {
-  title: propTypes.string.isRequired,
-  quantity: propTypes.string.isRequired
+  title: PropTypes.string,
+  quantity: PropTypes.string
 };
 
 export { Dropdowns };

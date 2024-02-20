@@ -23,8 +23,19 @@ const CheckBoxButton = ({ checkbox, onChange }) => {
     </div>
   );
 };
+// CheckBoxButton.propTypes = {
+//   checkbox: PropTypes.string.isRequired,
+//   onChange: PropTypes.func.isRequired
+// };
+
+const objShape = {
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  isChecked: PropTypes.bool.isRequired
+};
 CheckBoxButton.propTypes = {
-  checkbox: PropTypes.string.isRequired,
+  checkbox: PropTypes.shape(objShape).isRequired,
   onChange: PropTypes.func.isRequired
 };
 export default CheckBoxButton;

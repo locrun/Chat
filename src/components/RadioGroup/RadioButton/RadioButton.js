@@ -21,9 +21,9 @@ const RadioButton = ({ value, checked, handleChange, name }) => {
   );
 };
 RadioButton.propTypes = {
-  value: PropTypes.string.isRequired,
-  checked: PropTypes.bool.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  value: PropTypes.string,
+  checked: PropTypes.bool,
+  handleChange: PropTypes.func,
   name: PropTypes.string
 };
 export default RadioButton;
