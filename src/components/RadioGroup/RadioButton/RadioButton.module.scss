@@ -1,0 +1,64 @@
+.label {
+  min-width: 75px;
+  padding: 10px 16px;
+  display: inline-block;
+  background-color: #efefef;
+  user-select: none;
+  position: relative;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 13px;
+  color: #242424;
+  cursor: pointer;
+  border-radius: 8px;
+  position: relative;
+}
+
+.text {
+  position: absolute;
+  right: 18px;
+  bottom: 11px;
+}
+.inputRadio {
+  display: none;
+}
+.customRadio {
+  width: 14px;
+  height: 14px;
+  display: flex;
+  margin-right: 6px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: relative;
+  border: 1px solid #c9c9c9;
+  background-color: white;
+  // transition: $transition;
+}
+.customRadio::before {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  // transition: $transition;
+}
+.inputRadio:checked + .customRadio {
+  border: 1px solid #49c2bb;
+  //transition: $transition;
+}
+.inputRadio:checked + .customRadio::before {
+  background: #49c2bb;
+}
+
+.inputRadio:hover + .customRadio {
+  border: 1px solid rgba(73, 194, 187, 0.3);
+  box-shadow: 0px 5px 40px rgba(73, 194, 187, 0.3);
+  // transition: $transition;
+}
+.inputRadio:hover + .customRadio:before {
+  background: rgba(73, 194, 187, 0.3);
+  box-shadow: 0px 5px 40px rgba(135, 124, 202, 0.15);
+  //transition: $transition;
+}

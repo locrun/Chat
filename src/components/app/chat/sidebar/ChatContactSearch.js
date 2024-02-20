@@ -6,8 +6,9 @@ const ChatContactsSearch = () => (
   <Form className="contacts-search-wrapper" onSubmit={e => e.preventDefault()}>
     <Form.Group className="mb-0 position-relative d-md-none d-lg-block w-100 h-100">
       <Form.Control
+        style={{ boxShadow: 'none' }}
         className="chat-contacts-search border-0 h-100"
-        placeholder="Search contacts ..."
+        placeholder="Искать контакт..."
         size="sm"
       />
       <FontAwesomeIcon icon="search" className="contacts-search-icon" />

@@ -20180,7 +20180,7 @@ samp {
 -----------------------------------------------*/
 .card {
   --falcon-card-bg: var(--falcon-emphasis-bg);
-  box-shadow: var(--falcon-box-shadow);
+  border: 1px solid #f3f3f3;
 }
 
 .card-link {
@@ -26686,6 +26686,7 @@ option:disabled {
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
 }
 
 /*-----------------------------------------------
@@ -26789,7 +26790,7 @@ option:disabled {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 2.063rem;
+  height: 2.5rem;
 }
 
 .chat-contacts-search {
@@ -26903,13 +26904,15 @@ option:disabled {
   color: var(--falcon-gray-500);
   outline: none !important;
   margin-left: 1rem;
+  color: #49c2bb;
 }
 
 .chat-editor-area {
+  width: 100%;
+  height: 40px;
   border-top: 1px solid var(--falcon-border-color);
   display: flex;
   align-items: center;
-  width: 100%;
 }
 .chat-editor-area .form-control, .chat-editor-area .dropzone-area.is-invalid {
   min-height: 2rem;
@@ -26930,7 +26933,6 @@ option:disabled {
   max-height: 6.25rem;
   overflow: auto;
   word-break: break-all;
-  box-shadow: var(--falcon-box-shadow-inset);
 }
 .chat-editor-area .emojiarea-editor[contenteditable=true]:empty:before {
   content: attr(placeholder);
@@ -26947,7 +26949,7 @@ option:disabled {
 
 @media (min-width: 576px) {
   .contacts-list {
-    height: calc(100% - 2.063rem);
+    height: calc(100% - 2.5rem);
   }
   .conversation-scroll-area {
     height: calc(100% - 2.188rem);

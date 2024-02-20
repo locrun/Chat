@@ -9,8 +9,8 @@ import SearchItems from '../SearchBoxItems/SearchBoxItems';
 import s from './search.module.scss';
 
 const Search = ({ className = '' }) => (
-  <>
-    <FalconComponentCard>
+  <div className={s.container}>
+    <FalconComponentCard className={s.card}>
       <FalconComponentCard.Body className={s.body}>
         <div className={s.searchBody}>
           <SearchBox
@@ -21,7 +21,7 @@ const Search = ({ className = '' }) => (
         </div>
       </FalconComponentCard.Body>
     </FalconComponentCard>
-  </>
+  </div>
 );
 
 export default Search;
