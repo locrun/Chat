@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import is from 'is_js';
 // import FalconRoutes from 'routes';
@@ -40,7 +40,7 @@ const App = () => {
   }, [navbarPosition]);
 
   return (
-    <Router basename={process.env.PUBLIC_URL}>
+    <HashRouter basename={process.env.PUBLIC_URL}>
       <RoutesPage />
       {/* <FalconRoutes /> */}
       <SettingsToggle />
@@ -50,7 +50,7 @@ const App = () => {
         icon={false}
         position={toast.POSITION.BOTTOM_LEFT}
       />
-    </Router>
+    </HashRouter>
   );
 };
 
