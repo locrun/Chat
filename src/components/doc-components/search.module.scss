@@ -1,3 +1,10 @@
+.container {
+  margin: 20px 0;
+  @media (min-width: 1450px) {
+    margin: 60px 0;
+  }
+}
+
 .searchBody {
   display: flex;
   justify-content: space-between;
@@ -6,4 +13,8 @@
 
 .body {
   padding: 15px 30px 15px 30px !important;
+}
+
+.card {
+  width: 100%;
 }

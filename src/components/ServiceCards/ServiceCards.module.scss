@@ -1,12 +1,19 @@
 @import '../../assets/scss/theme/colors';
 
-.flex {
-  display: flex;
+.grid {
   max-width: 1146px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  margin: 0 auto;
-  gap: 30px;
+  gap: 10px;
+  padding-bottom: 130px;
+  @media (min-width: 768px) {
+    gap: 24px;
+    padding-bottom: 130px;
+  }
+  @media (min-width: 1450px) {
+    gap: 30px;
+    padding-bottom: 146px;
+  }
 }
 .card {
   padding: 20px;
@@ -52,7 +59,7 @@
 
 .text {
   display: inline-block;
-  min-width: 310px;
+  min-width: 100%;
   margin-top: 10px;
   max-width: 300px;
   font-size: 12px;
@@ -60,6 +67,13 @@
   color: $black-brown;
   letter-spacing: -0.5px;
   line-height: 14px;
+
+  @media (min-width: 768px) {
+    min-width: 273px;
+  }
+  @media (min-width: 1450px) {
+    min-width: 310px;
+  }
 }
 .list {
   margin: 10px 0 0 15px;

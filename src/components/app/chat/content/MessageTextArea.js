@@ -99,7 +99,7 @@ const MessageTextArea = () => {
         minRows={1}
         maxRows={6}
         value={message}
-        placeholder="Type your message"
+        placeholder="Написать сообщение..."
         onChange={({ target }) => setMessage(target.value)}
         className="form-control outline-none resize-none rounded-0 border-0 emojiarea-editor"
       />
@@ -142,7 +142,7 @@ const MessageTextArea = () => {
         })}
         type="submit"
       >
-        Send
+        Отправить
       </Button>
     </Form>
   );

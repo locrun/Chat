@@ -4,7 +4,7 @@ import cards from '../../data/serviceCard/serviceCard';
 
 export const ServiceCards = () => {
   return (
-    <div className={s.flex}>
+    <div className={s.grid}>
       {cards.map(card => {
         return (
           <div key={card.id} className={s.card}>

@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+}
+.flexCol {
+  padding: 0 15px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 768px) {
+    padding: 0 40px;
+  }
+}

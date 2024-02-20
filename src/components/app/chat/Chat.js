@@ -32,7 +32,7 @@ const ChatTab = () => {
   return (
     <Tab.Container
       id="left-tabs-example"
-      defaultActiveKey="0"
+      defaultActiveKey
       onSelect={handleSelect}
     >
       <Card className="card-chat overflow-hidden">
