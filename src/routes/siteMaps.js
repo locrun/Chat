@@ -493,11 +493,6 @@ export const pagesRoutes = {
           name: 'Settings',
           to: '/user/settings',
           active: true
-        },
-        {
-          name: 'Example',
-          to: '/user/example',
-          active: true
         }
       ]
     },
