@@ -43,7 +43,9 @@ export const Example = () => {
         handleChange={handleChangeRadio}
         name="Все"
       />
-      <Search />
+      <div style={{ width: '100%' }}>
+        <Search />
+      </div>
     </div>
   );
 };
