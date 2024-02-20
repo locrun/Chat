@@ -1,5 +1,4 @@
 import React from 'react';
-import * as ReactBootstrap from 'react-bootstrap';
 import Avatar from 'components/common/Avatar';
 import tips from '../../assets/img/icons/tips.svg';
 import messageIcon from '../../assets/img/icons/message_icon.svg';

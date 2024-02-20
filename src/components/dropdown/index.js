@@ -1,6 +1,7 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
+import { propTypes } from 'react-bootstrap/esm/Image';
 import { nanoid } from 'nanoid';
-import * as ReactBootstrap from 'react-bootstrap';
+
 import s from './dropdown.module.scss';
 import cn from 'classnames';
 import { Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
@@ -190,13 +191,14 @@ const Dropdowns = ({
             {header && <Dropdown.Header>{header}</Dropdown.Header>}
             {items.map(elm => {
               if ('hr' in elm) {
-                return <Dropdown.Divider />;
+                return <Dropdown.Divider key={elm.item} />;
               } else {
                 if (elm.itemAs === 'text')
                   return <Dropdown.ItemText>{elm.item}</Dropdown.ItemText>;
                 if (elm.active) {
                   return (
                     <Dropdown.Item
+                      key={elm.item}
                       as={elm.itemAs}
                       href={elm.href}
                       eventKey={elm.eventKey}
@@ -208,6 +210,7 @@ const Dropdowns = ({
                 } else {
                   return (
                     <Dropdown.Item
+                      key={elm.item}
                       as={elm.itemAs}
                       href={elm.href}
                       eventKey={elm.eventKey}
@@ -242,6 +245,10 @@ const Dropdowns = ({
   }, [dropdownWidth, dropdown]);
 
   return dropdown;
+};
+Title.propTypes = {
+  title: propTypes.string.isRequired,
+  quantity: propTypes.string.isRequired
 };
 
 export { Dropdowns };

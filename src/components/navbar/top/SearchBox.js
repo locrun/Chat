@@ -38,7 +38,7 @@ const MediaSearchContent = ({ item }) => {
   );
 };
 
-const SearchBox = ({ autoCompleteItem, className = '' }) => {
+const SearchBox = ({ autoCompleteItem }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchInputValue, setSearchInputValue] = useState('');
   const [resultItem, setResultItem] = useState(autoCompleteItem);

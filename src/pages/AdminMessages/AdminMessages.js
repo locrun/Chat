@@ -26,7 +26,7 @@ export const AdminMessages = () => {
       quantity: 77
     }
   ];
-  const [selectValue, setSelectValue] = useState(DROPDOWNITEMS[0].eventKey);
+  // const [selectValue, setSelectValue] = useState(DROPDOWNITEMS[0].eventKey);
   const handleChangeCheckbox = id => {
     const updatedCheckboxes = checkboxses.map(checkbox => {
       if (checkbox.id === id) {
@@ -61,7 +61,7 @@ export const AdminMessages = () => {
                 type={'dropdownBtnCode'}
                 items={DROPDOWNITEMS}
                 title={'По умолчанию'}
-                onSelect={setSelectValue}
+                //onSelect={setSelectValue}
               />
             </div>
             <div className={classnames(s.select, s.statusSelect)}>
@@ -70,7 +70,7 @@ export const AdminMessages = () => {
                 type={'dropdownBtnCode'}
                 items={DROPDOWNITEMS}
                 title={'Открытые'}
-                onSelect={setSelectValue}
+                //onSelect={setSelectValue}
               />
             </div>
           </div>

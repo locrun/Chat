@@ -93,7 +93,8 @@ Avatar.propTypes = {
   className: PropTypes.string,
   mediaClass: PropTypes.string,
   isExact: PropTypes.bool,
-  icon: PropTypes.string
+  icon: PropTypes.string,
+  onClick: PropTypes.func
 };
 
 Avatar.defaultProps = {

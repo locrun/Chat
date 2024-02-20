@@ -47,7 +47,7 @@ export const Example = () => {
 
   const [selectValue, setSelectValue] = useState(DROPDOWNITEMS[0].eventKey);
 
-  const [month, setMonth] = React.useState(0);
+  // const [month, setMonth] = React.useState(0);
 
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
