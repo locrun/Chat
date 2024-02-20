@@ -12,7 +12,17 @@
 }
 
 .body {
-  padding: 15px 30px 15px 30px !important;
+  padding: 15px 30px !important;
+}
+
+@media (max-width: 768px) {
+  .body {
+    padding: 8.17px 16.34px !important;
+  }
+}
+
+.card {
+  width: 100%;
 }
 
 .card {

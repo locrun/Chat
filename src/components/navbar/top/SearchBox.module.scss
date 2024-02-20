@@ -10,17 +10,18 @@
   border: none !important;
 }
 
+.searchCard {
+  width: calc(100% - 48%) !important;
+}
+
 .search {
-  width: 562px !important;
+  width: 100% !important;
 }
 
 @media (max-width: 768px) {
   .input {
     font-size: 10px !important;
     line-height: 12px !important;
-  }
-  .search {
-    width: 275px !important;
   }
   svg {
     left: 11px !important;

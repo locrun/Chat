@@ -82,7 +82,7 @@ const SearchBox = ({ autoCompleteItem, className = '' }) => {
   return (
     <Dropdown
       show={dropdownOpen}
-      className={'search-box'}
+      className={classnames('search-box', s.searchCard)}
       onToggle={() => setDropdownOpen(!dropdownOpen)}
     >
       <Dropdown.Toggle as="div" className="dropdown-caret-none">
