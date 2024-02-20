@@ -28,12 +28,24 @@ export const Example = () => {
   };
 
   const DROPDOWNITEMS /*: TItems[]*/ = [
-    { item: 'Link 1', href: 'google.com', active: true, quantity: 2 },
-    { item: 'Custom Text', eventKey: '1', itemAs: 'button', quantity: 45 },
-    { hr: true },
-    { item: 'Text', itemAs: 'text', quantity: 32 },
-    { item: 'Another Text', eventKey: '2', itemAs: 'button', quantity: 77 }
+    {
+      item: 'Все категории',
+      eventKey: 'Все категории',
+      quantity: 45
+    },
+    {
+      item: 'Все сообщения',
+      eventKey: 'Все сообщения',
+      quantity: 77
+    },
+    {
+      item: 'По умолчанию',
+      eventKey: 'По умолчанию',
+      quantity: 77
+    }
   ];
+
+  const [selectValue, setSelectValue] = useState(DROPDOWNITEMS[0].eventKey);
 
   const [month, setMonth] = React.useState(0);
 
@@ -58,7 +70,7 @@ export const Example = () => {
       <div style={{ width: '100%' }}>
         <Search />
       </div>
-      <div style={{ width: '500px', display: 'flex', gap: '10px' }}>
+      <div style={{ width: '800px', display: 'flex', gap: '10px' }}>
         <Dropdowns
           type={'dropdownBtnCode'}
           items={DROPDOWNITEMS}
@@ -68,9 +80,8 @@ export const Example = () => {
         <Dropdowns
           type={'dropdownBtnCode'}
           items={DROPDOWNITEMS}
-          title="Chat theme"
-          quantity={54}
-          onSelect={console.log}
+          title={selectValue}
+          onSelect={setSelectValue}
         />
       </div>
     </div>
