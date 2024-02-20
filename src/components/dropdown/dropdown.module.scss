@@ -1,9 +1,11 @@
+@import '../../assets/scss/theme/colors';
+
 .item_hr {
     margin: 6px 0
 }
 
 .Dropdown button {
-    background-color: rgba(239, 239, 239, 1) !important;
+    background-color: $smoky-white !important;
     border-radius: 8px;
     display: flex;
     justify-content: flex-start;
@@ -14,11 +16,11 @@
 
 
     &:hover {
-        background-color: rgba(239, 239, 239, 1);
+        background-color: $smoky-white;
     }
 
     &:active {
-        background-color: rgba(239, 239, 239, 1);
+        background-color: $smoky-white;
     }
 
     &::after {
@@ -41,7 +43,7 @@
 }
 
 .items_number {
-    color: rgba(73, 194, 187, 1);
+    color: $turquoise;
     font-size: 12px;
     font-family: 'Actor';
 }
@@ -64,8 +66,8 @@
     padding: 4px;
     margin-left: 10px;
     font-size: 12px;
-    color: rgba(73, 194, 187, 1);
-    background-color: rgba(255, 255, 255, 1);
+    color: $turquoise;
+    background-color: $white;
     min-width: 37px;
     min-height: 21px;
     border-radius: 12px;
