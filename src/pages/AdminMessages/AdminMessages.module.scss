@@ -1,12 +1,64 @@
+@import '../../assets/scss/theme/colors';
+
 .container {
   margin: 0 auto;
-  max-width: 1150px;
+  max-width: 1180px;
+  min-height: 100vh;
+  padding: 0 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+}
+
+.flex {
+  display: flex;
 }
 
 .chatWrapper {
   width: 100%;
+}
+
+.controlsWrapper {
+  margin-bottom: 30px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.selectGroup {
+  display: flex;
+  align-items: center;
+  gap: 110px;
+  flex-wrap: wrap;
+}
+
+.select {
+  button {
+    height: 35px;
+    display: flex;
+    align-items: center;
+  }
+  div {
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 12px;
+  }
+}
+.typesMessagesSelect {
+  min-width: 294px;
+}
+.dateSelect {
+  min-width: 142px;
+  margin-right: 10px;
+}
+.statusSelect {
+  min-width: 134px;
+}
+.label {
+  font-family: Arial;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  color: $telegrey;
 }
