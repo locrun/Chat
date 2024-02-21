@@ -94,11 +94,11 @@
   height: 40px;
 }
 
-.button {
-  width: 133px;
+.linkButton {
+  max-width: 133px;
   height: 47px;
   margin-top: 14px;
-  padding: 15px, 35px, 15px, 35px;
+  padding: 15px 35px 15px 35px;
   border-radius: 4px;
   background-color: $turquoise;
   border: none;
@@ -107,4 +107,7 @@
   font-weight: 500;
   line-height: 17px;
   color: $white;
+}
+a:hover {
+  text-decoration: none !important;
 }
