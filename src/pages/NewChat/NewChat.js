@@ -2,9 +2,9 @@ import React from 'react';
 import { Toolbar } from 'components/Toolbar/Toolbar';
 import { ServiceCards } from 'components/ServiceCards/ServiceCards';
 import Search from 'components/doc-components/Search';
-import s from './NewСonversation.module.scss';
+import s from './NewChat.module.scss';
 
-const NewСonversation = () => {
+const NewChat = () => {
   return (
     <div className={s.container}>
       <Toolbar />
@@ -16,4 +16,4 @@ const NewСonversation = () => {
   );
 };
 
-export default NewСonversation;
+export default NewChat;

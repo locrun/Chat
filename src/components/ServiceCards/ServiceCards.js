@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import s from './ServiceCards.module.scss';
 import cards from '../../data/serviceCard/serviceCard';
 
@@ -28,8 +29,9 @@ export const ServiceCards = () => {
                 </ul>
               )}
             </div>
-
-            <button className={s.button}>Написать</button>
+            <Link to={'/student-chat'} className={s.linkButton}>
+              Написать
+            </Link>
           </div>
         );
       })}

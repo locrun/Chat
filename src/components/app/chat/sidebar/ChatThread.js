@@ -25,7 +25,7 @@ const ChatThread = ({ thread, index }) => {
       <div className="d-md-none d-lg-block">
         <ChatSidebarDropdownAction />
       </div>
-      <Flex>
+      <Flex justifyContent="center">
         <Avatar className={user.status} src={user.avatarSrc} size="xl" />
         <div className="flex-1 chat-contact-body ms-2 d-md-none d-lg-block">
           <Flex justifyContent="between">

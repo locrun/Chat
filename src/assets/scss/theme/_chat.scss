@@ -286,7 +286,7 @@
     height: calc(100% - 2.188rem);
   }
   .card-chat {
-    height: calc(100vh - #{$top-nav-height} - 1px - #{$footer-height});
+    height: 100%;
   }
 }
 @include media-breakpoint-up(md) {
@@ -295,7 +295,7 @@
     height: 100%;
     top: 0;
     left: 0 !important;
-    width: auto;
+    width: 10%;
     transition: none;
   }
 }

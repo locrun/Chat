@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Chat from 'components/app/chat/Chat';
 import CheckBoxGroup from '../../components/CheckBoxGroup/CheckBoxGroup';
 import RadioGroup from 'components/RadioGroup/RadioGroup';
@@ -57,8 +58,34 @@ export const Example = () => {
   // const [month, setMonth] = React.useState(0);
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-      <ProfileUserCard />
+    <div
+      style={{
+        maxWidth: '1480px',
+        margin: '0 auto',
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column'
+      }}
+    >
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <h3>Навигация</h3>
+        <Link to="http://localhost:3000/new-chat">
+          Раздел для новых сообщений -
+        </Link>
+
+        <Link to="http://localhost:3000/admin-chat">
+          Стартовая страница сообщений (Админка)
+        </Link>
+
+        <Link to="http://localhost:3000/student-profile">
+          Чат с карточкой студента (Админка) -
+        </Link>
+        <Link to="http://localhost:3000/student-chat">Чат студента</Link>
+      </div>
+
+      <div style={{ maxWidth: '285px' }}>
+        <ProfileUserCard />
+      </div>
       <ServiceCards />
       <div style={{ width: '854px' }}>
         <Chat />

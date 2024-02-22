@@ -5,9 +5,9 @@ import CheckBoxGroup from '../../components/CheckBoxGroup/CheckBoxGroup';
 import { Dropdowns } from 'components/dropdown';
 import { checkbox } from 'data/checkboxses';
 import classnames from 'classnames';
-import s from './AdminMessages.module.scss';
+import s from './AdminChat.module.scss';
 
-export const AdminMessages = () => {
+export const AdminChat = () => {
   const [checkboxses, setCheckboxes] = useState(checkbox);
   const DROPDOWNITEMS /*: TItems[]*/ = [
     {
