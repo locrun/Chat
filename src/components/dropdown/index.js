@@ -28,7 +28,7 @@ const Title = ({ title, quantity }) => {
 
 /**
  * @typedef {{
- *    type: 'dropdownBtnCode' | 'btnVariantCode' | 'splitBtnCode';
+ *    type: 'dropdownBtnCode' | 'btnVariantCode' | 'splitBtnCode' | 'littleMenu';
  *    items: TItems[];
  *    ButtonGroup?: 'a' | 'div' | 'span';
  *    variant?: 'Primary' | 'Secondary' | 'falcon-default' | 'Success' | 'Info' | 'Warning' | 'Danger' | 'Light' | 'Dark';
@@ -39,6 +39,7 @@ const Title = ({ title, quantity }) => {
  *    title: string;
  *    quantity: number;
  *    onSelect: () => void;
+ *    img: string;
  * }} DropdownsProps
  */
 
@@ -60,10 +61,12 @@ const Dropdowns = ({
   align,
   title,
   quantity,
-  onSelect
+  onSelect,
+  img
 }) => {
   const [dropdown, setDropdown] = useState(null);
   const [dropdownWidth, setDropdownWidth] = useState(undefined);
+  const [itemsHeight, setItemsHeight] = useState(undefined);
   React.useEffect(() => {
     switch (type) {
       case 'dropdownBtnCode':
@@ -113,8 +116,8 @@ const Dropdowns = ({
               sizing == 'Large Button'
                 ? 'lg'
                 : sizing == 'Small Button'
-                ? 'sm'
-                : undefined
+                  ? 'sm'
+                  : undefined
             }
             className={
               sizing == 'Large Button' || sizing == 'Regular Button'
@@ -177,8 +180,8 @@ const Dropdowns = ({
               sizing == 'Large Button'
                 ? 'lg'
                 : sizing == 'Small Button'
-                ? 'sm'
-                : undefined
+                  ? 'sm'
+                  : undefined
             }
             className={
               sizing == 'Large Button' || sizing == 'Regular Button'
@@ -224,6 +227,24 @@ const Dropdowns = ({
           </SplitButton>
         );
         break;
+      case 'littleMenu': setDropdown(
+        <DropdownButton
+          onSelect={onSelect}
+          as={'div'}
+          id='little-menu'
+          title={<div className={s.LittleMenuTitle}>{img && <img src={img} />} <span>{title}</span></div>}
+          className={cn(s.Dropdown, s.LittleMenu, 'border-0 container-fluid radius-0')}
+        >
+          {items.map(elm => {
+            if (elm.active) {
+              return <Dropdown.Item className={s.LittleMenuItem} as={elm.itemAs} href={elm.href} eventKey={elm.eventKey} active>{elm.item}</Dropdown.Item>
+            } else {
+              return <Dropdown.Item className={s.LittleMenuItem} as={elm.itemAs} href={elm.href} eventKey={elm.eventKey} >{elm.item}</Dropdown.Item>
+            }
+          })}
+          {/* <div style={{ width: dropdownWidth, padding: 0, margin: 0 }}></div> */}
+        </DropdownButton>
+      ); break;
     }
   }, [
     type,

@@ -7,11 +7,12 @@ import { Dropdowns } from 'components/dropdown';
 import ProfileUserCard from 'components/ProfileUserCard/ProfileUserCard';
 import { ServiceCards } from 'components/ServiceCards/ServiceCards';
 import MessageStarting from '../../../message-starting/MessageStarting';
+import { LittleMenu } from 'components/littleMenu';
 
 
 const Example = () => {
 
-  const DROPDOWNITEMS/*: TItems[]*/ = [
+  const DROPDOWNITEMS = [
     { item: 'Link 1', href: 'google.com', active: true, quantity: 2 },
     { item: 'Custom Text', eventKey: '1', itemAs: 'button', quantity: 45 },
     { hr: true },
@@ -19,13 +20,27 @@ const Example = () => {
     { item: 'Another Text', eventKey: '2', itemAs: 'button', quantity: 77 },
   ];
 
-  const [month, setMonth] = React.useState(0);
+  const DASHBOARDITEMS = [
+    { item: 'Аналитика продаж', href: '#', eventKey: 'sal' },
+    { item: 'Аналитика обучения', href: '#', eventKey: 'ler' },
+  ]
 
+  const SALESITEMS = [
+    { item: 'Аналитика продаж', href: '#', eventKey: 'sal' },
+    { item: 'Аналитика обучения', href: '#', eventKey: 'ler' },
+  ]
+
+  const LEARNSITEMS = [
+    { item: 'Аналитика продаж', href: '#', eventKey: 'sal' },
+    { item: 'Аналитика обучения', href: '#', eventKey: 'ler' },
+  ]
+
+  const [month, setMonth] = React.useState(0);
   return (
     <div>
       <h1>Example Page</h1>
       <Row className="g-lg-3 bg-white p-3 rounded">
-        <Col lg={6}>
+        <Col lg={12}>
           <h2 className="mb-4">Dropwdown</h2>
           <h4 className='mb-1'>Dropwdown Button</h4>
           <Dropdowns type={'btnVariantCode'} items={DROPDOWNITEMS} title='Dropwdown Button' />
@@ -68,6 +83,15 @@ const Example = () => {
           </Form.Select>
           <h4>Dropdown from figma</h4>
           <Dropdowns type={'dropdownBtnCode'} items={DROPDOWNITEMS} title='Chat theme' quantity={124} onSelect={console.log} />
+          <h4>Little Menu</h4>
+          <LittleMenu
+            dashboard={DASHBOARDITEMS}
+            dashboadOnSelect={console.log}
+            sales={SALESITEMS}
+            salesOnSelect={console.log}
+            learns={LEARNSITEMS}
+            learnsOnSelect={console.log}
+          />
         </Col>
       </Row>
       <MessageStarting />
