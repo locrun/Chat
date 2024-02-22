@@ -26956,7 +26956,7 @@ option:disabled {
     height: calc(100% - 2.188rem);
   }
   .card-chat {
-    height: calc(100vh - var(--falcon-top-nav-height) - 1px - 3.9875rem);
+    height: 100%;
   }
 }
 @media (min-width: 768px) {
