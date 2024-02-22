@@ -3,11 +3,16 @@
 .container {
   margin: 0 auto;
   max-width: 1180px;
-  min-height: 100vh;
+  height: 100vh;
+  margin-bottom: 111px;
   padding: 0 15px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
+
+  @media (min-width: 428px) {
+    margin-top: 95px;
+  }
 }
 
 .linkButton {

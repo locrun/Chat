@@ -11,7 +11,7 @@ export const StudentChat = () => {
         <Search />
       </div>
       <Chat />
-      <Link to={'/new-conversation'} className={s.linkButton}>
+      <Link to={'/new-chat'} className={s.linkButton}>
         Новый разговор
       </Link>
     </div>
