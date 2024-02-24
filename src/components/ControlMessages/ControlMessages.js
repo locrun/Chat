@@ -4,21 +4,18 @@ import classnames from 'classnames';
 import s from './ControlMessages.module.scss';
 
 export const ControlMessages = () => {
-  const DROPDOWNITEMS /*: TItems[]*/ = [
+  const DROPDOWNITEMS = [
     {
       item: 'Открытые',
       eventKey: 'Все категории',
-      quantity: 45
     },
     {
       item: 'Все сообщения',
       eventKey: 'Все сообщения',
-      quantity: 77
     },
     {
       item: 'По умолчанию',
       eventKey: 'По умолчанию',
-      quantity: 77
     }
   ];
 
@@ -41,7 +38,7 @@ export const ControlMessages = () => {
               type={'dropdownBtnCode'}
               items={DROPDOWNITEMS}
               title={'Переадресовать в'}
-              //onSelect={setSelectValue}
+              onSelect={console.log}
             />
           </div>
         </div>

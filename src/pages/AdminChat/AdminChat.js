@@ -9,21 +9,18 @@ import s from './AdminChat.module.scss';
 
 export const AdminChat = () => {
   const [checkboxses, setCheckboxes] = useState(checkbox);
-  const DROPDOWNITEMS /*: TItems[]*/ = [
+  const DROPDOWNITEMS = [
     {
       item: 'Открытые',
       eventKey: 'Все категории',
-      quantity: 45
     },
     {
       item: 'Все сообщения',
       eventKey: 'Все сообщения',
-      quantity: 77
     },
     {
       item: 'По умолчанию',
       eventKey: 'По умолчанию',
-      quantity: 77
     }
   ];
   // const [selectValue, setSelectValue] = useState(DROPDOWNITEMS[0].eventKey);
@@ -61,7 +58,7 @@ export const AdminChat = () => {
                 type={'dropdownBtnCode'}
                 items={DROPDOWNITEMS}
                 title={'По умолчанию'}
-                //onSelect={setSelectValue}
+
               />
             </div>
             <div className={classnames(s.select, s.statusSelect)}>
@@ -70,7 +67,7 @@ export const AdminChat = () => {
                 type={'dropdownBtnCode'}
                 items={DROPDOWNITEMS}
                 title={'Открытые'}
-                //onSelect={setSelectValue}
+
               />
             </div>
           </div>

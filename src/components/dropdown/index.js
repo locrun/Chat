@@ -67,13 +67,15 @@ const Dropdowns = ({
   const [dropdown, setDropdown] = useState(null);
   const [dropdownWidth, setDropdownWidth] = useState(undefined);
   const [itemsHeight, setItemsHeight] = useState(undefined);
+  const [randId,] = useState(Math.random().toString(36).slice(2)) // to do a unique ID for dropdown
+
   React.useEffect(() => {
     switch (type) {
       case 'dropdownBtnCode':
         setDropdown(
           <DropdownButton
             onSelect={onSelect}
-            id="dropdown-basic-button"
+            id={randId}
             title={<Title title={title} quantity={quantity} />}
             variant="falcon-default"
             className={cn(s.Dropdown, 'border-0 container-fluid')}
@@ -89,6 +91,7 @@ const Dropdowns = ({
                     itemsAs={elm.itemAs}
                     active={elm.active}
                     className="pt-0 pb-0"
+                    style={{ width: dropdownWidth }}
                   >
                     <div className="d-flex justify-content-between pt-0 pb-0">
                       <span className={s.items_conent}>{elm.item}</span>
@@ -99,7 +102,6 @@ const Dropdowns = ({
                 );
               }
             })}
-            <div style={{ width: dropdownWidth, padding: 0, margin: 0 }}></div>
           </DropdownButton>
         );
         break;
@@ -242,7 +244,6 @@ const Dropdowns = ({
               return <Dropdown.Item className={s.LittleMenuItem} as={elm.itemAs} href={elm.href} eventKey={elm.eventKey} >{elm.item}</Dropdown.Item>
             }
           })}
-          {/* <div style={{ width: dropdownWidth, padding: 0, margin: 0 }}></div> */}
         </DropdownButton>
       ); break;
     }
@@ -260,10 +261,18 @@ const Dropdowns = ({
   ]);
 
   React.useEffect(() => {
+    /**
+     * For the seat width of dropdown items, consider the width of the dropdown button.
+     */
     setDropdownWidth(
-      document.getElementById('dropdown-basic-button')?.offsetWidth
+      document.getElementById(randId)?.offsetWidth
     );
-  }, [dropdownWidth, dropdown]);
+    const elm = document.querySelector('div[aria-labelledby="' + randId + '"]')
+    if (elm) {
+      elm.style.width = dropdownWidth + "px"
+      elm.style.minWidth = '50px'
+    }
+  }, [dropdownWidth, dropdown, randId])
 
   return dropdown;
 };

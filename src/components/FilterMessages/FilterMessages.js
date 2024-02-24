@@ -8,21 +8,18 @@ import s from './FilterMessages.module.scss';
 
 export const FilterMessages = () => {
   const [checkboxses, setCheckboxes] = useState(checkbox);
-  const DROPDOWNITEMS /*: TItems[]*/ = [
+  const DROPDOWNITEMS = [
     {
       item: 'Открытые',
       eventKey: 'Все категории',
-      quantity: 45
     },
     {
       item: 'Все сообщения',
       eventKey: 'Все сообщения',
-      quantity: 77
     },
     {
       item: 'По умолчанию',
       eventKey: 'По умолчанию',
-      quantity: 77
     }
   ];
   const handleChangeCheckbox = id => {
@@ -58,7 +55,7 @@ export const FilterMessages = () => {
               type={'dropdownBtnCode'}
               items={DROPDOWNITEMS}
               title={'По умолчанию'}
-              //onSelect={setSelectValue}
+            //onSelect={setSelectValue}
             />
           </div>
           <div className={classnames(s.select, s.statusSelect)}>
@@ -67,7 +64,7 @@ export const FilterMessages = () => {
               type={'dropdownBtnCode'}
               items={DROPDOWNITEMS}
               title={'Открытые'}
-              //onSelect={setSelectValue}
+            //onSelect={setSelectValue}
             />
           </div>
         </div>
