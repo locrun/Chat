@@ -14,7 +14,7 @@ export enum StatusType {
   CLOSED = 'closed'
 }
 
-export interface Dialog {
+export interface Chat {
   id: number;
   topic: Topic;
   created_at: string;
@@ -49,7 +49,18 @@ export interface CreateChatResponse {
   chat_type: ChatType;
 }
 
+export interface CreateMessagePayload {
+  text: string;
+  message_type: MessageType;
+  files: string[];
+  chat: number;
+}
+
 export interface File {
   id: number;
   file: string;
+}
+
+export interface TopicData {
+  topic: number;
 }

@@ -1,14 +1,29 @@
 import { AxiosPromise } from 'axios';
 import { endpoints_chat } from 'api/endpoints';
 import Apis from '..';
+import { AxiosPaginatedResponse, DefaultPaginationParams } from 'types/api';
+import {
+  Chat,
+  CreateChatResponse,
+  CreateMessagePayload,
+  Message,
+  Topic,
+  TopicData
+} from 'types/chat';
 
-export const getChatsLists = (params: any): AxiosPromise<any> => {
+export const getChatsLists = (
+  params: DefaultPaginationParams
+): AxiosPromise<AxiosPaginatedResponse<Chat[]>> => {
   return Apis.chat_api.get(endpoints_chat.chats_lists, { params });
 };
-export const getTopicsList = (params: any): AxiosPromise<any> => {
+export const getTopicsList = (
+  params: DefaultPaginationParams
+): AxiosPromise<AxiosPaginatedResponse<Topic[]>> => {
   return Apis.chat_api.get(endpoints_chat.topics_list, { params });
 };
-export const getMessageList = (id: number): AxiosPromise<any> => {
+export const getMessageList = (
+  id: number
+): AxiosPromise<AxiosPaginatedResponse<Message[]>> => {
   return Apis.chat_api.get(endpoints_chat.messages_list(id));
 };
 
@@ -21,9 +36,13 @@ export const getListReadMessages = (
   );
 };
 
-export const selectTopicChat = (data: any): AxiosPromise<any> => {
+export const selectTopicChat = (
+  data: TopicData
+): AxiosPromise<CreateChatResponse> => {
   return Apis.chat_api.post(endpoints_chat.select_chat_topic, data);
 };
-export const createNewMessage = (data: any): AxiosPromise<any> => {
+export const createNewMessage = (
+  data: CreateMessagePayload
+): AxiosPromise<Message> => {
   return Apis.chat_api.post(endpoints_chat.create_new_message, data);
 };
