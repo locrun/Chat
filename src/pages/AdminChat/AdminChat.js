@@ -12,15 +12,15 @@ export const AdminChat = () => {
   const DROPDOWNITEMS = [
     {
       item: 'Открытые',
-      eventKey: 'Все категории'
+      eventKey: 'Все категории',
     },
     {
       item: 'Все сообщения',
-      eventKey: 'Все сообщения'
+      eventKey: 'Все сообщения',
     },
     {
       item: 'По умолчанию',
-      eventKey: 'По умолчанию'
+      eventKey: 'По умолчанию',
     }
   ];
   // const [selectValue, setSelectValue] = useState(DROPDOWNITEMS[0].eventKey);
@@ -58,6 +58,7 @@ export const AdminChat = () => {
                 type={'dropdownBtnCode'}
                 items={DROPDOWNITEMS}
                 title={'По умолчанию'}
+
               />
             </div>
             <div className={classnames(s.select, s.statusSelect)}>
@@ -66,6 +67,7 @@ export const AdminChat = () => {
                 type={'dropdownBtnCode'}
                 items={DROPDOWNITEMS}
                 title={'Открытые'}
+
               />
             </div>
           </div>
