@@ -66,8 +66,8 @@ const Dropdowns = ({
 }) => {
   const [dropdown, setDropdown] = useState(null);
   const [dropdownWidth, setDropdownWidth] = useState(undefined);
-  const [itemsHeight, setItemsHeight] = useState(undefined);
-  const [randId,] = useState(Math.random().toString(36).slice(2)) // to do a unique ID for dropdown
+  // const [itemsHeight, setItemsHeight] = useState(undefined);
+  const [randId] = useState(Math.random().toString(36).slice(2)); // to do a unique ID for dropdown
 
   React.useEffect(() => {
     switch (type) {
@@ -118,8 +118,8 @@ const Dropdowns = ({
               sizing == 'Large Button'
                 ? 'lg'
                 : sizing == 'Small Button'
-                  ? 'sm'
-                  : undefined
+                ? 'sm'
+                : undefined
             }
             className={
               sizing == 'Large Button' || sizing == 'Regular Button'
@@ -182,8 +182,8 @@ const Dropdowns = ({
               sizing == 'Large Button'
                 ? 'lg'
                 : sizing == 'Small Button'
-                  ? 'sm'
-                  : undefined
+                ? 'sm'
+                : undefined
             }
             className={
               sizing == 'Large Button' || sizing == 'Regular Button'
@@ -229,23 +229,54 @@ const Dropdowns = ({
           </SplitButton>
         );
         break;
-      case 'littleMenu': setDropdown(
-        <DropdownButton
-          onSelect={onSelect}
-          as={'div'}
-          id='little-menu'
-          title={<div className={s.LittleMenuTitle}>{img && <img src={img} />} <span>{title}</span></div>}
-          className={cn(s.Dropdown, s.LittleMenu, 'border-0 container-fluid radius-0')}
-        >
-          {items.map(elm => {
-            if (elm.active) {
-              return <Dropdown.Item className={s.LittleMenuItem} as={elm.itemAs} href={elm.href} eventKey={elm.eventKey} active>{elm.item}</Dropdown.Item>
-            } else {
-              return <Dropdown.Item className={s.LittleMenuItem} as={elm.itemAs} href={elm.href} eventKey={elm.eventKey} >{elm.item}</Dropdown.Item>
+      case 'littleMenu':
+        setDropdown(
+          <DropdownButton
+            onSelect={onSelect}
+            as={'div'}
+            id="little-menu"
+            title={
+              <div className={s.LittleMenuTitle}>
+                {img && <img src={img} />} <span>{title}</span>
+              </div>
             }
-          })}
-        </DropdownButton>
-      ); break;
+            className={cn(
+              s.Dropdown,
+              s.LittleMenu,
+              'border-0 container-fluid radius-0'
+            )}
+          >
+            {items.map(elm => {
+              if (elm.active) {
+                return (
+                  <Dropdown.Item
+                    key={elm.item}
+                    className={s.LittleMenuItem}
+                    as={elm.itemAs}
+                    href={elm.href}
+                    eventKey={elm.eventKey}
+                    active
+                  >
+                    {elm.item}
+                  </Dropdown.Item>
+                );
+              } else {
+                return (
+                  <Dropdown.Item
+                    key={elm.item}
+                    className={s.LittleMenuItem}
+                    as={elm.itemAs}
+                    href={elm.href}
+                    eventKey={elm.eventKey}
+                  >
+                    {elm.item}
+                  </Dropdown.Item>
+                );
+              }
+            })}
+          </DropdownButton>
+        );
+        break;
     }
   }, [
     type,
@@ -264,15 +295,13 @@ const Dropdowns = ({
     /**
      * For the seat width of dropdown items, consider the width of the dropdown button.
      */
-    setDropdownWidth(
-      document.getElementById(randId)?.offsetWidth
-    );
-    const elm = document.querySelector('div[aria-labelledby="' + randId + '"]')
+    setDropdownWidth(document.getElementById(randId)?.offsetWidth);
+    const elm = document.querySelector('div[aria-labelledby="' + randId + '"]');
     if (elm) {
-      elm.style.width = dropdownWidth + "px"
-      elm.style.minWidth = '50px'
+      elm.style.width = dropdownWidth + 'px';
+      elm.style.minWidth = '50px';
     }
-  }, [dropdownWidth, dropdown, randId])
+  }, [dropdownWidth, dropdown, randId]);
 
   return dropdown;
 };

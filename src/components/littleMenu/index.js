@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Dropdowns } from '../dropdown';
 import dashboardImg from 'assets/img/icons/Arrow.svg';
 import salesImg from 'assets/img/icons/Sales.svg';
 import learnImg from 'assets/img/icons/Learn.svg';
 import s from './littleMenu.module.scss';
-import hideBtn from 'assets/img/icons/hideBtn.svg'
+import hideBtn from 'assets/img/icons/hideBtn.svg';
 
 /**
 * @typedef {{
@@ -28,27 +29,64 @@ import hideBtn from 'assets/img/icons/hideBtn.svg'
  */
 
 /**
- * 
- * @param {LittleMenuProps} props 
+ *
+ * @param {LittleMenuProps} props
  * @returns {React.ReactNode}
  */
 
-export const LittleMenu = ({ dashboard, dashboadOnSelect, sales, salesOnSelect, learns, learnsOnSelect }) => {
-    return (
-        <Container>
-            <Row>
-                <Col md={12} lg={12}>
-                    <div className={s.hideBtn}>
-                        <img src={hideBtn} />
-                    </div>
-                    <Dropdowns type={'littleMenu'} items={dashboard} title={'Дашбоарды'} onSelect={dashboadOnSelect} img={dashboardImg} />
-                    <div className={s.LittleMenuLine}>
-                        <span>Cервисы</span><hr />
-                    </div>
-                    <Dropdowns type={'littleMenu'} items={sales} title={'Аналитика продаж'} onSelect={salesOnSelect} img={salesImg} />
-                    <Dropdowns type={'littleMenu'} items={learns} title={'Аналитика обучения'} onSelect={learnsOnSelect} img={learnImg} />
-                </Col>
-            </Row>
-        </Container>
-    )
-}
+export const LittleMenu = ({
+  dashboard,
+  dashboadOnSelect,
+  sales,
+  salesOnSelect,
+  learns,
+  learnsOnSelect
+}) => {
+  return (
+    <Container>
+      <Row>
+        <Col md={12} lg={12}>
+          <div className={s.hideBtn}>
+            <img src={hideBtn} />
+          </div>
+          <Dropdowns
+            type={'littleMenu'}
+            items={dashboard}
+            title={'Дашбоарды'}
+            onSelect={dashboadOnSelect}
+            img={dashboardImg}
+          />
+          <div className={s.LittleMenuLine}>
+            <span>Cервисы</span>
+            <hr />
+          </div>
+          <Dropdowns
+            type={'littleMenu'}
+            items={sales}
+            title={'Аналитика продаж'}
+            onSelect={salesOnSelect}
+            img={salesImg}
+          />
+          <Dropdowns
+            type={'littleMenu'}
+            items={learns}
+            title={'Аналитика обучения'}
+            onSelect={learnsOnSelect}
+            img={learnImg}
+          />
+        </Col>
+      </Row>
+    </Container>
+  );
+};
+const propTypes = {
+  dashboard: PropTypes.any,
+  dashboadOnSelect: PropTypes.any,
+  sales: PropTypes.any,
+  salesOnSelect: PropTypes.any,
+  learns: PropTypes.any,
+  learnsOnSelect: PropTypes.any
+};
+
+// Пример использования:
+LittleMenu.propTypes = propTypes;

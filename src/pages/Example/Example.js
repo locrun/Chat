@@ -50,8 +50,8 @@ export const Example = () => {
 
   const LITTLEMENU = [
     { item: 'Аналитика продаж', href: '#', eventKey: 'sal' },
-    { item: 'Аналитика обучения', eventKey: 'ler' },
-  ]
+    { item: 'Аналитика обучения', eventKey: 'ler' }
+  ];
 
   const [selectValue, setSelectValue] = useState(DROPDOWNITEMS[0].eventKey);
 
@@ -120,7 +120,14 @@ export const Example = () => {
       </div>
       <Container>
         <Row>
-          <Col md={6} lg={4} sm={8} xs={9} className='p-1' style={{ backgroundColor: '#ffffff' }}>
+          <Col
+            md={6}
+            lg={4}
+            sm={8}
+            xs={9}
+            className="p-1"
+            style={{ backgroundColor: '#ffffff' }}
+          >
             <LittleMenu
               dashboard={LITTLEMENU}
               dashboadOnSelect={console.log}

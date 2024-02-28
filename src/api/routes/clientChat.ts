@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { AxiosPromise } from 'axios';
 import { endpoints_client } from 'api/endpoints';
 import Apis from '..';

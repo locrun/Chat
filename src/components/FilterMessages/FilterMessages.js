@@ -11,15 +11,15 @@ export const FilterMessages = () => {
   const DROPDOWNITEMS = [
     {
       item: 'Открытые',
-      eventKey: 'Все категории',
+      eventKey: 'Все категории'
     },
     {
       item: 'Все сообщения',
-      eventKey: 'Все сообщения',
+      eventKey: 'Все сообщения'
     },
     {
       item: 'По умолчанию',
-      eventKey: 'По умолчанию',
+      eventKey: 'По умолчанию'
     }
   ];
   const handleChangeCheckbox = id => {
@@ -55,7 +55,6 @@ export const FilterMessages = () => {
               type={'dropdownBtnCode'}
               items={DROPDOWNITEMS}
               title={'По умолчанию'}
-            //onSelect={setSelectValue}
             />
           </div>
           <div className={classnames(s.select, s.statusSelect)}>
@@ -64,7 +63,6 @@ export const FilterMessages = () => {
               type={'dropdownBtnCode'}
               items={DROPDOWNITEMS}
               title={'Открытые'}
-            //onSelect={setSelectValue}
             />
           </div>
         </div>

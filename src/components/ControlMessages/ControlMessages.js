@@ -7,15 +7,15 @@ export const ControlMessages = () => {
   const DROPDOWNITEMS = [
     {
       item: 'Открытые',
-      eventKey: 'Все категории',
+      eventKey: 'Все категории'
     },
     {
       item: 'Все сообщения',
-      eventKey: 'Все сообщения',
+      eventKey: 'Все сообщения'
     },
     {
       item: 'По умолчанию',
-      eventKey: 'По умолчанию',
+      eventKey: 'По умолчанию'
     }
   ];
 

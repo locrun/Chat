@@ -1,10 +1,13 @@
-const path = require('path');
+import path from 'path';
+
+const __dirname = path.resolve();
+
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackRTLPlugin = require('@automattic/webpack-rtl-plugin');
 const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 
-module.exports = {
+export default {
   mode: 'development',
   entry: {
     theme: './src/assets/scss/theme.scss',
