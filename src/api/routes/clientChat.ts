@@ -1,10 +1,23 @@
-// eslint-disable-next-line no-unused-vars
 import { AxiosPromise } from 'axios';
 import { endpoints_client } from 'api/endpoints';
 import Apis from '..';
+import { AxiosPaginatedResponse, DefaultPaginationParams } from 'types/api';
+import { Chat, CreateMessagePayload, Message, Topic } from 'types/chat';
 
-export const getClientChats = (params: any): AxiosPromise<any> => {
+export const getChatsLists = (
+  params: DefaultPaginationParams
+): AxiosPromise<AxiosPaginatedResponse<Chat[]>> => {
   return Apis.client_api.get(endpoints_client.chats_lists, { params });
+};
+export const getTopicsList = (
+  params?: DefaultPaginationParams
+): AxiosPromise<AxiosPaginatedResponse<Topic>> => {
+  return Apis.client_api.get(endpoints_client.topics_list, { params });
+};
+export const getMessageList = (
+  id: number
+): AxiosPromise<AxiosPaginatedResponse<Message[]>> => {
+  return Apis.client_api.get(endpoints_client.chats_messages(id));
 };
 
 export const createClientChats = (data: any): AxiosPromise<any> => {
@@ -24,10 +37,8 @@ export const markChatMessagesAsReadClient = (
   );
 };
 
-export const getClientChatsMessages = (id: number): AxiosPromise<any> => {
-  return Apis.client_api.get(endpoints_client.chats_messages(id));
-};
-
-export const getTopicsList = (params: any): AxiosPromise<any> => {
-  return Apis.client_api.get(endpoints_client.topics_list, { params });
+export const createNewMessage = (
+  data: CreateMessagePayload
+): AxiosPromise<Message> => {
+  return Apis.client_api.post(endpoints_client.create_message, data);
 };
