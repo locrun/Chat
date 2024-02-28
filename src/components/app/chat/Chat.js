@@ -38,7 +38,8 @@ const ChatTab = () => {
       <Card className="card-chat overflow-hidden">
         <Card.Body as={Flex} className="p-0 h-100">
           <ChatSidebar hideSidebar={hideSidebar} />
-          <ChatContent setHideSidebar={setHideSidebar} />
+          {/* <div><button onClick={() => setHideSidebar(!hideSidebar)}>handle sidebar</button></div> */}
+          <ChatContent setHideSidebar={setHideSidebar} hideSidebar={hideSidebar} />
         </Card.Body>
       </Card>
     </Tab.Container>

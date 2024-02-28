@@ -32,7 +32,7 @@ const ChatThread = ({ thread, index }) => {
             <h6 className="mb-0 chat-contact-title">{user.name}</h6>
             <span className="message-time fs-11">
               {' '}
-              {!!lastMessage && lastMessage.time.day}{' '}
+              {!!lastMessage && lastMessage.time.date}{' '}
             </span>
           </Flex>
           <div className="min-w-0">

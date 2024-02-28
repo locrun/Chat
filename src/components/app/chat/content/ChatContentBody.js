@@ -29,7 +29,7 @@ const ChatContentBody = ({ thread }) => {
       <ThreadInfo thread={thread} isOpenThreadInfo={true} />
       <SimpleBarReact style={{ height: '100%' }}>
         <div className="chat-content-scroll-area">
-          <ChatContentBodyIntro user={user} />
+          {/* <ChatContentBodyIntro user={user} /> */}
           {content.map(({ message, time, senderUserId, status }, index) => (
             <div key={index}>
               {lastDate !== time.date && (
