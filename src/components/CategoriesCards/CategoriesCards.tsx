@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Card } from './Card/Card';
+import { TopicCard } from './TopicCard/TopicCard';
 import { getTopicsList } from 'api/routes/clientChat';
 import s from './CategoriesCards.module.scss';
 import { Topics } from 'shared/types/topics';
@@ -26,7 +26,7 @@ export const CategoriesCards = () => {
   return (
     <div className={s.grid}>
       {isLoading && <span>...идет загрузка</span>}
-      <Card topics={topics} />
+      <TopicCard topics={topics} />
     </div>
   );
 };

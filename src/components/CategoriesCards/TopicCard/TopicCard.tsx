@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import s from './Card.module.scss';
-import { Topics } from 'shared/types/topics';
+import s from './TopicCard.module.scss';
+// import { Topics } from 'shared/types/topics';
 
-interface CardProps {
-  topics: Topics[];
-}
+// interface TopicCardProps {
+//   topics: Topics[];
+// }
 
-export const Card = ({ topics }: CardProps) => {
+export const TopicCard = ({ topics }: any) => {
   return (
     <>
       {topics.map((card: any) => {
@@ -26,17 +26,6 @@ export const Card = ({ topics }: CardProps) => {
                   className={s.text}
                   dangerouslySetInnerHTML={{ __html: card.description }}
                 />
-              )}
-              {card.list && (
-                <ul className={s.list}>
-                  {card.list?.map((list: any, id: any) => {
-                    return (
-                      <li key={id} className={s.listItem}>
-                        {list.title}
-                      </li>
-                    );
-                  })}
-                </ul>
               )}
             </div>
             <Link to={'/student-chat'} className={s.linkButton}>
