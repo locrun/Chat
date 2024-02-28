@@ -2,16 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import s from './TopicCard.module.scss';
-// import { Topics } from 'shared/types/topics';
+import { Topics } from 'types/topics';
 
-// interface TopicCardProps {
-//   topics: Topics[];
-// }
+interface TopicCardProps {
+  topics: Topics[];
+}
 
-export const TopicCard = ({ topics }: any) => {
+export const TopicCard = ({ topics }: TopicCardProps) => {
   return (
     <>
-      {topics.map((card: any) => {
+      {topics.map((card: Topics) => {
         return (
           <div key={card.id} className={s.card}>
             <div>

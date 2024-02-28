@@ -38,7 +38,7 @@ export interface Topic {
   id: number;
   title: string;
   logo: string;
-  description?: string;
+  description: string;
 }
 
 export interface CreateChatResponse {

@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Col, Row, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
 import { ChatContext } from 'context/Context';
 
 const ChatContentHeader = ({ thread, setHideSidebar, hideSidebar }) => {
-  const { getUser, isOpenThreadInfo, setIsOpenThreadInfo } =
-    useContext(ChatContext);
+  const { getUser } = useContext(ChatContext);
   const user = getUser(thread);
 
   return (
@@ -41,7 +40,8 @@ const ChatContentHeader = ({ thread, setHideSidebar, hideSidebar }) => {
 
 ChatContentHeader.propTypes = {
   thread: PropTypes.object.isRequired,
-  setHideSidebar: PropTypes.func.isRequired
+  setHideSidebar: PropTypes.func.isRequired,
+  hideSidebar: PropTypes.boolean
 };
 
 export default ChatContentHeader;

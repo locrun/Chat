@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import ChatContentBodyIntro from './ChatContentBodyIntro';
+
 import Message from './Message';
 import SimpleBarReact from 'simplebar-react';
 import ThreadInfo from './ThreadInfo';
@@ -10,9 +10,9 @@ const ChatContentBody = ({ thread }) => {
   let lastDate = null;
   const messagesEndRef = useRef();
 
-  const { getUser, messages, scrollToBottom, setScrollToBottom } =
+  const { messages, scrollToBottom, setScrollToBottom } =
     useContext(ChatContext);
-  const user = getUser(thread);
+
   const { content } = messages.find(({ id }) => id === thread.messagesId);
 
   useEffect(() => {

@@ -11,7 +11,11 @@ const ChatContent = ({ setHideSidebar, hideSidebar }) => {
     <Tab.Content className="card-chat-content">
       {threads.map((thread, index) => (
         <Tab.Pane key={index} eventKey={index} className="card-chat-pane">
-          <ChatContentHeader thread={thread} setHideSidebar={setHideSidebar} hideSidebar={hideSidebar} />
+          <ChatContentHeader
+            thread={thread}
+            setHideSidebar={setHideSidebar}
+            hideSidebar={hideSidebar}
+          />
           <ChatContentBody thread={thread} />
         </Tab.Pane>
       ))}
@@ -21,7 +25,8 @@ const ChatContent = ({ setHideSidebar, hideSidebar }) => {
 };
 
 ChatContent.propTypes = {
-  setHideSidebar: PropTypes.func.isRequired
+  setHideSidebar: PropTypes.func.isRequired,
+  hideSidebar: PropTypes.boolean
 };
 
 export default ChatContent;
