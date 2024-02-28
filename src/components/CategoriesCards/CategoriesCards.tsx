@@ -13,7 +13,7 @@ export const CategoriesCards = () => {
     const fetchTopicsList = async () => {
       setIsLoading(true);
 
-      const { results: data } = (await getTopicsList()).data;
+      const { results: data } = (await getTopicsList({ topic: 0 })).data;
 
       if (data) {
         setTopics(data);

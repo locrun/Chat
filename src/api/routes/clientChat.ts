@@ -28,6 +28,6 @@ export const getClientChatsMessages = (id: number): AxiosPromise<any> => {
   return Apis.client_api.get(endpoints_client.chats_messages(id));
 };
 
-export const getClientTopics = (params: any): AxiosPromise<any> => {
+export const getTopicsList = (params: any): AxiosPromise<any> => {
   return Apis.client_api.get(endpoints_client.topics_list, { params });
 };
