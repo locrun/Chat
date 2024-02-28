@@ -7,7 +7,7 @@ import CheckBoxGroup from '../../components/CheckBoxGroup/CheckBoxGroup';
 import RadioGroup from 'components/RadioGroup/RadioGroup';
 import ProfileUserCard from 'components/ProfileUserCard/ProfileUserCard';
 import MessageStarting from 'components/message-starting/MessageStarting';
-import { ServiceCards } from 'components/ServiceCards/ServiceCards';
+import { CategoriesCards } from 'components/CategoriesCards/CategoriesCards';
 import { checkbox } from 'data/checkboxses';
 import Search from 'components/doc-components/Search';
 import { Dropdowns } from 'components/dropdown';
@@ -86,7 +86,7 @@ export const Example = () => {
       <div style={{ maxWidth: '285px' }}>
         <ProfileUserCard />
       </div>
-      <ServiceCards />
+      <CategoriesCards />
       <div style={{ width: '854px' }}>
         <Chat />
       </div>

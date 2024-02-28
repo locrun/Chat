@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
+
 import { Toolbar } from 'components/Toolbar/Toolbar';
-import { ServiceCards } from 'components/ServiceCards/ServiceCards';
+import { CategoriesCards } from 'components/CategoriesCards/CategoriesCards';
 import Search from 'components/doc-components/Search';
 import { getClientTopics } from 'api/routes/clientChat';
 import s from './NewChat.module.scss';
@@ -20,7 +21,7 @@ const NewChat = () => {
       <Toolbar />
       <div className={s.flexCol}>
         <Search />
-        <ServiceCards />
+        <CategoriesCards />
       </div>
     </div>
   );

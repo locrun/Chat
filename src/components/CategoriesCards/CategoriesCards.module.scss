@@ -1,0 +1,15 @@
+.grid {
+  max-width: 1146px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 10px;
+  padding-bottom: 130px;
+  @media (min-width: 768px) {
+    gap: 24px;
+    padding-bottom: 130px;
+  }
+  @media (min-width: 1450px) {
+    gap: 30px;
+    padding-bottom: 146px;
+  }
+}

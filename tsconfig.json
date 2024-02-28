@@ -1,59 +1,46 @@
 {
-
   "compilerOptions": {
+    "target": "es5",
 
-    "target": "es5", 
+    "lib": ["dom", "dom.iterable", "esnext"],
 
-    "lib": [
+    "allowJs": true,
 
-      "dom",
+    "skipLibCheck": true,
 
-      "dom.iterable",
+    "allowSyntheticDefaultImports": true,
 
-      "esnext"
+    "strict": true,
 
-    ], 
+    "forceConsistentCasingInFileNames": true,
 
-    "allowJs": true, 
+    "module": "es6",
 
-    "skipLibCheck": true, 
+    "moduleResolution": "node",
 
-    "allowSyntheticDefaultImports": true, 
+    "isolatedModules": true,
 
-    "strict": true, 
-
-    "forceConsistentCasingInFileNames": true, 
-
-    "module": "es6", 
-
-    "moduleResolution": "node", 
-
-    "isolatedModules": true, 
-
-    "resolveJsonModule": true, 
+    "resolveJsonModule": true,
 
     "noEmit": true,
 
-    "jsx": "react", 
+    "jsx": "react",
 
     "sourceMap": true,
 
-    "declaration": true, 
+    "declaration": true,
 
-    "noUnusedLocals": true, 
+    "noUnusedLocals": true,
 
     "noUnusedParameters": true,
 
-    "incremental": true, 
+    "incremental": true,
 
-    "noFallthroughCasesInSwitch": true, 
-    "baseUrl": "src",
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": "src"
   },
 
-  "include": [
-    "src/**/*"
-  ],
+  "include": ["src/**/*", "./declaration.d.ts"],
 
   "exclude": ["node_modules", "build"]
-
 }
