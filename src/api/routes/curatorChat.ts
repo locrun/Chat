@@ -1,87 +1,60 @@
 import { AxiosPromise } from 'axios';
 import { endpoints_curator } from 'api/endpoints';
 import Apis from '..';
-import {
-  ChatInfo,
-  ChatListResponse,
-  CreateMessagePayload,
-  CreateMessage,
-  CuratorChatPayloadParams,
-  CuratorTopicsResponse,
-  OrderCreationPayload,
-  OrderCreationResponse,
-  UpdateMessagesParams,
-  UpdateMessagesResponse,
-  UpdateTopic,
-  Message,
-  Note
-} from 'shared/types/curator';
 
-export const getChats = (
-  params: CuratorChatPayloadParams
-): AxiosPromise<ChatListResponse> => {
+export const getCuratorChats = (params: any): AxiosPromise<any> => {
   return Apis.curator_api.get(endpoints_curator.chats_lists, { params });
 };
 
-export const createChats = (
-  data: OrderCreationPayload
-): AxiosPromise<OrderCreationResponse> => {
+export const createCuratorChats = (data: any): AxiosPromise<any> => {
   return Apis.curator_api.post(endpoints_curator.create_chats, data);
 };
 
-export const updateChats = (
+export const updateCuratorChats = (
   id: number,
-  data: UpdateTopic
-): AxiosPromise<UpdateTopic> => {
-  return Apis.curator_api.put(endpoints_curator.update_chats(id), data);
+  data: any
+): AxiosPromise<any> => {
+  return Apis.curator_api.post(endpoints_curator.update_chats(id), data);
 };
 
-export const closeChats = (id: number): AxiosPromise<any> => {
+export const closeCuratorChats = (id: number): AxiosPromise<any> => {
   return Apis.curator_api.post(endpoints_curator.close_chat(id));
 };
 
-export const getChatInfoStatistics = (): AxiosPromise<ChatInfo> => {
-  return Apis.curator_api.get(endpoints_curator.chats_info);
+export const getChatInfoStatistics = (params: any): AxiosPromise<any> => {
+  return Apis.curator_api.get(endpoints_curator.chats_info, { params });
 };
 
-export const createCuratorMessage = (
-  data: CreateMessagePayload
-): AxiosPromise<CreateMessage> => {
+export const createCuratorMessage = (data: any): AxiosPromise<any> => {
   return Apis.curator_api.post(endpoints_curator.create_message, data);
 };
 
-export const updateMessage = (
-  id: number,
-  params: UpdateMessagesParams
-): AxiosPromise<UpdateMessagesResponse> => {
+export const updateMessage = (id: number, params: any): AxiosPromise<any> => {
   return Apis.curator_api.put(endpoints_curator.update_message(id), params);
 };
-export const deleteMessage = (id: number): AxiosPromise => {
+export const deleteMessage = (id: number): AxiosPromise<any> => {
   return Apis.curator_api.put(endpoints_curator.delete_message(id));
 };
 
-export const getCuratorTopics = (params: {
-  limit: number;
-  offset: number;
-}): AxiosPromise<CuratorTopicsResponse> => {
+export const getCuratorTopics = (params: any): AxiosPromise<any> => {
   return Apis.curator_api.get(endpoints_curator.topics_list, { params });
 };
 
 export const markChatMessagesAsReadCurator = (
   chat_id: number,
   message_id: number
-): AxiosPromise => {
+): AxiosPromise<any> => {
   return Apis.curator_api.get(
     endpoints_curator.mark_as_read_curator(chat_id, message_id)
   );
 };
 
-export const getMessage = (id: number): AxiosPromise<Message> => {
+export const getCuratorChatsMessages = (id: number): AxiosPromise<any> => {
   return Apis.curator_api.get(endpoints_curator.chats_messages(id));
 };
-export const getChatNote = (id: number): AxiosPromise<Note> => {
+export const getChatNote = (id: number): AxiosPromise<any> => {
   return Apis.curator_api.get(endpoints_curator.get_note(id));
 };
-export const updateChatNote = (id: number, data: Note): AxiosPromise<Note> => {
+export const updateChatNote = (id: number, data: any): AxiosPromise<any> => {
   return Apis.curator_api.put(endpoints_curator.update_note(id), data);
 };
