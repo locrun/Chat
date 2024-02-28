@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Chat from 'components/app/chat/Chat';
 import CheckBoxGroup from '../../components/CheckBoxGroup/CheckBoxGroup';
@@ -10,13 +9,23 @@ import MessageStarting from 'components/message-starting/MessageStarting';
 import { ServiceCards } from 'components/ServiceCards/ServiceCards';
 import { checkbox } from 'data/checkboxses';
 import Search from 'components/doc-components/Search';
-import { Dropdowns } from 'components/dropdown';
-import { LittleMenu } from 'components/littleMenu';
+
+import { updateChats } from 'api/routes/curatorChat';
 
 export const Example = () => {
+  useEffect(() => {
+    const fetch = async () => {
+      const data = await updateChats(2, {
+        topic: 0
+      });
+      console.log(data);
+    };
+    fetch();
+  }, []);
+
   const [checkboxses, setCheckboxes] = useState(checkbox);
 
-  const handleChangeCheckbox = id => {
+  const handleChangeCheckbox = (id: number) => {
     const updatedCheckboxes = checkboxses.map(checkbox => {
       if (checkbox.id === id) {
         return { ...checkbox, isChecked: !checkbox.isChecked };
@@ -26,36 +35,9 @@ export const Example = () => {
     });
     setCheckboxes(updatedCheckboxes);
   };
-  const handleChangeRadio = selected => {
+  const handleChangeRadio = (selected: any) => {
     console.log(selected.value);
   };
-
-  const DROPDOWNITEMS = [
-    {
-      item: 'Все категории',
-      eventKey: 'Все категории',
-      quantity: 0
-    },
-    {
-      item: 'Все сообщения',
-      eventKey: 'Все сообщения',
-      quantity: 0
-    },
-    {
-      item: 'По умолчанию',
-      eventKey: 'По умолчанию',
-      quantity: 0
-    }
-  ];
-
-  const LITTLEMENU = [
-    { item: 'Аналитика продаж', href: '#', eventKey: 'sal' },
-    { item: 'Аналитика обучения', eventKey: 'ler' },
-  ]
-
-  const [selectValue, setSelectValue] = useState(DROPDOWNITEMS[0].eventKey);
-
-  // const [month, setMonth] = React.useState(0);
 
   return (
     <div
@@ -104,34 +86,6 @@ export const Example = () => {
       <div style={{ width: '100%' }}>
         <Search />
       </div>
-      <div style={{ width: '800px', display: 'flex', gap: '10px' }}>
-        <Dropdowns
-          type={'dropdownBtnCode'}
-          items={DROPDOWNITEMS}
-          title="Chat theme"
-          onSelect={console.log}
-        />
-        <Dropdowns
-          type={'dropdownBtnCode'}
-          items={DROPDOWNITEMS}
-          title={selectValue}
-          onSelect={setSelectValue}
-        />
-      </div>
-      <Container>
-        <Row>
-          <Col md={6} lg={4} sm={8} xs={9} className='p-1' style={{ backgroundColor: '#ffffff' }}>
-            <LittleMenu
-              dashboard={LITTLEMENU}
-              dashboadOnSelect={console.log}
-              sales={LITTLEMENU}
-              salesOnSelect={console.log}
-              learns={LITTLEMENU}
-              learnsOnSelect={console.log}
-            />
-          </Col>
-        </Row>
-      </Container>
     </div>
   );
 };

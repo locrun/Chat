@@ -2,17 +2,23 @@ import axios from 'axios';
 
 export const BASE_URL = 'https://lms-api.mdev.uz/api/v1';
 
-const chat_api = axios.create({
-  baseURL: `${BASE_URL}/client`,
-  headers: {
-    Authorization: 'client_' + 3,
-    Accept: 'application/json',
-    'Content-Type': 'application/json'
-  },
-  withCredentials: true
-});
+const createApiInstance = (role: string) => {
+  return axios.create({
+    baseURL: `${BASE_URL}/${role}`,
+    headers: {
+      Authorization: `${role}_` + 2,
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    withCredentials: true
+  });
+};
+
+const client_api = createApiInstance('client');
+const curator_api = createApiInstance('curator');
 
 const Apis = {
-  chat_api
+  client_api,
+  curator_api
 };
 export default Apis;

@@ -1,29 +1,32 @@
 import { AxiosPromise } from 'axios';
-import { endpoints_chat } from 'api/endpoints';
+import { endpoints_client } from 'api/endpoints';
 import Apis from '..';
 
-export const getChatsLists = (params: any): AxiosPromise<any> => {
-  return Apis.chat_api.get(endpoints_chat.chats_lists, { params });
-};
-export const getTopicsList = (params: any): AxiosPromise<any> => {
-  return Apis.chat_api.get(endpoints_chat.topics_list, { params });
-};
-export const getMessageList = (id: number): AxiosPromise<any> => {
-  return Apis.chat_api.get(endpoints_chat.messages_list(id));
+export const getClientChats = (params: any): AxiosPromise<any> => {
+  return Apis.client_api.get(endpoints_client.chats_lists, { params });
 };
 
-export const getListReadMessages = (
+export const createClientChats = (data: any): AxiosPromise<any> => {
+  return Apis.client_api.post(endpoints_client.create_chats, data);
+};
+
+export const createClientMessage = (data: any): AxiosPromise<any> => {
+  return Apis.client_api.post(endpoints_client.create_message, data);
+};
+
+export const markChatMessagesAsReadClient = (
   chat_id: number,
   message_id: number
 ): AxiosPromise<any> => {
-  return Apis.chat_api.get(
-    endpoints_chat.read_messages_list(chat_id, message_id)
+  return Apis.client_api.get(
+    endpoints_client.mark_as_read_client(chat_id, message_id)
   );
 };
 
-export const selectTopicChat = (data: any): AxiosPromise<any> => {
-  return Apis.chat_api.post(endpoints_chat.select_chat_topic, data);
+export const getClientChatsMessages = (id: number): AxiosPromise<any> => {
+  return Apis.client_api.get(endpoints_client.chats_messages(id));
 };
-export const createNewMessage = (data: any): AxiosPromise<any> => {
-  return Apis.chat_api.post(endpoints_chat.create_new_message, data);
+
+export const getClientTopics = (params: any): AxiosPromise<any> => {
+  return Apis.client_api.get(endpoints_client.topics_list, { params });
 };
