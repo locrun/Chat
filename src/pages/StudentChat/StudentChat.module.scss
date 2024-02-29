@@ -4,8 +4,8 @@
   margin: 0 auto;
   max-width: 1180px;
   height: 100vh;
-  margin-bottom: 111px;
   padding: 0 15px;
+  padding-bottom: 111px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -14,7 +14,10 @@
     margin-top: 95px;
   }
 }
-
+.chatWrapper {
+  width: 100%;
+  height: calc(100vh - 111px);
+}
 .linkButton {
   min-width: 183px;
   height: 47px;

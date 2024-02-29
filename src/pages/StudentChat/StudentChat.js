@@ -10,7 +10,9 @@ export const StudentChat = () => {
       <div className={s.search}>
         <Search />
       </div>
-      <Chat />
+      <div className={s.chatWrapper}>
+        <Chat />
+      </div>
       <Link to={'/new-chat'} className={s.linkButton}>
         Новый разговор
       </Link>
