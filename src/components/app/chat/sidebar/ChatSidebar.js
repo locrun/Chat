@@ -9,6 +9,7 @@ import { ChatContext } from 'context/Context';
 
 const ChatSidebar = ({ hideSidebar }) => {
   const { threads } = useContext(ChatContext);
+
   return (
     <div className={classNames('chat-sidebar', { 'start-0': hideSidebar })}>
       <div className="contacts-list">

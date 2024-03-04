@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import s from './RadioButton.module.scss';
 
-const RadioButton = ({ value, checked, handleChange, name }) => {
+const RadioButton = ({ value, handleChange, name }) => {
   return (
     <label className={s.label}>
       <input
@@ -13,7 +13,6 @@ const RadioButton = ({ value, checked, handleChange, name }) => {
         onChange={e => {
           handleChange(e);
         }}
-        checked={checked}
       />
       <span className={s.customRadio}></span>
       <span className={s.text}>Все</span>

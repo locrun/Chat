@@ -1,4 +1,9 @@
-@import '../../../assets/scss/theme/colors';
+@import '../../assets/scss/theme/colors';
+
+.form {
+  height: 36px;
+  margin-right: 6px;
+}
 
 .label {
   min-width: 75px;

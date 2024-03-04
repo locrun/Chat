@@ -6,7 +6,7 @@ const createApiInstance = (role: string) => {
   return axios.create({
     baseURL: `${BASE_URL}/${role}`,
     headers: {
-      Authorization: `${role}_` + 3,
+      Authorization: `${role}_` + 2,
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },

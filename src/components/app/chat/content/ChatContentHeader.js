@@ -41,7 +41,7 @@ const ChatContentHeader = ({ thread, setHideSidebar, hideSidebar }) => {
 ChatContentHeader.propTypes = {
   thread: PropTypes.object.isRequired,
   setHideSidebar: PropTypes.func.isRequired,
-  hideSidebar: PropTypes.boolean
+  hideSidebar: PropTypes.bool
 };
 
 export default ChatContentHeader;

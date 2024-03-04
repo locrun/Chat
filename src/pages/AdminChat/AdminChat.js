@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Chat from 'components/app/chat/Chat';
-import RadioGroup from '../../components/RadioGroup/RadioGroup';
+import RadioButton from 'components/RadioButton/RadioButton';
 import CheckBoxGroup from '../../components/CheckBoxGroup/CheckBoxGroup';
 import { Dropdowns } from 'components/dropdown';
 import { checkbox } from 'data/checkboxses';
@@ -34,8 +34,8 @@ export const AdminChat = () => {
     });
     setCheckboxes(updatedCheckboxes);
   };
-  const handleChangeRadio = selected => {
-    console.log(selected.value);
+  const handleChangeRadio = e => {
+    console.log(e.target.value);
   };
   return (
     <div className={s.container}>
@@ -71,7 +71,7 @@ export const AdminChat = () => {
           </div>
         </div>
         <div className={s.flex}>
-          <RadioGroup
+          <RadioButton
             button={undefined}
             selected={undefined}
             handleChange={handleChangeRadio}

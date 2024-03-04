@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Chat from 'components/app/chat/Chat';
 import CheckBoxGroup from '../../components/CheckBoxGroup/CheckBoxGroup';
-import RadioGroup from 'components/RadioGroup/RadioGroup';
+
 import ProfileUserCard from 'components/ProfileUserCard/ProfileUserCard';
 import MessageStarting from 'components/message-starting/MessageStarting';
 import { CategoriesCards } from 'components/CategoriesCards/CategoriesCards';
@@ -25,9 +25,6 @@ export const Example = () => {
       }
     });
     setCheckboxes(updatedCheckboxes);
-  };
-  const handleChangeRadio = selected => {
-    console.log(selected.value);
   };
 
   const DROPDOWNITEMS = [
@@ -94,12 +91,6 @@ export const Example = () => {
       <CheckBoxGroup
         checkboxes={checkboxses}
         handleChange={handleChangeCheckbox}
-      />
-      <RadioGroup
-        button={undefined}
-        selected={undefined}
-        handleChange={handleChangeRadio}
-        name="Все"
       />
       <div style={{ width: '100%' }}>
         <Search />

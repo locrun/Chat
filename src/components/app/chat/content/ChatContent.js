@@ -26,7 +26,7 @@ const ChatContent = ({ setHideSidebar, hideSidebar }) => {
 
 ChatContent.propTypes = {
   setHideSidebar: PropTypes.func.isRequired,
-  hideSidebar: PropTypes.boolean
+  hideSidebar: PropTypes.bool
 };
 
 export default ChatContent;

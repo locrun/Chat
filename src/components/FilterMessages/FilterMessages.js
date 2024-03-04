@@ -1,79 +1,116 @@
-import React, { useState } from 'react';
-import RadioGroup from '../../components/RadioGroup/RadioGroup';
+import React from 'react';
+import PropTypes from 'prop-types';
+import Form from 'react-bootstrap/Form';
+import RadioButton from 'components/RadioButton/RadioButton';
 import CheckBoxGroup from '../../components/CheckBoxGroup/CheckBoxGroup';
-import { Dropdowns } from 'components/dropdown';
-import { checkbox } from 'data/checkboxses';
-import classnames from 'classnames';
 import s from './FilterMessages.module.scss';
 
-export const FilterMessages = () => {
-  const [checkboxses, setCheckboxes] = useState(checkbox);
-  const DROPDOWNITEMS = [
-    {
-      item: 'Открытые',
-      eventKey: 'Все категории'
-    },
+export const FilterMessages = ({
+  handleChangeRadio,
+  handleChangeCheckbox,
+  checkboxses,
+  handleTypeMessagesChange,
+  handleSortingMessagesChange,
+  handleStatusMessagesChange
+}) => {
+  const typeMessagesItems = [
     {
       item: 'Все сообщения',
-      eventKey: 'Все сообщения'
+      value: ''
     },
     {
-      item: 'По умолчанию',
-      eventKey: 'По умолчанию'
+      item: 'Обращения',
+      value: 'topic'
+    },
+    {
+      item: 'Заказы',
+      value: 'order'
     }
   ];
-  const handleChangeCheckbox = id => {
-    const updatedCheckboxes = checkboxses.map(checkbox => {
-      if (checkbox.id === id) {
-        return { ...checkbox, isChecked: !checkbox.isChecked };
-      } else {
-        return checkbox;
-      }
-    });
-    setCheckboxes(updatedCheckboxes);
-  };
-  const handleChangeRadio = selected => {
-    console.log(selected.value);
-  };
+  const sortingMessaggesItems = [
+    {
+      item: 'Старые',
+      value: '-created_at'
+    },
+    {
+      item: 'Новые',
+      value: 'created_at'
+    }
+  ];
+  const statusMessaggesItems = [
+    {
+      item: 'Новые',
+      value: 'new'
+    },
+    {
+      item: 'В процессе',
+      value: 'in_progress'
+    },
+    {
+      item: 'Спам',
+      value: 'spam'
+    },
+    {
+      item: 'Закрытые',
+      value: 'closed'
+    }
+  ];
+
   return (
     <div className={s.controlsWrapper}>
       <div className={s.selectGroup}>
-        <div className={classnames(s.select, s.typesMessagesSelect)}>
+        <div className={s.typesMessagesSelectWrapper}>
           <span className={s.label}>Типы сообщений</span>
-          <Dropdowns
-            type={'dropdownBtnCode'}
-            items={DROPDOWNITEMS}
-            title="Все сообщения"
-            onSelect={console.log}
-          />
+          <Form.Select
+            className={s.select}
+            onChange={e => handleTypeMessagesChange(e)}
+          >
+            {typeMessagesItems.map(item => {
+              return (
+                <option key={item.value} value={item.value}>
+                  {item.item}
+                </option>
+              );
+            })}
+          </Form.Select>
         </div>
 
         <div className={s.flex}>
-          <div className={classnames(s.select, s.dateSelect)}>
+          <div className={s.sortingSelectWrapper}>
             <span className={s.label}>Дата</span>
-            <Dropdowns
-              type={'dropdownBtnCode'}
-              items={DROPDOWNITEMS}
-              title={'По умолчанию'}
-            />
+            <Form.Select
+              className={s.select}
+              onChange={e => handleSortingMessagesChange(e)}
+            >
+              <option className={s.default}>По умолчанию</option>
+              {sortingMessaggesItems.map(item => {
+                return (
+                  <option key={item.value} value={item.value}>
+                    {item.item}
+                  </option>
+                );
+              })}
+            </Form.Select>
           </div>
-          <div className={classnames(s.select, s.statusSelect)}>
+          <div className={s.statusSelectWrapper}>
             <span className={s.label}>Статус</span>
-            <Dropdowns
-              type={'dropdownBtnCode'}
-              items={DROPDOWNITEMS}
-              title={'Открытые'}
-            />
+            <Form.Select
+              className={s.select}
+              onChange={e => handleStatusMessagesChange(e)}
+            >
+              {statusMessaggesItems.map(item => {
+                return (
+                  <option key={item.value} value={item.value}>
+                    {item.item}
+                  </option>
+                );
+              })}
+            </Form.Select>
           </div>
         </div>
       </div>
       <div className={s.flex}>
-        <RadioGroup
-          button={undefined}
-          selected={undefined}
-          handleChange={handleChangeRadio}
-          name="Все"
-        />
+        <RadioButton handleChange={handleChangeRadio} name="Все" value="all" />
         <CheckBoxGroup
           checkboxes={checkboxses}
           handleChange={handleChangeCheckbox}
@@ -81,4 +118,12 @@ export const FilterMessages = () => {
       </div>
     </div>
   );
+};
+FilterMessages.propTypes = {
+  checkboxses: PropTypes.any,
+  handleChangeRadio: PropTypes.func.isRequired,
+  handleChangeCheckbox: PropTypes.func.isRequired,
+  handleTypeMessagesChange: PropTypes.func.isRequired,
+  handleSortingMessagesChange: PropTypes.func.isRequired,
+  handleStatusMessagesChange: PropTypes.func.isRequired
 };

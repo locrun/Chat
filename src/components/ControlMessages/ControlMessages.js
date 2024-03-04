@@ -1,45 +1,60 @@
-import React from 'react';
-import { Dropdowns } from 'components/dropdown';
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+import { TopicsContext } from 'context/Context';
+import Form from 'react-bootstrap/Form';
 import classnames from 'classnames';
 import s from './ControlMessages.module.scss';
+import TopicsProvider from 'components/app/topics/TopicsProvider';
 
-export const ControlMessages = () => {
-  const DROPDOWNITEMS = [
+const Controls = ({ handleChangeTopicType, handleChangeRedirection }) => {
+  const redirectListItems = [
     {
-      item: 'Открытые',
-      eventKey: 'Все категории'
+      item: 'В корзину',
+      value: 'trash'
     },
     {
-      item: 'Все сообщения',
-      eventKey: 'Все сообщения'
-    },
-    {
-      item: 'По умолчанию',
-      eventKey: 'По умолчанию'
+      item: 'В спам',
+      value: 'spam'
     }
   ];
+
+  const { topics } = useContext(TopicsContext);
 
   return (
     <div className={s.container}>
       <div className={s.controlsWrapper}>
         <div className={s.selectGroup}>
-          <div className={classnames(s.select, s.appealsSelect)}>
+          <div className={s.topicsSelect}>
             <span className={s.label}>Обращения</span>
-            <Dropdowns
-              type={'dropdownBtnCode'}
-              items={DROPDOWNITEMS}
-              title="Вопросы по работе в тройках"
-              onSelect={console.log}
-            />
+            <Form.Select
+              className={s.select}
+              onChange={e => handleChangeTopicType && handleChangeTopicType(e)}
+            >
+              {topics.map(item => {
+                return (
+                  <option key={item.value} value={item.value}>
+                    {item.item}
+                  </option>
+                );
+              })}
+            </Form.Select>
           </div>
-          <div className={classnames(s.select, s.spamSelect)}>
+          <div className={s.redirectSelect}>
             <span className={s.label}>Спам</span>
-            <Dropdowns
-              type={'dropdownBtnCode'}
-              items={DROPDOWNITEMS}
-              title={'Переадресовать в'}
-              onSelect={console.log}
-            />
+            <Form.Select
+              className={s.select}
+              onChange={e =>
+                handleChangeTopicType && handleChangeRedirection(e)
+              }
+            >
+              {redirectListItems.map(item => {
+                return (
+                  <option key={item.value} value={item.value}>
+                    {item.item}
+                  </option>
+                );
+              })}
+            </Form.Select>
           </div>
         </div>
         <div className={s.buttons}>
@@ -60,3 +75,17 @@ export const ControlMessages = () => {
     </div>
   );
 };
+
+Controls.propTypes = {
+  handleChangeTopicType: PropTypes.func.isRequired,
+  handleChangeRedirection: PropTypes.func.isRequired
+};
+
+const ControlMessages = () => {
+  return (
+    <TopicsProvider>
+      <Controls />
+    </TopicsProvider>
+  );
+};
+export default ControlMessages;

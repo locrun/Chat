@@ -7,6 +7,8 @@ export const EmailContext = createContext({ emails: [] });
 
 export const ProductContext = createContext({ products: [] });
 
+export const TopicsContext = createContext({ topics: [] });
+
 export const CourseContext = createContext({ courses: [], primaryCourses: [] });
 
 export const FeedContext = createContext({ feeds: [] });
