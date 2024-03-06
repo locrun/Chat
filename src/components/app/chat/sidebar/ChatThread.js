@@ -9,17 +9,20 @@ import ChatSidebarDropdownAction from './ChatSidebarDropdownAction';
 import { ChatContext } from 'context/Context';
 
 const ChatThread = ({ thread, index }) => {
-  const { getUser, messages } = useContext(ChatContext);
-  const user = getUser(thread);
+  const { messages } = useContext(ChatContext);
+
   const message = messages.find(({ id }) => id === thread.messagesId);
   const lastMessage = message?.content[message.content.length - 1];
+
+  //console.log(thread.status);
 
   return (
     <Nav.Link
       eventKey={index}
       className={classNames(`chat-contact hover-actions-trigger p-3`, {
         'unread-message': !thread.read,
-        'read-message': thread.read
+        'read-message': thread.read,
+        'delete-message': thread.status === 'closed'
       })}
     >
       <div className="d-md-none d-lg-block">
@@ -27,7 +30,7 @@ const ChatThread = ({ thread, index }) => {
       </div>
       <Flex justifyContent="center">
         <Avatar
-          className={user.status}
+          className={thread.status}
           src={'/static/media/4.482e0311a04c21d39072.jpg'}
           size="xl"
         />

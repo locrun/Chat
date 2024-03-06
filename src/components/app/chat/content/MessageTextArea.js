@@ -98,6 +98,7 @@ const MessageTextArea = () => {
       <TextareaAutosize
         minRows={1}
         maxRows={6}
+        disabled={currentThread?.status === 'closed'}
         value={message}
         placeholder="Написать сообщение..."
         onChange={({ target }) => setMessage(target.value)}

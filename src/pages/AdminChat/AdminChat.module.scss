@@ -3,10 +3,10 @@
 .container {
   margin: 0 auto;
   max-width: 1180px;
-  height: 100vh;
+  height: 100%;
   padding: 0 15px;
-  padding-top: 111px;
-  padding-bottom: 150px;
+  padding-top: 80px;
+  padding-bottom: 120px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -18,7 +18,7 @@
 
 .chatWrapper {
   width: 100%;
-  height: calc(100vh - 160px);
+  height: calc(100vh - 200px);
 }
 
 .controlsWrapper {

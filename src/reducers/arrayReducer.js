@@ -6,6 +6,8 @@ export const arrayReducer = (state, action) => {
   const { type, id, payload, sortBy, order, isAddToStart, isUpdatedStart } =
     action;
   switch (type) {
+    case 'SET_DIALOGS':
+      return payload;
     case 'ADD':
       if (!payload) {
         return state;

@@ -191,7 +191,7 @@ theme/
       ├── routes/
       ├── App.js
       ├── config.js
-      ├── index.js
+      ├── index.tsx
       └── Main.js
 `}
           </pre>

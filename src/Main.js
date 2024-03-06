@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import AppContext from 'context/Context';
+import ChatProvider from 'components/app/chat/ChatProvider';
+import TopicsProvider from 'components/app/topics/TopicsProvider';
 import { settings } from './config';
 import { getColor, getItemFromStore } from 'helpers/utils';
 import { configReducer } from './reducers/configReducer';
@@ -94,7 +96,9 @@ const Main = props => {
     <AppContext.Provider
       value={{ config, setConfig, configDispatch, changeTheme }}
     >
-      {props.children}
+      <ChatProvider>
+        <TopicsProvider>{props.children}</TopicsProvider>
+      </ChatProvider>
     </AppContext.Provider>
   );
 };

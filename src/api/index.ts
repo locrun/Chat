@@ -3,10 +3,11 @@ import axios from 'axios';
 export const BASE_URL = 'https://lms-api.mdev.uz/api/v1';
 
 const createApiInstance = (role: string) => {
+  const roleNumber = role === 'client' ? 3 : 2;
   return axios.create({
     baseURL: `${BASE_URL}/${role}`,
     headers: {
-      Authorization: `${role}_` + 2,
+      Authorization: `${role}_` + roleNumber,
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },

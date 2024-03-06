@@ -5,7 +5,7 @@ import * as ReactBootstrap from 'react-bootstrap';
 import { Button, Row, Col, Form } from 'react-bootstrap';
 import { Dropdowns } from 'components/dropdown';
 import ProfileUserCard from 'components/ProfileUserCard/ProfileUserCard';
-import { ServiceCards } from 'components/CategoriesCards/CategoriesCards';
+import { ServiceCards } from 'components/TopicList/TopicList';
 import MessageStarting from '../../../message-starting/MessageStarting';
 import { LittleMenu } from 'components/littleMenu';
 

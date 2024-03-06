@@ -1,18 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ChangeEvent } from 'react';
 import Form from 'react-bootstrap/Form';
 import RadioButton from 'components/RadioButton/RadioButton';
-import CheckBoxGroup from '../../components/CheckBoxGroup/CheckBoxGroup';
+import CheckBoxGroup from '../CheckBoxGroup/CheckBoxGroup';
+import { CheckBoxData } from 'data/checkboxData';
 import s from './FilterMessages.module.scss';
 
+interface FilterMessagesProps {
+  isChecked: boolean;
+  checkboxList: CheckBoxData[];
+  handleChangeRadio: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleChangeCheckbox: (id: number) => void;
+  handleTypeMessagesChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  handleSortingMessagesChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  handleStatusMessagesChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+}
+
 export const FilterMessages = ({
+  isChecked,
+  checkboxList,
   handleChangeRadio,
   handleChangeCheckbox,
-  checkboxses,
   handleTypeMessagesChange,
   handleSortingMessagesChange,
   handleStatusMessagesChange
-}) => {
+}: FilterMessagesProps) => {
   const typeMessagesItems = [
     {
       item: 'Все сообщения',
@@ -38,6 +49,10 @@ export const FilterMessages = ({
     }
   ];
   const statusMessaggesItems = [
+    {
+      item: 'Открытые',
+      value: 'open'
+    },
     {
       item: 'Новые',
       value: 'new'
@@ -110,20 +125,17 @@ export const FilterMessages = ({
         </div>
       </div>
       <div className={s.flex}>
-        <RadioButton handleChange={handleChangeRadio} name="Все" value="all" />
+        <RadioButton
+          checked={isChecked}
+          handleChange={handleChangeRadio}
+          name="Все"
+          value="all"
+        />
         <CheckBoxGroup
-          checkboxes={checkboxses}
+          checkboxList={checkboxList}
           handleChange={handleChangeCheckbox}
         />
       </div>
     </div>
   );
-};
-FilterMessages.propTypes = {
-  checkboxses: PropTypes.any,
-  handleChangeRadio: PropTypes.func.isRequired,
-  handleChangeCheckbox: PropTypes.func.isRequired,
-  handleTypeMessagesChange: PropTypes.func.isRequired,
-  handleSortingMessagesChange: PropTypes.func.isRequired,
-  handleStatusMessagesChange: PropTypes.func.isRequired
 };

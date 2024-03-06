@@ -1,29 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext, ChangeEvent } from 'react';
 import Chat from 'components/app/chat/Chat';
+import {
+  TopicsContext,
+  TopicsContextType
+} from 'components/app/topics/TopicsProvider';
 import ProfileUserCard from 'components/ProfileUserCard/ProfileUserCard';
 import ControlMessages from 'components/ControlMessages/ControlMessages';
 import { FilterMessages } from 'components/FilterMessages/FilterMessages';
 import { getCuratorChats } from 'api/routes/curatorChat';
-import { checkbox } from 'data/checkboxses';
+import { checkboxData } from 'data/checkboxData';
 import s from './StudentProfile.module.scss';
+import { ChatContext } from 'context/Context';
 
 export const StudentProfile = () => {
-  const [checkboxses, setCheckboxes] = useState(checkbox);
+  const { topics } = useContext(TopicsContext) as TopicsContextType;
+  const { threadsDispatch } = useContext(ChatContext);
+  const [checkboxList, setCheckboxList] = useState(checkboxData);
 
   const [typeMessages, setTypeMessages] = useState('');
-  const [sortedCreatedAt, setSortedCreatedAt] = useState(null);
+  const [messagesByDate, setMessagesByDate] = useState('');
   const [statusMessages, setStatusMessages] = useState('');
   const [selectedRadioValue, setSelectedRadioValue] = useState('');
-  const [checkboxValues, setСheckboxValues] = useState([]);
+  const [chosenCheckboxes, setChosenCheckboxes] = useState<string[]>([]);
+  const [topicType, setTopicType] = useState('');
 
-  const [topicType, setTopicType] = useState(null);
-
-  const handleChangeRadio = e => {
-    setSelectedRadioValue(e.target.value);
+  const handleChangeRadio = (event: ChangeEvent<HTMLInputElement>) => {
+    setSelectedRadioValue(event.target.value);
   };
 
-  const handleChangeCheckbox = id => {
-    setCheckboxes(prevCheckboxes => {
+  const handleChangeCheckbox = (id: number) => {
+    setCheckboxList(prevCheckboxes => {
       return prevCheckboxes.map(checkbox => {
         if (checkbox.id === id)
           return { ...checkbox, isChecked: !checkbox.isChecked };
@@ -35,59 +41,68 @@ export const StudentProfile = () => {
   };
 
   useEffect(() => {
-    const selectedValues = checkboxses
+    const selectedValues = checkboxList
       .filter(checkbox => checkbox.isChecked)
       .map(checkbox => checkbox.value);
-    setСheckboxValues(selectedValues);
-  }, [checkboxses]);
+    setChosenCheckboxes(selectedValues);
+  }, [checkboxList]);
 
   useEffect(() => {
     const selectedValuesString =
-      checkboxValues.length > 0 ? checkboxValues.join(',') : null;
+      chosenCheckboxes.length > 0 ? chosenCheckboxes.join(',') : null;
 
     const fetchDialogs = async () => {
       const params = {
         chat_type: typeMessages || undefined,
-        ordering: sortedCreatedAt || undefined,
+        ordering: messagesByDate || undefined,
         status: statusMessages || undefined,
         chats: selectedValuesString || selectedRadioValue || undefined,
         topic: topicType || undefined
       };
 
       const { data } = await getCuratorChats(params);
-      console.log(data.results);
+      threadsDispatch({
+        type: 'SET_DIALOGS',
+        payload: data.results
+      });
     };
 
     fetchDialogs();
   }, [
     typeMessages,
-    sortedCreatedAt,
+    messagesByDate,
     statusMessages,
     selectedRadioValue,
-    checkboxValues,
+    chosenCheckboxes,
     topicType
   ]);
 
-  const handleTypeMessagesChange = event => {
+  const handleTypeMessagesChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setTypeMessages(event.target.value);
   };
 
-  const handleSortingMessagesChange = event => {
-    setSortedCreatedAt(event.target.value);
+  const handleSortingMessagesChange = (
+    event: ChangeEvent<HTMLSelectElement>
+  ) => {
+    setMessagesByDate(event.target.value);
   };
 
-  const handleStatusMessagesChange = event => {
+  const handleStatusMessagesChange = (
+    event: ChangeEvent<HTMLSelectElement>
+  ) => {
     setStatusMessages(event.target.value);
   };
 
-  const handleChangeTopicType = event => {
+  const handleChangeTopicType = (event: ChangeEvent<HTMLSelectElement>) => {
     setTopicType(event.target.value);
   };
   const handleChangeRedirection = () => {};
+
   return (
     <div className={s.container}>
       <FilterMessages
-        checkboxses={checkboxses}
+        checkboxList={checkboxList}
+        isChecked={selectedRadioValue === 'all'}
         handleChangeRadio={handleChangeRadio}
         handleChangeCheckbox={handleChangeCheckbox}
         handleTypeMessagesChange={handleTypeMessagesChange}
@@ -95,6 +110,7 @@ export const StudentProfile = () => {
         handleSortingMessagesChange={handleSortingMessagesChange}
       />
       <ControlMessages
+        topics={topics}
         handleChangeTopicType={handleChangeTopicType}
         handleChangeRedirection={handleChangeRedirection}
       />

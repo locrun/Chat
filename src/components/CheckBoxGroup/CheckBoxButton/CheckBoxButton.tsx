@@ -1,8 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import s from './CheckBoxButton.module.scss';
 
-const CheckBoxButton = ({ checkbox, onChange }) => {
+import s from './CheckBoxButton.module.scss';
+import { CheckBoxData } from 'data/checkboxData';
+
+interface CheckBoxButtonProps {
+  checkbox: CheckBoxData;
+  onChange: (checkbox: CheckBoxData) => void;
+}
+
+const CheckBoxButton = ({ checkbox, onChange }: CheckBoxButtonProps) => {
   return (
     <div className={s.checkBoxWrapper}>
       <input
@@ -23,19 +29,5 @@ const CheckBoxButton = ({ checkbox, onChange }) => {
     </div>
   );
 };
-// CheckBoxButton.propTypes = {
-//   checkbox: PropTypes.string.isRequired,
-//   onChange: PropTypes.func.isRequired
-// };
 
-const objShape = {
-  id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  isChecked: PropTypes.bool.isRequired
-};
-CheckBoxButton.propTypes = {
-  checkbox: PropTypes.shape(objShape).isRequired,
-  onChange: PropTypes.func.isRequired
-};
 export default CheckBoxButton;

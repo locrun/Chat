@@ -1,20 +1,26 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { ChatContext } from 'context/Context';
 import users from 'data/people';
-import rawThreads from 'data/chat/threads';
 import rawMessages from 'data/chat/messages';
 import groups from 'data/chat/groups';
 import { arrayReducer } from 'reducers/arrayReducer';
 
 const ChatProvider = ({ children }) => {
   const [messages, messagesDispatch] = useReducer(arrayReducer, rawMessages);
-  const [threads, threadsDispatch] = useReducer(arrayReducer, rawThreads);
-  const [currentThread, setCurrentThread] = useState(threads[0]);
+  const [threads, threadsDispatch] = useReducer(arrayReducer, []);
+  const [currentThread, setCurrentThread] = useState(null);
   const [textAreaInitialHeight, setTextAreaInitialHeight] = useState(32);
-  const [activeThreadId, setActiveThreadId] = useState(threads[0].id);
+  const [activeThreadId, setActiveThreadId] = useState(null);
   const [isOpenThreadInfo, setIsOpenThreadInfo] = useState(false);
   const [scrollToBottom, setScrollToBottom] = useState(true);
+
+  useEffect(() => {
+    if (threads.length > 0) {
+      setCurrentThread(threads[0]);
+      setActiveThreadId(threads[0].id);
+    }
+  }, [threads]);
 
   const getUser = thread => {
     let user = {};

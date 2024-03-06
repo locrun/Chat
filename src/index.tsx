@@ -1,10 +1,10 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import Main from './Main';
 import 'helpers/initFA';
+import Main from 'Main';
 
-const container = document.getElementById('main');
+const container = document.getElementById('main') as HTMLElement;
 const root = createRoot(container);
 
 root.render(

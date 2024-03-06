@@ -35,8 +35,8 @@ export const updateCuratorChats = (
   return Apis.curator_api.post(endpoints_curator.update_chats(id), data);
 };
 
-export const closeCuratorChats = (id: number): AxiosPromise => {
-  return Apis.curator_api.post(endpoints_curator.close_chat(id));
+export const closeCurrentDialog = (id: number): AxiosPromise => {
+  return Apis.curator_api.get(endpoints_curator.close_chat(id));
 };
 
 export const getChatInfoStatistics = (): AxiosPromise<ChatInfo> => {

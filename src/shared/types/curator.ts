@@ -1,4 +1,4 @@
-import { LastMessage, Topic, MessageType, StatusType, ChatType } from '.';
+import { LastMessage, Topic, MessageType } from '.';
 
 export enum Chats {
   MY = 'my',
@@ -6,17 +6,17 @@ export enum Chats {
   OTHERS = 'others',
   NOT_CURATOR = 'not_curator'
 }
-
-export interface CuratorChatPayloadParams {
+export type CuratorChatPayloadParams = Partial<{
   topic: string;
-  chat_type: ChatType;
-  status: StatusType;
-  chats: Chats;
+  chat_type: string;
+  status: string;
+  chats: string;
   ordering: string;
   search: string;
   limit: string;
   offset: string;
-}
+}>;
+
 export interface OrderCreationPayload {
   client: number;
 }
@@ -27,6 +27,7 @@ export interface OrderCreationResponse {
 }
 
 export interface ChatList {
+  id: number;
   client: Client;
   curator: Curator;
   topic: Topic;
