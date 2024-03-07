@@ -7,13 +7,10 @@ import ThreadInfo from './ThreadInfo';
 import { ChatContext } from 'context/Context';
 
 const ChatContentBody = ({ thread }) => {
-  let lastDate = null;
   const messagesEndRef = useRef();
 
   const { messages, scrollToBottom, setScrollToBottom } =
     useContext(ChatContext);
-
-  const { content } = messages.find(({ id }) => id === thread.messagesId);
 
   useEffect(() => {
     if (scrollToBottom) {
@@ -29,23 +26,9 @@ const ChatContentBody = ({ thread }) => {
       <ThreadInfo thread={thread} isOpenThreadInfo={true} />
       <SimpleBarReact style={{ height: '100%' }}>
         <div className="chat-content-scroll-area">
-          {content.map(({ message, time, senderUserId, status }, index) => (
-            <div key={index}>
-              {lastDate !== time.date && (
-                <div className="text-center fs-11 text-500">{`${time.date}, ${time.hour}`}</div>
-              )}
-              {(() => {
-                lastDate = time.date;
-              })()}
-              <Message
-                message={message}
-                senderUserId={senderUserId}
-                time={time}
-                status={status}
-                isGroup={thread.type === 'group'}
-              />
-            </div>
-          ))}
+          {messages?.map(({ text, created_at }, index) => {
+            return <Message key={index} message={text} time={created_at} />;
+          })}
         </div>
         <div ref={messagesEndRef} />
       </SimpleBarReact>

@@ -14,6 +14,7 @@ export const StudentChat = () => {
       const params = {};
 
       const { data } = await getClientChats(params);
+
       threadsDispatch({
         type: 'SET_DIALOGS',
         payload: data.results

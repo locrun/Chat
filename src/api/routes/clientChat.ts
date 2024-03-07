@@ -26,7 +26,7 @@ export const getTopicsList = (
   return Apis.client_api.get(endpoints_client.topics_list, { params });
 };
 
-export const getMessageList = ({
+export const getMessagesList = ({
   id,
   limit,
   offset

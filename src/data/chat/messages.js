@@ -14,7 +14,7 @@ import chatImg12 from 'assets/img/chat/12.jpg';
 export default [
   {
     id: 0,
-    content: [
+    results: [
       {
         senderUserId: 1,
         message:
@@ -139,7 +139,7 @@ export default [
   },
   {
     id: 1,
-    content: [
+    results: [
       {
         senderUserId: 13,
         message:
@@ -225,7 +225,7 @@ export default [
   },
   {
     id: 2,
-    content: [
+    results: [
       {
         senderUserId: 3,
         message: 'Hello',
@@ -250,7 +250,7 @@ export default [
   },
   {
     id: 3,
-    content: [
+    results: [
       {
         senderUserId: 3,
         message: 'Hello',
@@ -274,7 +274,7 @@ export default [
   },
   {
     id: 4,
-    content: [
+    results: [
       {
         senderUserId: 4,
         message: "What's Up!",
@@ -307,7 +307,7 @@ export default [
   },
   {
     id: 5,
-    content: [
+    results: [
       {
         senderUserId: 5,
         message: "What's Up!",
@@ -341,7 +341,7 @@ export default [
   },
   {
     id: 6,
-    content: [
+    results: [
       {
         senderUserId: 10,
         message: "What's Up!",
@@ -374,7 +374,7 @@ export default [
   },
   {
     id: 7,
-    content: [
+    results: [
       {
         senderUserId: 11,
         message: 'I got my visa',
@@ -407,7 +407,7 @@ export default [
   },
   {
     id: 8,
-    content: [
+    results: [
       {
         senderUserId: 12,
         message: "What's Up!",
@@ -440,7 +440,7 @@ export default [
   },
   {
     id: 9,
-    content: [
+    results: [
       {
         senderUserId: 22,
         message: "What's Up!",
@@ -476,6 +476,6 @@ export default [
   },
   {
     id: 10,
-    content: []
+    results: []
   }
 ];

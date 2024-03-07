@@ -96,7 +96,6 @@ export const StudentProfile = () => {
   const handleChangeTopicType = (event: ChangeEvent<HTMLSelectElement>) => {
     setTopicType(event.target.value);
   };
-  const handleChangeRedirection = () => {};
 
   return (
     <div className={s.container}>
@@ -112,7 +111,6 @@ export const StudentProfile = () => {
       <ControlMessages
         topics={topics}
         handleChangeTopicType={handleChangeTopicType}
-        handleChangeRedirection={handleChangeRedirection}
       />
       <div className={s.flex}>
         <div className={s.chatWrapper}>

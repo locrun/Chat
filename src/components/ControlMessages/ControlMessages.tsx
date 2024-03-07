@@ -9,26 +9,13 @@ import { closeCurrentDialog } from 'api/routes/curatorChat';
 interface ColtrolMessagesProps {
   topics: Topics[];
   handleChangeTopicType: (e: ChangeEvent<HTMLSelectElement>) => void;
-  handleChangeRedirection: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const ControlMessages = ({
   topics,
-  handleChangeTopicType,
-  handleChangeRedirection
+  handleChangeTopicType
 }: ColtrolMessagesProps) => {
   const { currentThread } = useContext(ChatContext);
-
-  const redirectListItems = [
-    {
-      item: 'В корзину',
-      value: 'trash'
-    },
-    {
-      item: 'В спам',
-      value: 'spam'
-    }
-  ];
 
   const deleteDialog = () => {
     if (currentThread) closeCurrentDialog(currentThread.id);
@@ -48,21 +35,6 @@ const ControlMessages = ({
                 return (
                   <option key={item.title} value={item.id}>
                     {item.title}
-                  </option>
-                );
-              })}
-            </Form.Select>
-          </div>
-          <div className={s.redirectSelect}>
-            <span className={s.label}>Спам</span>
-            <Form.Select
-              className={s.select}
-              onChange={e => handleChangeRedirection(e)}
-            >
-              {redirectListItems.map(item => {
-                return (
-                  <option key={item.value} value={item.value}>
-                    {item.item}
                   </option>
                 );
               })}

@@ -14,7 +14,7 @@ const Chat = () => {
   const handleSelect = e => {
     setHideSidebar(false);
     setIsOpenThreadInfo(false);
-    const thread = threads.find(thread => thread.id === parseInt(e));
+    const thread = threads.find((thread, index) => index === parseInt(e));
     setCurrentThread(thread);
     setScrollToBottom(true);
   };
@@ -22,7 +22,7 @@ const Chat = () => {
   return (
     <Tab.Container
       id="left-tabs-example"
-      defaultActiveKey
+      defaultActiveKey={1}
       onSelect={handleSelect}
     >
       <Card className="card-chat overflow-hidden">

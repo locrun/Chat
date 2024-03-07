@@ -5,9 +5,8 @@ import { Col, Row } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
 import { ChatContext } from 'context/Context';
 
-const ChatContentHeader = ({ thread, setHideSidebar, hideSidebar }) => {
-  const { getUser } = useContext(ChatContext);
-  const user = getUser(thread);
+const ChatContentHeader = ({ setHideSidebar, hideSidebar }) => {
+  const { currentThread } = useContext(ChatContext);
 
   return (
     <>
@@ -22,12 +21,10 @@ const ChatContentHeader = ({ thread, setHideSidebar, hideSidebar }) => {
                 <FontAwesomeIcon icon="chevron-left" />
               </div>
               <div className="min-w-0">
-                <h5 className="mb-0 text-truncate fs-9">{user.name}</h5>
-                <div className="fs-11 text-400">
-                  {user.status === 'status-online'
-                    ? 'Active on  chat'
-                    : 'Active 7h ago'}
-                </div>
+                <h5 className="mb-0 text-truncate fs-9">
+                  {currentThread?.topic.title}
+                </h5>
+                <div className="fs-11 text-400">Online</div>
               </div>
             </Col>
             <Col xs="auto"></Col>

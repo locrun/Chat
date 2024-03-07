@@ -88,14 +88,15 @@ const ThreadInfo = ({ thread }) => {
             alignItems="center"
             className="position-relative p-3 border-bottom hover-actions-trigger"
           >
-            <Avatar className={user.status} size="xl" src={user.avatarSrc} />
+            {/* <Avatar className={user.status} size="xl" src={user.avatarSrc} /> */}
             <Flex className="ms-2 flex-between-center flex-1">
               <h6 className="mb-0">
                 <Link
                   to="/user/profile"
                   className="text-decoration-none stretched-link text-700"
                 >
-                  {user.name}
+                  {/* {user.name} */}
+                  Test
                 </Link>
               </h6>
               <Button

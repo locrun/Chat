@@ -10,6 +10,7 @@ const ChatContactsSearch = () => (
         className="chat-contacts-search border-0 h-100"
         placeholder="Искать контакт..."
         size="sm"
+        onChange={e => console.log(e.target.value)}
       />
       <FontAwesomeIcon icon="search" className="contacts-search-icon" />
     </Form.Group>

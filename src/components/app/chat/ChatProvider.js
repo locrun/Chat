@@ -2,12 +2,11 @@ import React, { useState, useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { ChatContext } from 'context/Context';
 import users from 'data/people';
-import rawMessages from 'data/chat/messages';
 import groups from 'data/chat/groups';
 import { arrayReducer } from 'reducers/arrayReducer';
 
 const ChatProvider = ({ children }) => {
-  const [messages, messagesDispatch] = useReducer(arrayReducer, rawMessages);
+  const [messages, messagesDispatch] = useReducer(arrayReducer, []);
   const [threads, threadsDispatch] = useReducer(arrayReducer, []);
   const [currentThread, setCurrentThread] = useState(null);
   const [textAreaInitialHeight, setTextAreaInitialHeight] = useState(32);

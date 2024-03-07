@@ -8,6 +8,8 @@ export const arrayReducer = (state, action) => {
   switch (type) {
     case 'SET_DIALOGS':
       return payload;
+    case 'SET_MESSAGES':
+      return payload;
     case 'ADD':
       if (!payload) {
         return state;

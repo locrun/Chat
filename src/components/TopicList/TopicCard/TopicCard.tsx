@@ -1,14 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
+import { useNavigate } from 'react-router-dom';
 import s from './TopicCard.module.scss';
 import { Topics } from 'types/topics';
+import { createClientChats } from 'api/routes/clientChat';
 
 interface TopicCardProps {
   topics: Topics[];
 }
 
 export const TopicCard = ({ topics }: TopicCardProps) => {
+  const navigate = useNavigate();
+
+  const onClick = async (id: number) => {
+    await createClientChats({
+      topic: id
+    });
+    navigate('/student-chat');
+  };
+
   return (
     <>
       {topics.map((card: Topics) => {
@@ -28,9 +38,9 @@ export const TopicCard = ({ topics }: TopicCardProps) => {
                 />
               )}
             </div>
-            <Link to={'/student-chat'} className={s.linkButton}>
+            <button onClick={() => onClick(card.id)} className={s.linkButton}>
               Написать
-            </Link>
+            </button>
           </div>
         );
       })}
