@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import is from 'is_js';
-// import FalconRoutes from 'routes';
+import FalconRoutes from 'routes';
 import RoutesPage from 'routes/main';
 import { CloseButton } from 'components/common/Toast';
 import SettingsToggle from 'components/settings-panel/SettingsToggle';
@@ -41,8 +41,8 @@ const App = () => {
 
   return (
     <Router basename={process.env.PUBLIC_URL}>
-      <RoutesPage />
-      {/* <FalconRoutes /> */}
+      {/*<RoutesPage />*/}
+      {<FalconRoutes />}
       <SettingsToggle />
       <SettingsPanel />
       <ToastContainer

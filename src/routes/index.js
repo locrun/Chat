@@ -196,6 +196,18 @@ import QuickLinks from 'components/app/support-desk/quick-links/QuickLinks';
 import Reports from 'components/app/support-desk/reports/Reports';
 import InputMaskExample from 'components/doc-components/InputMaskExample';
 import RangeSlider from 'components/doc-components/RangeSlider';
+
+import PrivateRoute from './privateRoute';
+import PrivateMainLayoutRoute from './privateMainLayoutRoute';
+import keycloakRealmRoles from '../helpers/keycloakRealmRoles';
+
+import { ChatTopic } from '../pages/ChatTopic/ChatTopic';
+import { StudentProfile } from 'pages/StudentProfile/StudentProfile';
+import { AdminChat } from '../pages/AdminChat/AdminChat';
+import { StudentChat } from 'pages/StudentChat/StudentChat';
+
+import { Example } from '../pages/Example/Example';
+
 const FalconRoutes = () => {
   return (
     <Routes>
@@ -290,8 +302,60 @@ const FalconRoutes = () => {
 
       {/* //--- MainLayout Starts  */}
 
-      <Route element={<MainLayout />}>
+      <Route
+        element={
+          <PrivateMainLayoutRoute>
+            <MainLayout />
+          </PrivateMainLayoutRoute>
+        }
+      >
         {/*Dashboard*/}
+        <Route
+          path="/admin-chat"
+          element={
+            <PrivateRoute
+              requiredRoles={[keycloakRealmRoles.USERS_EDIT]}
+              pageName={'дефолтный дашборд'}
+            >
+              <AdminChat />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="new-chat"
+          element={
+            <PrivateRoute
+              requiredRoles={[keycloakRealmRoles.ADMIN]}
+              pageName={'дефолтный дашборд'}
+            >
+              <ChatTopic />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/student-profile"
+          element={
+            <PrivateRoute
+              requiredRoles={[keycloakRealmRoles.ADMIN]}
+              pageName={'дефолтный дашборд'}
+            >
+              <StudentProfile />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/student-chat"
+          element={
+            <PrivateRoute
+              requiredRoles={[keycloakRealmRoles.CHAT_USER]}
+              pageName={'дефолтный дашборд'}
+            >
+              <StudentChat />
+            </PrivateRoute>
+          }
+        />
+
         <Route path="/" element={<Dashboard />} />
         <Route path="dashboard/analytics" element={<Analytics />} />
         <Route path="dashboard/crm" element={<Crm />} />

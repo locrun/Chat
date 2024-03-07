@@ -70,9 +70,27 @@ export const appRoutes = {
       active: true
     },
     {
-      name: 'Chat',
+      name: 'StudentChat',
       icon: 'comments',
-      to: '/app/chat',
+      to: '/student-chat',
+      active: true
+    },
+    {
+      name: 'AdminChat',
+      icon: 'comments',
+      to: '/admin-chat',
+      active: true
+    },
+    {
+      name: 'NewChat',
+      icon: 'comments',
+      to: '/new-chat',
+      active: true
+    },
+    {
+      name: 'StudentProfile',
+      icon: 'comments',
+      to: '/student-profile',
       active: true
     },
     {

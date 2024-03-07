@@ -426,3 +426,19 @@ export const slugifyText = str =>
     .replace(/--+/g, '-')
     .replace(/^-+/, '')
     .replace(/-+$/, '');
+
+export const checkAllRealmRolesAssigned = (
+  assignedUserRoles,
+  requiredRoles
+) => {
+  // если для роута не заданы требуемые роли - считаем, что он отображается для всех пользователей
+
+  if (typeof requiredRoles !== 'undefined') {
+    for (let roleIndex in requiredRoles) {
+      if (!assignedUserRoles.includes(requiredRoles[roleIndex])) {
+        return false;
+      }
+    }
+  }
+  return true;
+};
