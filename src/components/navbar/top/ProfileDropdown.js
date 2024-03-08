@@ -4,8 +4,17 @@ import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import team3 from 'assets/img/team/3.jpg';
 import Avatar from 'components/common/Avatar';
+import { useKeycloak } from '@react-keycloak/web';
 
 const ProfileDropdown = () => {
+  const { keycloak } = useKeycloak();
+
+  const onLogout = () => {
+    window.location.href = keycloak.createLogoutUrl({
+      redirectUri: process.env.REACT_APP_CRM_URL + '/authentication/card/logout'
+    });
+  };
+
   return (
     <Dropdown navbar={true} as="li">
       <Dropdown.Toggle
@@ -33,8 +42,8 @@ const ProfileDropdown = () => {
           <Dropdown.Item as={Link} to="/user/settings">
             Settings
           </Dropdown.Item>
-          <Dropdown.Item as={Link} to="/authentication/card/logout">
-            Logout
+          <Dropdown.Item as={Link} onClick={() => onLogout()}>
+            Выйти
           </Dropdown.Item>
         </div>
       </Dropdown.Menu>

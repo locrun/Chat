@@ -6,6 +6,7 @@ const keycloakRealmRoles = {
   USERS_VIEW: 'crm_users_view',
   CUSTOMER_CARD: 'crm_customer_card',
   CHAT_USER: 'chat_user',
+  CHAT_MANAGER: 'chat_manager',
   ADMIN: 'crm_access_something'
 };
 

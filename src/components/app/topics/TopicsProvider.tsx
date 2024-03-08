@@ -26,8 +26,22 @@ const TopicsProvider = ({ children }: TopicsProviderProps) => {
   const { keycloak } = useKeycloak();
   const isLoggedIn = keycloak.authenticated;
 
-  useEffect(() => {}, [isLoggedIn]);
+  //TODO: wait structure
+  useEffect(() => {
+    const fetchTopicsList = async () => {
+      setIsLoading(true);
+      const { results: data } = (await getTopicsList({})).data;
+      if (data) {
+        setTopics(data);
+        setIsLoading(false);
+      }
+    };
+    if (isLoggedIn) {
+      fetchTopicsList();
+    }
+  }, [isLoggedIn]);
 
+  /*
   useEffect(() => {
     const fetchTopicsList = async () => {
       if (isLoggedIn) {
@@ -40,7 +54,7 @@ const TopicsProvider = ({ children }: TopicsProviderProps) => {
       }
     };
     fetchTopicsList();
-  }, []);
+  }, []);*/
 
   return (
     <TopicsContext.Provider value={{ isLoading, topics, setTopics }}>

@@ -20,6 +20,7 @@ const MainLayout = () => {
   // const isChat = pathname.includes('chat');
   const { keycloak } = useKeycloak();
 
+  //TODO: wait roles
   if (
     checkAllRealmRolesAssigned(keycloak.realmAccess.roles, [
       keycloakRealmRoles.CHAT_USER
@@ -33,7 +34,7 @@ const MainLayout = () => {
     });
   } else if (
     checkAllRealmRolesAssigned(keycloak.realmAccess.roles, [
-      keycloakRealmRoles.ADMIN
+      keycloakRealmRoles.CHAT_MANAGER
     ])
   ) {
     Apis.curator_api.interceptors.request.use(function (config) {
