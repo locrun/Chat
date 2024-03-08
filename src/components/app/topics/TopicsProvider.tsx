@@ -1,3 +1,4 @@
+import { useKeycloak } from '@react-keycloak/web';
 import { getTopicsList } from 'api/routes/clientChat';
 import React, { useState, useEffect } from 'react';
 import { Topics } from 'types/topics';
@@ -22,14 +23,20 @@ export interface TopicsContextType {
 const TopicsProvider = ({ children }: TopicsProviderProps) => {
   const [topics, setTopics] = useState<Topics[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { keycloak } = useKeycloak();
+  const isLoggedIn = keycloak.authenticated;
+
+  useEffect(() => {}, [isLoggedIn]);
 
   useEffect(() => {
     const fetchTopicsList = async () => {
-      setIsLoading(true);
-      const { results: data } = (await getTopicsList({})).data;
-      if (data) {
-        setTopics(data);
-        setIsLoading(false);
+      if (isLoggedIn) {
+        setIsLoading(true);
+        const { results: data } = (await getTopicsList({})).data;
+        if (data) {
+          setTopics(data);
+          setIsLoading(false);
+        }
       }
     };
     fetchTopicsList();

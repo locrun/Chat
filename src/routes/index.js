@@ -314,7 +314,7 @@ const FalconRoutes = () => {
           path="/admin-chat"
           element={
             <PrivateRoute
-              requiredRoles={[keycloakRealmRoles.USERS_EDIT]}
+              requiredRoles={[keycloakRealmRoles.ADMIN]}
               pageName={'дефолтный дашборд'}
             >
               <AdminChat />
@@ -348,7 +348,7 @@ const FalconRoutes = () => {
           path="/student-chat"
           element={
             <PrivateRoute
-              requiredRoles={[keycloakRealmRoles.CHAT_USER]}
+              requiredRoles={[keycloakRealmRoles.ADMIN]}
               pageName={'дефолтный дашборд'}
             >
               <StudentChat />

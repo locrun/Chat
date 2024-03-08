@@ -9,11 +9,40 @@ import CourseProvider from 'components/app/e-learning/CourseProvider';
 import ModalAuth from 'components/authentication/modal/ModalAuth';
 
 import { useAppContext } from 'Main';
+import { useKeycloak } from '@react-keycloak/web';
+import Apis from 'api/index';
+import { checkAllRealmRolesAssigned } from 'helpers/utils';
+import keycloakRealmRoles from 'helpers/keycloakRealmRoles';
 
 const MainLayout = () => {
   const { hash, pathname } = useLocation();
   const isKanban = pathname.includes('kanban');
   // const isChat = pathname.includes('chat');
+  const { keycloak } = useKeycloak();
+
+  if (
+    checkAllRealmRolesAssigned(keycloak.realmAccess.roles, [
+      keycloakRealmRoles.CHAT_USER
+    ])
+  ) {
+    Apis.client_api.interceptors.request.use(function (config) {
+      if (typeof window !== 'undefined') {
+        config.headers['Authorization'] = `${keycloak.token}`; // token - токен из кейклока - главная строка
+      }
+      return config;
+    });
+  } else if (
+    checkAllRealmRolesAssigned(keycloak.realmAccess.roles, [
+      keycloakRealmRoles.ADMIN
+    ])
+  ) {
+    Apis.curator_api.interceptors.request.use(function (config) {
+      if (typeof window !== 'undefined') {
+        config.headers['Authorization'] = `${keycloak.token}`; // token - токен из кейклока - главная строка
+      }
+      return config;
+    });
+  }
 
   const {
     config: { isFluid, navbarPosition }
