@@ -10,6 +10,7 @@ import SettingsPanel from 'components/settings-panel/SettingsPanel';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { useAppContext } from 'Main';
+import TestRoutes from 'routes/testRoutes';
 
 const App = () => {
   const HTMLClassList = document.getElementsByTagName('html')[0].classList;
@@ -41,8 +42,9 @@ const App = () => {
 
   return (
     <Router basename={process.env.PUBLIC_URL}>
+      <TestRoutes />
       {/*<RoutesPage />*/}
-      {<FalconRoutes />}
+      {/*<FalconRoutes />*/}
       <SettingsToggle />
       <SettingsPanel />
       <ToastContainer

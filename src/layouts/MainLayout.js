@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import NavbarTop from 'components/navbar/top/NavbarTop';
 import NavbarVertical from 'components/navbar/vertical/NavbarVertical';
@@ -13,12 +13,15 @@ import { useKeycloak } from '@react-keycloak/web';
 import Apis from 'api/index';
 import { checkAllRealmRolesAssigned } from 'helpers/utils';
 import keycloakRealmRoles from 'helpers/keycloakRealmRoles';
+import { MainPage } from 'layouts/MainPage';
+import { Example } from 'pages/Example/Example';
 
 const MainLayout = () => {
   const { hash, pathname } = useLocation();
   const isKanban = pathname.includes('kanban');
   // const isChat = pathname.includes('chat');
   const { keycloak } = useKeycloak();
+  const navigate = useNavigate();
 
   //TODO: wait roles
   if (
@@ -32,6 +35,7 @@ const MainLayout = () => {
       }
       return config;
     });
+    navigate('/student-chat');
   } else if (
     checkAllRealmRolesAssigned(keycloak.realmAccess.roles, [
       keycloakRealmRoles.CHAT_MANAGER
@@ -43,6 +47,7 @@ const MainLayout = () => {
       }
       return config;
     });
+    navigate('/admin-chat');
   }
 
   const {
@@ -67,20 +72,7 @@ const MainLayout = () => {
 
   return (
     <div className={isFluid ? 'container-fluid' : 'container'}>
-      {(navbarPosition === 'vertical' || navbarPosition === 'combo') && (
-        <NavbarVertical />
-      )}
-      <ProductProvider>
-        <CourseProvider>
-          <div className={classNames('content', { 'pb-0': isKanban })}>
-            <NavbarTop />
-            {/*------ Main Routes ------*/}
-            <Outlet />
-            {!isKanban && <Footer />}
-          </div>
-        </CourseProvider>
-      </ProductProvider>
-      <ModalAuth />
+      <MainPage />
     </div>
   );
 };
