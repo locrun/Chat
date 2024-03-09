@@ -3,21 +3,43 @@ import { Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getClientChats } from 'api/routes/clientChat';
 import { ChatContext } from 'context/Context';
+import { useKeycloak } from '@react-keycloak/web';
+import { checkAllRealmRolesAssigned } from 'helpers/utils';
+import keycloakRealmRoles from 'helpers/keycloakRealmRoles';
+import { getCuratorChats } from 'api/routes/curatorChat';
 
 const ChatContactsSearch = () => {
   const { threadsDispatch } = useContext(ChatContext);
+  const { keycloak } = useKeycloak();
   // const [value, setValue] = useState('');
 
   const handleSearchTopic = async e => {
     const value = e.target.value;
 
     try {
-      const { data } = await getClientChats({ search: value });
+      if (
+        checkAllRealmRolesAssigned(keycloak.realmAccess.roles, [
+          keycloakRealmRoles.CHAT_USER
+        ])
+      ) {
+        const { data } = await getClientChats({ search: value });
 
-      threadsDispatch({
-        type: 'SET_DIALOGS',
-        payload: data.results
-      });
+        threadsDispatch({
+          type: 'SET_DIALOGS',
+          payload: data.results
+        });
+      } else if (
+        checkAllRealmRolesAssigned(keycloak.realmAccess.roles, [
+          keycloakRealmRoles.CHAT_MANAGER
+        ])
+      ) {
+        const { data } = await getCuratorChats({ search: value });
+
+        threadsDispatch({
+          type: 'SET_DIALOGS',
+          payload: data.results
+        });
+      }
     } catch (error) {
       console.log(error);
     }

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import NavbarTop from 'components/navbar/top/NavbarTop';
 import NavbarVertical from 'components/navbar/vertical/NavbarVertical';
@@ -7,23 +7,26 @@ import Footer from 'components/footer/Footer';
 import ProductProvider from 'components/app/e-commerce/ProductProvider';
 import CourseProvider from 'components/app/e-learning/CourseProvider';
 import ModalAuth from 'components/authentication/modal/ModalAuth';
+import PrivateRoute from 'routes/privateRoute';
 
 import { useAppContext } from 'Main';
 import { useKeycloak } from '@react-keycloak/web';
 import Apis from 'api/index';
 import { checkAllRealmRolesAssigned } from 'helpers/utils';
 import keycloakRealmRoles from 'helpers/keycloakRealmRoles';
-import { MainPage } from 'layouts/MainPage';
-import { Example } from 'pages/Example/Example';
+import { ChatTopic } from 'pages/ChatTopic/ChatTopic';
+import { StudentProfile } from 'pages/StudentProfile/StudentProfile';
+import { usePage } from 'components/app/pagesProvider/PagesProvider';
+import { PageType } from 'shared/types';
+import { Chats } from './Chats';
 
 const MainLayout = () => {
   const { hash, pathname } = useLocation();
   const isKanban = pathname.includes('kanban');
   // const isChat = pathname.includes('chat');
   const { keycloak } = useKeycloak();
-  const navigate = useNavigate();
+  const { page } = usePage();
 
-  //TODO: wait roles
   if (
     checkAllRealmRolesAssigned(keycloak.realmAccess.roles, [
       keycloakRealmRoles.CHAT_USER
@@ -35,7 +38,6 @@ const MainLayout = () => {
       }
       return config;
     });
-    navigate('/student-chat');
   } else if (
     checkAllRealmRolesAssigned(keycloak.realmAccess.roles, [
       keycloakRealmRoles.CHAT_MANAGER
@@ -47,7 +49,6 @@ const MainLayout = () => {
       }
       return config;
     });
-    navigate('/admin-chat');
   }
 
   const {
@@ -70,10 +71,35 @@ const MainLayout = () => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
+  const getPage = () => {
+    switch (page) {
+      case PageType.CHAT:
+        return <Chats />;
+      case PageType.TOPIC:
+        return (
+          <PrivateRoute
+            requiredRoles={[keycloakRealmRoles.CHAT_USER]}
+            pageName={'Топики'}
+          >
+            <ChatTopic />
+          </PrivateRoute>
+        );
+      case PageType.STUDENTPROFILE:
+        return (
+          <PrivateRoute
+            requiredRoles={[keycloakRealmRoles.CHAT_MANAGER]}
+            pageName={'Профиль студента'}
+          >
+            <StudentProfile />
+          </PrivateRoute>
+        );
+      default:
+        return <></>;
+    }
+  };
+
   return (
-    <div className={isFluid ? 'container-fluid' : 'container'}>
-      <MainPage />
-    </div>
+    <div className={isFluid ? 'container-fluid' : 'container'}>{getPage()}</div>
   );
 };
 

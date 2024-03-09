@@ -1,14 +1,17 @@
 import React, { useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import Chat from 'components/app/chat/Chat';
 import Search from 'components/doc-components/Search';
 import s from './StudentChat.module.scss';
 import { getClientChats } from 'api/routes/clientChat';
 
 import { ChatContext } from 'context/Context';
+import { usePage } from 'components/app/pagesProvider/PagesProvider';
+import { PageType } from 'shared/types';
 
 export const StudentChat = () => {
   const { threadsDispatch } = useContext(ChatContext);
+  const { changePage } = usePage();
+
   useEffect(() => {
     const fetchClentDialogs = async () => {
       const params = {};
@@ -31,9 +34,12 @@ export const StudentChat = () => {
       <div className={s.chatWrapper}>
         <Chat />
       </div>
-      <Link to={'/new-chat'} className={s.linkButton}>
+      <button
+        onClick={() => changePage(PageType.TOPIC)}
+        className={s.linkButton}
+      >
         Новый разговор
-      </Link>
+      </button>
     </div>
   );
 };

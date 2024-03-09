@@ -1,22 +1,22 @@
 import React from 'react';
-
-import { useNavigate } from 'react-router-dom';
 import s from './TopicCard.module.scss';
 import { Topics } from 'types/topics';
 import { createClientChats } from 'api/routes/clientChat';
+import { usePage } from 'components/app/pagesProvider/PagesProvider';
+import { PageType } from 'shared/types';
 
 interface TopicCardProps {
   topics: Topics[];
 }
 
 export const TopicCard = ({ topics }: TopicCardProps) => {
-  const navigate = useNavigate();
+  const { changePage } = usePage();
 
   const onClick = async (id: number) => {
     await createClientChats({
       topic: id
     });
-    navigate('/student-chat');
+    changePage(PageType.CHAT);
   };
 
   return (

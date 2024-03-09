@@ -10,7 +10,9 @@ import SettingsPanel from 'components/settings-panel/SettingsPanel';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { useAppContext } from 'Main';
-import TestRoutes from 'routes/testRoutes';
+import MainLayout from 'layouts/MainLayout';
+import PrivateMainLayoutRoute from 'routes/privateMainLayoutRoute';
+import PagesProvider from 'components/app/pagesProvider/PagesProvider';
 
 const App = () => {
   const HTMLClassList = document.getElementsByTagName('html')[0].classList;
@@ -42,7 +44,11 @@ const App = () => {
 
   return (
     <Router basename={process.env.PUBLIC_URL}>
-      <TestRoutes />
+      <PagesProvider>
+        <PrivateMainLayoutRoute>
+          <MainLayout />
+        </PrivateMainLayoutRoute>
+      </PagesProvider>
       {/*<RoutesPage />*/}
       {/*<FalconRoutes />*/}
       <SettingsToggle />

@@ -1,15 +1,32 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useContext, useEffect, useState } from 'react';
 import Chat from 'components/app/chat/Chat';
 
 import { checkboxData } from 'data/checkboxData';
 
 import s from './AdminChat.module.scss';
 import { FilterMessages } from 'components/FilterMessages/FilterMessages';
+import { getCuratorChats } from 'api/routes/curatorChat';
+import { ChatContext } from 'context/Context';
 
 export const AdminChat = () => {
   const [checkboxList, setCheckboxList] = useState(checkboxData);
+  const { threadsDispatch } = useContext(ChatContext);
 
   const [selectedRadioValue, setSelectedRadioValue] = useState('');
+
+  useEffect(() => {
+    const fetchDialogs = async () => {
+      const params = {};
+
+      const { data } = await getCuratorChats(params);
+      threadsDispatch({
+        type: 'SET_DIALOGS',
+        payload: data.results
+      });
+    };
+
+    fetchDialogs();
+  }, []);
 
   const handleChangeCheckbox = (id: number) => {
     const updatedCheckboxes = checkboxList.map(checkbox => {

@@ -11,6 +11,12 @@ export enum StatusType {
   CLOSED = 'closed'
 }
 
+export enum PageType {
+  CHAT = 'chat',
+  TOPIC = 'topics',
+  STUDENTPROFILE = 'student-profile'
+}
+
 export enum ChatType {
   TOPIC = 'topic',
   ORDER = 'order'
