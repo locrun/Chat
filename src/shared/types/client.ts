@@ -17,7 +17,7 @@ export interface MarkCharReadPayload {
   message_id: number;
 }
 
-export interface ClientChatMessagePayload {
+export interface ChatListMessagePayload {
   id: number;
   limit?: number;
   offset?: number;

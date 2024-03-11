@@ -3,7 +3,7 @@ import { endpoints_client } from 'api/endpoints';
 import Apis from '..';
 import {
   ChatPayloadParams,
-  ClientChatMessagePayload,
+  ChatListMessagePayload,
   ClientTopicsPayload,
   ClientCreateChatPayload,
   MarkCharReadPayload,
@@ -26,11 +26,11 @@ export const getTopicsList = (
   return Apis.client_api.get(endpoints_client.topics_list, { params });
 };
 
-export const getMessagesList = ({
+export const getMessagesListClient = ({
   id,
   limit,
   offset
-}: ClientChatMessagePayload): AxiosPromise<AxiosPaginatedResponse<Message>> => {
+}: ChatListMessagePayload): AxiosPromise<AxiosPaginatedResponse<Message>> => {
   const params = { limit, offset };
   return Apis.client_api.get(endpoints_client.chats_messages(id), { params });
 };

@@ -1,6 +1,13 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { getMessagesList } from 'api/routes/clientChat';
+import { useKeycloak } from '@react-keycloak/web';
+import { checkAllRealmRolesAssigned } from 'helpers/utils';
+import keycloakRealmRoles from 'helpers/keycloakRealmRoles';
+import { getMessagesListClient } from 'api/routes/clientChat';
+import {
+  getMessagesListCurator
+  //markChatMessagesAsReadCurator
+} from 'api/routes/curatorChat';
 import Flex from 'components/common/Flex';
 import classNames from 'classnames';
 import Avatar from 'components/common/Avatar';
@@ -11,6 +18,11 @@ import { ChatContext } from 'context/Context';
 
 const ChatThread = ({ thread, index }) => {
   const { messagesDispatch } = useContext(ChatContext);
+  const { keycloak } = useKeycloak();
+
+  const isChatClient = checkAllRealmRolesAssigned(keycloak.realmAccess.roles, [
+    keycloakRealmRoles.CHAT_USER
+  ]);
 
   const date = new Date(thread.created_at);
   const options = {
@@ -23,14 +35,16 @@ const ChatThread = ({ thread, index }) => {
 
   const fetchMessagesList = async id => {
     try {
-      if (id) {
-        const { data } = await getMessagesList({ id });
+      const { data } = isChatClient
+        ? await getMessagesListClient({ id })
+        : await getMessagesListCurator({ id });
 
-        messagesDispatch({
-          type: 'SET_MESSAGES',
-          payload: data.results
-        });
-      }
+      messagesDispatch({
+        type: 'SET_MESSAGES',
+        payload: data.results
+      });
+
+      // await markChatMessagesAsReadCurator(thread.id, thread.last_message.id);
     } catch (error) {
       console.log(error);
     }

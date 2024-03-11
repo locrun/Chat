@@ -16,6 +16,7 @@ import {
 } from 'shared/types/curator';
 import { Message, CreateMessagePayload } from 'shared/types';
 import { AxiosPaginatedResponse } from 'types/api';
+import { ChatListMessagePayload } from 'shared/types/client';
 
 export const getCuratorChats = (
   params: ChatFilterParams
@@ -31,6 +32,15 @@ export const createCuratorChats = (
   data: OrderCreationPayload
 ): AxiosPromise<OrderCreationResponse> => {
   return Apis.curator_api.post(endpoints_curator.create_chats, data);
+};
+
+export const getMessagesListCurator = ({
+  id,
+  limit,
+  offset
+}: ChatListMessagePayload): AxiosPromise<AxiosPaginatedResponse<Message>> => {
+  const params = { limit, offset };
+  return Apis.curator_api.get(endpoints_curator.chats_messages(id), { params });
 };
 
 export const updateCuratorChats = (
