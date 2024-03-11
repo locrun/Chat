@@ -1,15 +1,15 @@
 import React, { useEffect, useContext } from 'react';
 import Chat from 'components/app/chat/Chat';
 import Search from 'components/doc-components/Search';
-import s from './StudentChat.module.scss';
 import { getClientChats } from 'api/routes/clientChat';
-
+import MessageStarting from 'components/message-starting/MessageStarting';
 import { ChatContext } from 'context/Context';
 import { usePage } from 'components/app/pagesProvider/PagesProvider';
 import { PageType } from 'shared/types';
+import s from './StudentChat.module.scss';
 
 export const StudentChat = () => {
-  const { threadsDispatch } = useContext(ChatContext);
+  const { threads, threadsDispatch } = useContext(ChatContext);
   const { changePage } = usePage();
 
   useEffect(() => {
@@ -31,15 +31,21 @@ export const StudentChat = () => {
       <div className={s.search}>
         <Search />
       </div>
-      <div className={s.chatWrapper}>
-        <Chat />
-      </div>
-      <button
-        onClick={() => changePage(PageType.TOPIC)}
-        className={s.linkButton}
-      >
-        Новый разговор
-      </button>
+      {threads.length === 0 ? (
+        <MessageStarting />
+      ) : (
+        <>
+          <div className={s.chatWrapper}>
+            <Chat />
+          </div>
+          <button
+            onClick={() => changePage(PageType.TOPIC)}
+            className={s.linkButton}
+          >
+            Новый разговор
+          </button>
+        </>
+      )}
     </div>
   );
 };
