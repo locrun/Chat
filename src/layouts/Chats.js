@@ -4,8 +4,6 @@ import { StudentChat } from 'pages/StudentChat/StudentChat';
 import { useKeycloak } from '@react-keycloak/web';
 import keycloakRealmRoles from 'helpers/keycloakRealmRoles';
 import { checkAllRealmRolesAssigned } from 'helpers/utils';
-import { StudentProfile } from 'pages/StudentProfile/StudentProfile';
-import { Navigate } from 'react-router-dom';
 import PrivateRoute from 'routes/privateRoute';
 
 export const Chats = () => {

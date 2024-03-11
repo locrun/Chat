@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import s from '../ProfileUserCard.module.scss';
 
-const BodyProfile = ({ userInfo }) => {
+export const BodyProfile = ({ userInfo }) => {
   return (
     <ul className={s.userInfoList}>
       {userInfo.map(item => {
@@ -25,5 +25,3 @@ const BodyProfile = ({ userInfo }) => {
 BodyProfile.propTypes = {
   userInfo: PropTypes.arrayOf(PropTypes.object)
 };
-
-export default BodyProfile;

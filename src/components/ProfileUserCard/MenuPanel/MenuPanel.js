@@ -8,6 +8,7 @@ import phone from 'assets/img/icons/phone.svg';
 import edit from 'assets/img/icons/edit.svg';
 import cn from 'classnames';
 import s from './UserMenuPanel.module.scss';
+
 export const MenuPanel = () => {
   return (
     <div className={s.container}>

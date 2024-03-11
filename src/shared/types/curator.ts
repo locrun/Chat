@@ -6,7 +6,7 @@ export enum Chats {
   OTHERS = 'others',
   NOT_CURATOR = 'not_curator'
 }
-export type CuratorChatPayloadParams = Partial<{
+export type ChatFilterParams = Partial<{
   topic: string;
   chat_type: string;
   status: string;
@@ -78,4 +78,9 @@ export interface UpdateTopic {
 
 export interface Note {
   curator_note: string;
+}
+
+export interface AssignCuratorParams {
+  chat: number;
+  curator: string;
 }

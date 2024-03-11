@@ -1,22 +1,65 @@
-import React, { ChangeEvent, useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext, ChangeEvent } from 'react';
 import Chat from 'components/app/chat/Chat';
-
+import {
+  TopicsContext,
+  TopicsContextType
+} from 'components/app/topics/TopicsProvider';
+import { ChatContext } from 'context/Context';
+import { ProfileUserCard } from 'components/ProfileUserCard/ProfileUserCard';
+import { ControlMessages } from 'components/ControlMessages/ControlMessages';
+import { FilterMessages } from 'components/FilterMessages/FilterMessages';
+import { getCuratorChats } from 'api/routes/curatorChat';
 import { checkboxData } from 'data/checkboxData';
 
 import s from './AdminChat.module.scss';
-import { FilterMessages } from 'components/FilterMessages/FilterMessages';
-import { getCuratorChats } from 'api/routes/curatorChat';
-import { ChatContext } from 'context/Context';
 
 export const AdminChat = () => {
-  const [checkboxList, setCheckboxList] = useState(checkboxData);
+  const { topics } = useContext(TopicsContext) as TopicsContextType;
   const { threadsDispatch } = useContext(ChatContext);
+  const [checkboxList, setCheckboxList] = useState(checkboxData);
 
-  const [selectedRadioValue, setSelectedRadioValue] = useState('');
+  const [typeMessages, setTypeMessages] = useState('');
+  const [messagesByDate, setMessagesByDate] = useState('');
+  const [statusMessages, setStatusMessages] = useState('');
+  const [selectedRadioValue, setSelectedRadioValue] = useState<string>('');
+  const [chosenCheckboxes, setChosenCheckboxes] = useState<string[]>([]);
+  const [topicType, setTopicType] = useState('');
+
+  const handleChangeRadio = (event: ChangeEvent<HTMLInputElement>) => {
+    setSelectedRadioValue(event.target.value);
+  };
+
+  const handleChangeCheckbox = (id: number) => {
+    setCheckboxList(prevCheckboxes => {
+      return prevCheckboxes.map(checkbox => {
+        if (checkbox.id === id)
+          return { ...checkbox, isChecked: !checkbox.isChecked };
+        else {
+          return checkbox;
+        }
+      });
+    });
+  };
 
   useEffect(() => {
+    const selectedValues = checkboxList
+      .filter(checkbox => checkbox.isChecked)
+      .map(checkbox => checkbox.value);
+    setChosenCheckboxes(selectedValues);
+  }, [checkboxList]);
+
+  useEffect(() => {
+    const selectedValuesString =
+      chosenCheckboxes.length > 0 ? chosenCheckboxes.join(',') : null;
+
     const fetchDialogs = async () => {
-      const params = {};
+      const params = {
+        chat_type: typeMessages,
+        ordering: messagesByDate,
+        status: statusMessages,
+        chats: selectedValuesString || selectedRadioValue,
+        topic: topicType
+      };
 
       const { data } = await getCuratorChats(params);
       threadsDispatch({
@@ -26,52 +69,59 @@ export const AdminChat = () => {
     };
 
     fetchDialogs();
-  }, []);
-
-  const handleChangeCheckbox = (id: number) => {
-    const updatedCheckboxes = checkboxList.map(checkbox => {
-      if (checkbox.id === id) {
-        return { ...checkbox, isChecked: !checkbox.isChecked };
-      } else {
-        return checkbox;
-      }
-    });
-    setCheckboxList(updatedCheckboxes);
-  };
-  const handleChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
-    setSelectedRadioValue(e.target.value);
-  };
+  }, [
+    typeMessages,
+    messagesByDate,
+    statusMessages,
+    selectedRadioValue,
+    chosenCheckboxes,
+    topicType
+  ]);
 
   const handleTypeMessagesChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    console.log(event.target.value);
+    setTypeMessages(event.target.value);
   };
 
   const handleSortingMessagesChange = (
     event: ChangeEvent<HTMLSelectElement>
   ) => {
-    console.log(event.target.value);
+    setMessagesByDate(event.target.value);
   };
 
   const handleStatusMessagesChange = (
     event: ChangeEvent<HTMLSelectElement>
   ) => {
-    console.log(event.target.value);
+    setStatusMessages(event.target.value);
   };
+
+  const handleTypeTopicChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setTopicType(event.target.value);
+  };
+
   return (
     <div className={s.container}>
-      <div className={s.controlsWrapper}>
-        <FilterMessages
-          checkboxList={checkboxList}
-          isChecked={selectedRadioValue === 'all'}
-          handleChangeRadio={handleChangeRadio}
-          handleChangeCheckbox={handleChangeCheckbox}
-          handleTypeMessagesChange={handleTypeMessagesChange}
-          handleStatusMessagesChange={handleStatusMessagesChange}
-          handleSortingMessagesChange={handleSortingMessagesChange}
+      <FilterMessages
+        checkboxList={checkboxList}
+        isChecked={selectedRadioValue === 'all'}
+        handleChangeRadio={handleChangeRadio}
+        handleChangeCheckbox={handleChangeCheckbox}
+        handleTypeMessagesChange={handleTypeMessagesChange}
+        handleStatusMessagesChange={handleStatusMessagesChange}
+        handleSortingMessagesChange={handleSortingMessagesChange}
+      />
+
+      {typeMessages === 'topic' && (
+        <ControlMessages
+          topics={topics}
+          handleTypeTopicChange={handleTypeTopicChange}
         />
-      </div>
-      <div className={s.chatWrapper}>
-        <Chat />
+      )}
+
+      <div className={s.flex}>
+        <div className={s.chatWrapper}>
+          <Chat />
+        </div>
+        <ProfileUserCard />
       </div>
     </div>
   );

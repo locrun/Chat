@@ -4,7 +4,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Chat from 'components/app/chat/Chat';
 
-import ProfileUserCard from 'components/ProfileUserCard/ProfileUserCard';
 import MessageStarting from 'components/message-starting/MessageStarting';
 
 import Search from 'components/doc-components/Search';
@@ -41,10 +40,6 @@ export const Example = () => {
           Чат с карточкой студента (Админка) -
         </Link>
         <Link to="http://localhost:3000/student-chat">Чат студента</Link>
-      </div>
-
-      <div style={{ maxWidth: '285px' }}>
-        <ProfileUserCard />
       </div>
 
       <div style={{ width: '854px' }}>

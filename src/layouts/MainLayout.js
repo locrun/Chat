@@ -1,12 +1,5 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import classNames from 'classnames';
-import NavbarTop from 'components/navbar/top/NavbarTop';
-import NavbarVertical from 'components/navbar/vertical/NavbarVertical';
-import Footer from 'components/footer/Footer';
-import ProductProvider from 'components/app/e-commerce/ProductProvider';
-import CourseProvider from 'components/app/e-learning/CourseProvider';
-import ModalAuth from 'components/authentication/modal/ModalAuth';
 import PrivateRoute from 'routes/privateRoute';
 
 import { useAppContext } from 'Main';
@@ -15,15 +8,14 @@ import Apis from 'api/index';
 import { checkAllRealmRolesAssigned } from 'helpers/utils';
 import keycloakRealmRoles from 'helpers/keycloakRealmRoles';
 import { ChatTopic } from 'pages/ChatTopic/ChatTopic';
-import { StudentProfile } from 'pages/StudentProfile/StudentProfile';
+import { AdminChat } from 'pages/AdminChat/AdminChat';
 import { usePage } from 'components/app/pagesProvider/PagesProvider';
 import { PageType } from 'shared/types';
 import { Chats } from './Chats';
 
 const MainLayout = () => {
   const { hash, pathname } = useLocation();
-  const isKanban = pathname.includes('kanban');
-  // const isChat = pathname.includes('chat');
+
   const { keycloak } = useKeycloak();
   const { page } = usePage();
 
@@ -58,7 +50,7 @@ const MainLayout = () => {
   }
 
   const {
-    config: { isFluid, navbarPosition }
+    config: { isFluid }
   } = useAppContext();
 
   useEffect(() => {
@@ -96,7 +88,7 @@ const MainLayout = () => {
             requiredRoles={[keycloakRealmRoles.CHAT_MANAGER]}
             pageName={'Профиль студента'}
           >
-            <StudentProfile />
+            <AdminChat />
           </PrivateRoute>
         );
       default:

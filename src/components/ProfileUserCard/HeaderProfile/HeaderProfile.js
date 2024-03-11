@@ -6,7 +6,7 @@ import { HashLink } from 'react-router-hash-link';
 import { CgClose } from 'react-icons/cg';
 import s from '../ProfileUserCard.module.scss';
 
-const HeaderProfile = ({ avatar, userName, linkProfile }) => {
+export const HeaderProfile = ({ avatar, userName, linkProfile }) => {
   return (
     <Flex alignItems="center" className={s.header}>
       <Avatar src={avatar} />
@@ -32,4 +32,3 @@ HeaderProfile.propTypes = {
     path: PropTypes.string.isRequired
   }).isRequired
 };
-export default HeaderProfile;

@@ -11,6 +11,7 @@ export const endpoints_curator = {
   chats_lists: '/chats/',
   create_chats: '/chats/',
   update_chats: (id: number) => `/chats/${id}/`,
+  assign_curator: '/chats/assign/',
   close_chat: (id: number) => `/chats/${id}/close/`,
   chats_info: '/chats/info/',
   create_message: '/chats/messages/',

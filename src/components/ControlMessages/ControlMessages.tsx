@@ -4,20 +4,29 @@ import classnames from 'classnames';
 import { Topics } from 'types/topics';
 import { ChatContext } from 'context/Context';
 import s from './ControlMessages.module.scss';
-import { closeCurrentDialog } from 'api/routes/curatorChat';
+import { assignCurator, closeCurrentDialog } from 'api/routes/curatorChat';
+import { AssignCuratorParams } from 'shared/types/curator';
 
 interface ColtrolMessagesProps {
   topics: Topics[];
-  handleChangeTopicType: (e: ChangeEvent<HTMLSelectElement>) => void;
+  handleTypeTopicChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const ControlMessages = ({
+export const ControlMessages = ({
   topics,
-  handleChangeTopicType
+  handleTypeTopicChange
 }: ColtrolMessagesProps) => {
   const { currentThread } = useContext(ChatContext);
 
-  const deleteDialog = () => {
+  const assignCuratorHandler = () => {
+    const params: AssignCuratorParams = {
+      chat: currentThread.id,
+      curator: ''
+    };
+    if (currentThread) assignCurator(params);
+  };
+
+  const deleteDialogHandler = () => {
     if (currentThread) closeCurrentDialog(currentThread.id);
   };
 
@@ -29,7 +38,22 @@ const ControlMessages = ({
             <span className={s.label}>Обращения</span>
             <Form.Select
               className={s.select}
-              onChange={e => handleChangeTopicType(e)}
+              onChange={e => handleTypeTopicChange(e)}
+            >
+              {topics.map(item => {
+                return (
+                  <option key={item.title} value={item.id}>
+                    {item.title}
+                  </option>
+                );
+              })}
+            </Form.Select>
+          </div>
+          <div className={s.topicsSelect}>
+            <span className={s.label}>Обращения</span>
+            <Form.Select
+              className={s.select}
+              onChange={e => handleTypeTopicChange(e)}
             >
               {topics.map(item => {
                 return (
@@ -44,7 +68,9 @@ const ControlMessages = ({
         <div className={s.buttons}>
           <div className={s.flexCol}>
             <span className={s.label}>Нет менеджера</span>
-            <button className={s.button}>Взять себе</button>
+            <button className={s.button} onClick={assignCuratorHandler}>
+              Взять себе
+            </button>
           </div>
           <div className={s.flexCol}>
             <span className={s.label}>
@@ -52,7 +78,7 @@ const ControlMessages = ({
             </span>
             <button
               className={classnames(s.button, s.openButton)}
-              onClick={deleteDialog}
+              onClick={deleteDialogHandler}
             >
               Закрыть
             </button>
@@ -62,5 +88,3 @@ const ControlMessages = ({
     </div>
   );
 };
-
-export default ControlMessages;

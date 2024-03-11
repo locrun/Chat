@@ -202,7 +202,6 @@ import PrivateMainLayoutRoute from './privateMainLayoutRoute';
 import keycloakRealmRoles from '../helpers/keycloakRealmRoles';
 
 import { ChatTopic } from '../pages/ChatTopic/ChatTopic';
-import { StudentProfile } from 'pages/StudentProfile/StudentProfile';
 import { AdminChat } from '../pages/AdminChat/AdminChat';
 import { StudentChat } from 'pages/StudentChat/StudentChat';
 
@@ -339,7 +338,7 @@ const FalconRoutes = () => {
               requiredRoles={[keycloakRealmRoles.CHAT_MANAGER]}
               pageName={'дефолтный дашборд'}
             >
-              <StudentProfile />
+              <AdminChat />
             </PrivateRoute>
           }
         />

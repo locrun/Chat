@@ -4,22 +4,27 @@ import Apis from '..';
 import {
   ChatInfo,
   ChatList,
-  CuratorChatPayloadParams,
+  ChatFilterParams,
   CuratorTopicsResponse,
   OrderCreationPayload,
   OrderCreationResponse,
   UpdateMessagesParams,
   UpdateMessagesResponse,
   UpdateTopic,
-  Note
+  Note,
+  AssignCuratorParams
 } from 'shared/types/curator';
 import { Message, CreateMessagePayload } from 'shared/types';
 import { AxiosPaginatedResponse } from 'types/api';
 
 export const getCuratorChats = (
-  params: CuratorChatPayloadParams
+  params: ChatFilterParams
 ): AxiosPromise<AxiosPaginatedResponse<ChatList>> => {
   return Apis.curator_api.get(endpoints_curator.chats_lists, { params });
+};
+
+export const assignCurator = (data: AssignCuratorParams) => {
+  return Apis.curator_api.post(endpoints_curator.assign_curator, data);
 };
 
 export const createCuratorChats = (
