@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { useKeycloak } from '@react-keycloak/web';
 import Lottie from 'lottie-react';
 import Flex from '../components/common/Flex';
@@ -65,8 +67,10 @@ const PrivateMainLayoutRoute = ({ children }) => {
       </>
     );
   } else {
-    keycloak.login({ redirectUri: window.location.url }).then(r => null);
+    keycloak.login({ redirectUri: window.location.url }).then(() => null);
   }
 };
-
+PrivateMainLayoutRoute.propTypes = {
+  children: PropTypes.node.isRequired
+};
 export default PrivateMainLayoutRoute;

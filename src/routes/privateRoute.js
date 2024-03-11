@@ -1,14 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useKeycloak } from '@react-keycloak/web';
-import Lottie from 'lottie-react';
-import Flex from '../components/common/Flex';
-import infiniteLoop from 'assets/img/animated-icons/infinite-loop.json';
-import { Alert, Button, Modal } from 'react-bootstrap';
+
+import { Alert } from 'react-bootstrap';
 import { checkAllRealmRolesAssigned } from '../helpers/utils';
 
 const PrivateRoute = ({ children, requiredRoles, pageName }) => {
-  const { initialized, keycloak } = useKeycloak();
-  const isLoggedIn = keycloak.authenticated;
+  const { keycloak } = useKeycloak();
 
   if (
     typeof requiredRoles === 'undefined' ||
@@ -28,5 +26,9 @@ const PrivateRoute = ({ children, requiredRoles, pageName }) => {
     );
   }
 };
-
+PrivateRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+  requiredRoles: PropTypes.string.isRequired,
+  pageName: PropTypes.string.isRequired
+};
 export default PrivateRoute;

@@ -22,9 +22,8 @@ const ThreadInfo = ({ thread }) => {
   const [isOpenSharedMediaCollapse, setIsOpenSharedMediaCollapse] =
     useState(false);
 
-  const { getUser, isOpenThreadInfo, groups, setIsOpenThreadInfo } =
+  const { isOpenThreadInfo, groups, setIsOpenThreadInfo } =
     useContext(ChatContext);
-  const user = getUser(thread);
 
   const groupMembers =
     thread.type === 'group'

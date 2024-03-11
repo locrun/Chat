@@ -205,8 +205,6 @@ import { ChatTopic } from '../pages/ChatTopic/ChatTopic';
 import { AdminChat } from '../pages/AdminChat/AdminChat';
 import { StudentChat } from 'pages/StudentChat/StudentChat';
 
-import { Example } from '../pages/Example/Example';
-
 const FalconRoutes = () => {
   return (
     <Routes>
