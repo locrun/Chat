@@ -49,6 +49,12 @@ const MainLayout = () => {
       }
       return config;
     });
+    Apis.client_api.interceptors.request.use(function (config) {
+      if (typeof window !== 'undefined') {
+        config.headers['Authorization'] = `${keycloak.token}`; // token - токен из кейклока - главная строка
+      }
+      return config;
+    });
   }
 
   const {
