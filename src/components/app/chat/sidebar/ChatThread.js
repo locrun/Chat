@@ -36,8 +36,8 @@ const ChatThread = ({ thread, index }) => {
   const fetchMessagesList = async id => {
     try {
       const { data } = isChatClient
-        ? await getMessagesListClient({ id })
-        : await getMessagesListCurator({ id });
+        ? await getMessagesListClient({ id: thread.id })
+        : await getMessagesListCurator({ id: thread.id });
 
       messagesDispatch({
         type: 'SET_MESSAGES',

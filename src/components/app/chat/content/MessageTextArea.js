@@ -7,6 +7,10 @@ import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useAppContext } from 'Main';
+import { createCuratorMessage } from 'api/routes/curatorChat';
+import { useKeycloak } from '@react-keycloak/web';
+import { useRolesActions } from 'hooks/useDivideActions';
+import { createClientMessage } from 'api/routes/clientChat';
 
 const formatDate = date => {
   const options = {
@@ -41,6 +45,10 @@ const MessageTextArea = () => {
   } = useContext(ChatContext);
   const [previewEmoji, setPreviewEmoji] = useState(false);
   const [message, setMessage] = useState('');
+  const [documents, setDocuments] = useState([]);
+
+  const { keycloak } = useKeycloak();
+  const divideAction = useRolesActions();
 
   const {
     config: { isDark }
@@ -52,7 +60,29 @@ const MessageTextArea = () => {
     setPreviewEmoji(false);
   };
 
-  const handleSubmit = e => {
+  const sendCuratorMessage = async () => {
+    const formData = new FormData();
+
+    documents.forEach(file => {
+      formData.append('files', file);
+    });
+    formData.append('text', message);
+    formData.append('message_type', 'file');
+    formData.append('chat', currentThread.topic.id);
+
+    return await createCuratorMessage(formData);
+  };
+
+  const sendClientMessage = () => {
+    return createClientMessage({
+      text: message,
+      message_type: 'text',
+      files: [],
+      chat: currentThread.topic.id
+    });
+  };
+
+  const handleSubmit = async e => {
     e.preventDefault();
     const date = new Date();
     let newMessage = {
@@ -62,18 +92,17 @@ const MessageTextArea = () => {
       time: formatDate(date)
     };
 
-    const { content } = messages.find(
-      ({ id }) => id === currentThread.messagesId
-    );
-
     if (message) {
+      const { data } = await divideAction(
+        sendClientMessage,
+        sendCuratorMessage
+      );
+
       messagesDispatch({
         type: 'EDIT',
-        payload: {
-          id: currentThread.messagesId,
-          content: [...content, newMessage]
-        },
-        id: currentThread.messagesId
+        payload: data,
+        id: currentThread.id,
+        isUpdatedStart: true
       });
 
       threadsDispatch({
@@ -93,6 +122,23 @@ const MessageTextArea = () => {
     }
   }, [isOpenThreadInfo]);
 
+  const fileListToFiles = fileList => {
+    let filesArray = [];
+
+    for (let i = 0; i < fileList.length; i++) {
+      filesArray.push(fileList[i]);
+    }
+
+    return filesArray;
+  };
+
+  const handleInputFiles = event => {
+    setDocuments(prevDocuments => [
+      ...prevDocuments,
+      ...fileListToFiles(event.target.files)
+    ]);
+  };
+
   return (
     <Form className="chat-editor-area" onSubmit={handleSubmit}>
       <TextareaAutosize
@@ -109,7 +155,12 @@ const MessageTextArea = () => {
         <Form.Label className="chat-file-upload cursor-pointer">
           <FontAwesomeIcon icon="paperclip" />
         </Form.Label>
-        <Form.Control type="file" className="d-none" />
+
+        <Form.Control
+          onChange={handleInputFiles}
+          type="file"
+          className="d-none"
+        />
       </Form.Group>
 
       <Button

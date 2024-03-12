@@ -59,9 +59,13 @@ export const getChatInfoStatistics = (): AxiosPromise<ChatInfo> => {
 };
 
 export const createCuratorMessage = (
-  data: CreateMessagePayload
+  formData: CreateMessagePayload
 ): AxiosPromise<Message> => {
-  return Apis.curator_api.post(endpoints_curator.create_message, data);
+  return Apis.curator_api.post(endpoints_curator.create_message, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
 };
 
 export const updateMessage = (

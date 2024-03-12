@@ -25,7 +25,7 @@ export enum ChatType {
 export interface CreateMessagePayload {
   text: string;
   message_type: MessageType;
-  files: string[];
+  files: File[];
   chat: number;
 }
 
