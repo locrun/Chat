@@ -1,8 +1,7 @@
 import Keycloak from 'keycloak-js';
-import PLATFORM_URL from './constants/index';
 
 const keycloak = new Keycloak({
-  url: PLATFORM_URL,
+  url: process.env.REACT_APP_KEYCLOAK_URL,
   realm: 'openedx',
   clientId: 'crm'
 });
