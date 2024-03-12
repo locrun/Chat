@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { Toolbar } from 'components/Toolbar/Toolbar';
 import { TopicList } from 'components/TopicList/TopicList';
 import Search from 'components/doc-components/Search';
 
@@ -14,7 +13,6 @@ export const ChatTopic = () => {
 
   return (
     <div className={s.container}>
-      <Toolbar />
       <div className={s.flexCol}>
         <Search />
         <TopicList isLoading={isLoading} topics={topics} />
