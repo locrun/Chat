@@ -8,36 +8,12 @@ import { Button, Form } from 'react-bootstrap';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useAppContext } from 'Main';
 import { createCuratorMessage } from 'api/routes/curatorChat';
-import { useKeycloak } from '@react-keycloak/web';
 import { useRolesActions } from 'hooks/useDivideActions';
 import { createClientMessage } from 'api/routes/clientChat';
-
-const formatDate = date => {
-  const options = {
-    weekday: 'short',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric'
-  };
-
-  const now = date
-    .toLocaleString('en-US', options)
-    .split(',')
-    .map(item => item.trim());
-
-  return {
-    day: now[0],
-    hour: now[3],
-    date: now[1] + ', ' + now[2]
-  };
-};
 
 const MessageTextArea = () => {
   const {
     messagesDispatch,
-    messages,
     threadsDispatch,
     currentThread,
     setScrollToBottom,
@@ -47,7 +23,6 @@ const MessageTextArea = () => {
   const [message, setMessage] = useState('');
   const [documents, setDocuments] = useState([]);
 
-  const { keycloak } = useKeycloak();
   const divideAction = useRolesActions();
 
   const {
@@ -84,13 +59,6 @@ const MessageTextArea = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const date = new Date();
-    let newMessage = {
-      senderUserId: 3,
-      message: `${message.replace(/(?:\r\n|\r|\n)/g, '<br>')}`,
-      status: 'delivered',
-      time: formatDate(date)
-    };
 
     if (message) {
       const { data } = await divideAction(

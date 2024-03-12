@@ -1,13 +1,14 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { checkAllRealmRolesAssigned } from 'helpers/utils';
 import keycloakRealmRoles from '../helpers/keycloakRealmRoles';
+type CallbackFunction = () => void;
 
 export const useRolesActions = () => {
   const { keycloak } = useKeycloak();
 
   const divideAction = (
-    clientCallback: Function,
-    curatorCallback: Function
+    clientCallback: CallbackFunction,
+    curatorCallback: CallbackFunction
   ) => {
     if (
       keycloak.realmAccess &&

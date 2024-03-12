@@ -33,7 +33,7 @@ const ChatThread = ({ thread, index }) => {
 
   const formattedTime = date.toLocaleDateString('ru-RU', options);
 
-  const fetchMessagesList = async id => {
+  const fetchMessagesList = async () => {
     try {
       const { data } = isChatClient
         ? await getMessagesListClient({ id: thread.id })
