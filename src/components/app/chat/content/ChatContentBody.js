@@ -37,25 +37,27 @@ const ChatContentBody = ({ thread }) => {
     }
     return null;
   };
-
+  console.log('threadMessages', threadMessages);
   return (
     <div className="chat-content-body" style={{ display: 'inherit' }}>
       <ThreadInfo thread={thread} isOpenThreadInfo={true} />
       <SimpleBarReact style={{ height: '100%' }}>
         <div className="chat-content-scroll-area">
-          {threadMessages?.map(({ text, created_at, is_my_message }, index) => {
-            return (
-              <div>
-                {checkDayDiff(created_at)}
-                <Message
-                  key={index}
-                  message={text}
-                  time={created_at}
-                  is_my={is_my_message}
-                />
-              </div>
-            );
-          })}
+          {threadMessages?.map(
+            ({ text, created_at, is_my_message, files }, index) => {
+              return (
+                <div key={index}>
+                  {checkDayDiff(created_at)}
+                  <Message
+                    message={text}
+                    time={created_at}
+                    files={files}
+                    is_my={is_my_message}
+                  />
+                </div>
+              );
+            }
+          )}
         </div>
         <div ref={messagesEndRef} />
       </SimpleBarReact>

@@ -5,7 +5,7 @@ import Flex from 'components/common/Flex';
 import classNames from 'classnames';
 import s from './content.module.scss';
 
-const Message = ({ message, time, is_my }) => {
+const Message = ({ message, time, is_my, files }) => {
   const date = new Date(time);
 
   const NewTime = date
@@ -31,6 +31,16 @@ const Message = ({ message, time, is_my }) => {
         >
           <p>{message}</p>
         </div>
+        {files.map(image => {
+          return (
+            <img
+              className={s.image}
+              key={image.id}
+              src={image?.file}
+              alt="picture"
+            />
+          );
+        })}
         <div className={s.time}>
           <p>{NewTime}</p>
         </div>
@@ -40,7 +50,9 @@ const Message = ({ message, time, is_my }) => {
 };
 Message.propTypes = {
   message: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  time: PropTypes.string.isRequired
+  time: PropTypes.string.isRequired,
+  is_my: PropTypes.string.bol,
+  files: PropTypes.string
 };
 
 Message.defaultProps = { status: '' };
