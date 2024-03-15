@@ -13,7 +13,7 @@ const ChatSidebar = ({ hideSidebar, threads }) => {
         <SimpleBarReact style={{ height: '100%', minWidth: '65px' }}>
           <Nav className="border-0">
             {threads.map((thread, index) => (
-              <ChatThread thread={thread} index={index} key={thread.id} />
+              <ChatThread thread={thread} index={thread.id} key={thread.id} />
             ))}
           </Nav>
         </SimpleBarReact>

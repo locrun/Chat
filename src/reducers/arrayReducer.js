@@ -3,8 +3,16 @@ import orderBy from 'lodash/orderBy';
 import { toast } from 'react-toastify';
 
 export const arrayReducer = (state, action) => {
-  const { type, id, payload, sortBy, order, isAddToStart, isUpdatedStart } =
-    action;
+  const {
+    type,
+    id,
+    payload,
+    sortBy,
+    order,
+    isAddToStart,
+    isUpdatedStart,
+    isAddToEnd
+  } = action;
   switch (type) {
     case 'SET_DIALOGS':
       return payload;
@@ -32,6 +40,10 @@ export const arrayReducer = (state, action) => {
     case 'EDIT':
       if (id !== 0 && !id) {
         return state;
+      }
+      if (isAddToEnd) {
+        const filteredState = state.filter(item => item.id !== id);
+        return [...filteredState, payload];
       }
       if (isUpdatedStart) {
         const filteredState = state.filter(item => item.id !== id);

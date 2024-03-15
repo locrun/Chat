@@ -42,9 +42,13 @@ export const createClientChats = (
 };
 
 export const createClientMessage = (
-  data: CreateMessagePayload
+  formData: CreateMessagePayload
 ): AxiosPromise<Message> => {
-  return Apis.client_api.post(endpoints_client.create_message, data);
+  return Apis.client_api.post(endpoints_client.create_message, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
 };
 
 export const markChatMessagesAsReadClient = ({

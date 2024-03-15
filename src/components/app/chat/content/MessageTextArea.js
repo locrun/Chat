@@ -35,14 +35,17 @@ const MessageTextArea = () => {
     setPreviewEmoji(false);
   };
 
-  console.log(currentThread);
-
   const sendCuratorMessage = async () => {
     const formData = new FormData();
+    let messageType = 'text';
 
-    documents.forEach(file => {
-      formData.append('files', file);
-    });
+    if (documents.length > 0) {
+      documents.forEach(file => {
+        formData.append('files', file);
+      });
+      messageType = 'file';
+    }
+
     formData.append('text', message);
     formData.append('message_type', 'file');
     formData.append('chat', currentThread.id);
@@ -51,38 +54,49 @@ const MessageTextArea = () => {
   };
 
   const sendClientMessage = () => {
-    return createClientMessage({
-      text: message,
-      message_type: 'text',
-      files: [],
-      chat: currentThread.id
-    });
+    const formData = new FormData();
+    let messageType = 'text';
+
+    if (documents.length > 0) {
+      documents.forEach(file => {
+        formData.append('files', file);
+      });
+      messageType = 'file';
+    }
+
+    formData.append('text', message);
+    formData.append('message_type', messageType);
+    formData.append('chat', currentThread.id);
+
+    return createClientMessage(formData);
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
 
     if (message.length > 0) {
-      const { data } = await divideAction(
-        sendClientMessage,
-        sendCuratorMessage
-      );
+      try {
+        const { data } = await divideAction(
+          sendClientMessage,
+          sendCuratorMessage
+        );
+        messagesDispatch({
+          type: 'EDIT',
+          payload: data,
+          id: currentThread.id,
+          isUpdatedStart: true
+        });
 
-      messagesDispatch({
-        type: 'EDIT',
-        payload: data,
-        id: currentThread.id,
-        isUpdatedStart: true
-      });
-
-      threadsDispatch({
-        type: 'EDIT',
-        payload: currentThread,
-        id: currentThread.id,
-        isUpdatedStart: true
-      });
+        threadsDispatch({
+          type: 'EDIT',
+          payload: currentThread,
+          id: currentThread.id,
+          isUpdatedStart: true
+        });
+      } catch (e) {}
     }
     setMessage('');
+    setDocuments([]);
     setScrollToBottom(true);
   };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import Chat from 'components/app/chat/Chat';
 import Search from 'components/doc-components/Search';
 import { getClientChats } from 'api/routes/clientChat';
@@ -9,7 +9,8 @@ import { PageType } from 'shared/types';
 import s from './StudentChat.module.scss';
 
 export const StudentChat = () => {
-  const { threads, threadsDispatch } = useContext(ChatContext);
+  const { threadsDispatch } = useContext(ChatContext);
+  const [isThreadsEmpty, setIsThreadsEmpty] = useState(false);
   const { changePage } = usePage();
 
   useEffect(() => {
@@ -17,6 +18,8 @@ export const StudentChat = () => {
       const params = {};
 
       const { data } = await getClientChats(params);
+
+      if (data.results.length === 0) setIsThreadsEmpty(true);
 
       threadsDispatch({
         type: 'SET_DIALOGS',
@@ -31,7 +34,7 @@ export const StudentChat = () => {
       <div className={s.search}>
         <Search />
       </div>
-      {threads.length === 0 ? (
+      {isThreadsEmpty ? (
         <MessageStarting />
       ) : (
         <>

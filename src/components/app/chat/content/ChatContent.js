@@ -12,7 +12,7 @@ const ChatContent = ({ setHideSidebar, hideSidebar }) => {
   return (
     <Tab.Content className="card-chat-content">
       {threads.map((thread, index) => (
-        <Tab.Pane key={index} eventKey={index} className="card-chat-pane">
+        <Tab.Pane key={index} eventKey={thread.id} className="card-chat-pane">
           <ChatContentHeader
             thread={thread}
             setHideSidebar={setHideSidebar}
