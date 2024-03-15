@@ -35,6 +35,8 @@ const MessageTextArea = () => {
     setPreviewEmoji(false);
   };
 
+  console.log(currentThread);
+
   const sendCuratorMessage = async () => {
     const formData = new FormData();
 
@@ -43,7 +45,7 @@ const MessageTextArea = () => {
     });
     formData.append('text', message);
     formData.append('message_type', 'file');
-    formData.append('chat', currentThread.topic.id);
+    formData.append('chat', currentThread.id);
 
     return await createCuratorMessage(formData);
   };
@@ -53,14 +55,14 @@ const MessageTextArea = () => {
       text: message,
       message_type: 'text',
       files: [],
-      chat: currentThread.topic.id
+      chat: currentThread.id
     });
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
 
-    if (message) {
+    if (message.length > 0) {
       const { data } = await divideAction(
         sendClientMessage,
         sendCuratorMessage

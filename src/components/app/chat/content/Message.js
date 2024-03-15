@@ -3,27 +3,37 @@ import PropTypes from 'prop-types';
 
 import Flex from 'components/common/Flex';
 import classNames from 'classnames';
+import s from './content.module.scss';
 
-const Message = ({ message, time }) => {
+const Message = ({ message, time, is_my }) => {
   const date = new Date(time);
 
-  const formattedTime = `${
-    new Intl.DateTimeFormat('ru-RU', { month: 'long' })
-      .format(date)
-      .charAt(0)
-      .toUpperCase() +
-    new Intl.DateTimeFormat('ru-RU', { month: 'long' }).format(date).slice(1)
-  } ${date.getDate()}, ${date.getFullYear()}, ${date.toLocaleString('en-US', {
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true
-  })}`;
+  const NewTime = date
+    .toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    })
+    .toLowerCase();
 
   return (
-    <Flex className={classNames('p-3', 'd-block')}>
+    <Flex
+      className={classNames('p-3', 'd-block', {
+        [s.isMyMessage]: is_my
+      })}
+    >
       <div>
-        <p>{message}</p>
-        <p>{formattedTime}</p>
+        <div
+          className={classNames(s.message, {
+            [s.isMy]: is_my,
+            [s.another]: !is_my
+          })}
+        >
+          <p>{message}</p>
+        </div>
+        <div className={s.time}>
+          <p>{NewTime}</p>
+        </div>
       </div>
     </Flex>
   );

@@ -26,11 +26,13 @@ $grays: (
   '800': $gray-800,
   '900': $gray-900,
   '1000': $gray-1000,
-  '1100': $gray-1100) !default;
+  '1100': $gray-1100
+) !default;
 
 // color-variables
 $magnolia: #f0edfe;
 $blue: #2c7be5 !default;
+$message-blue: #317adf !default;
 $indigo: #727cf5 !default;
 $purple: #6b5eae !default;
 $pink: #ff679b !default;
@@ -68,7 +70,8 @@ $theme-colors: (
   'warning': $warning,
   'danger': $danger,
   'light': $light,
-  'dark': $dark) !default;
+  'dark': $dark
+) !default;
 
 // brand-color-variables
 $linkedin: #0077b5 !default;
@@ -85,14 +88,16 @@ $brand-colors: (
   'twitter': $twitter,
   'linkedin': $linkedin,
   'youtube': $youtube,
-  'github': $github) !default;
+  'github': $github
+) !default;
 
 // icon-circle-color-map
 $icon-circle-colors: (
   'primary': $primary,
   'success': $success,
   'info': $info,
-  'warning': $warning) !default;
+  'warning': $warning
+) !default;
 
 // scss-docs-start theme-text-variables
 $primary-text-emphasis: shade-color($primary, 25%) !default;
