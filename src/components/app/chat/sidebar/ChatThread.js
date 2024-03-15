@@ -24,14 +24,11 @@ const ChatThread = ({ thread, index }) => {
     keycloakRealmRoles.CHAT_USER
   ]);
 
-  const date = new Date(thread.created_at);
   const options = {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit'
   };
-
-  const formattedTime = date.toLocaleDateString('ru-RU', options);
 
   const fetchMessagesList = async () => {
     try {
@@ -48,6 +45,14 @@ const ChatThread = ({ thread, index }) => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const getFormattedDate = (time, formatOptions) => {
+    if (!time) {
+      return '';
+    }
+    const dateTime = new Date(time);
+    return new Date(dateTime).toLocaleDateString('ru-RU', formatOptions);
   };
 
   return (
@@ -73,7 +78,7 @@ const ChatThread = ({ thread, index }) => {
           <div className="min-w-0">
             <div className="chat-contact-content pe-3">
               {/* <LastMessage lastMessage={lastMessage} thread={thread} /> */}
-              {formattedTime}
+              {getFormattedDate(thread.last_message?.created_at, options)}
               <div className="position-absolute bottom-0 end-0 hover-hide"></div>
             </div>
           </div>
