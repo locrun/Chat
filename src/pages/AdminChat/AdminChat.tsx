@@ -27,9 +27,22 @@ export const AdminChat = () => {
 
   const handleChangeRadio = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedRadioValue(event.target.value);
+    setCheckboxList(prevCheckboxes => {
+      return prevCheckboxes.map(checkbox => {
+        return { ...checkbox, isChecked: true };
+      });
+    });
   };
 
   const handleChangeCheckbox = (id: number) => {
+    const hasCheckedCheckbox = checkboxList.some(item => {
+      return item.isChecked;
+    });
+
+    if (hasCheckedCheckbox) {
+      setSelectedRadioValue('');
+    }
+
     setCheckboxList(prevCheckboxes => {
       return prevCheckboxes.map(checkbox => {
         if (checkbox.id === id)
