@@ -37,7 +37,7 @@ const ChatContentBody = ({ thread }) => {
     }
     return null;
   };
-  console.log('threadMessages', threadMessages);
+
   return (
     <div className="chat-content-body" style={{ display: 'inherit' }}>
       <ThreadInfo thread={thread} isOpenThreadInfo={true} />
