@@ -16,7 +16,7 @@ import { Nav } from 'react-bootstrap';
 import ChatSidebarDropdownAction from './ChatSidebarDropdownAction';
 import { ChatContext } from 'context/Context';
 
-const ChatThread = ({ thread, index, messageCount }) => {
+const ChatThread = ({ thread, index }) => {
   const { messagesDispatch } = useContext(ChatContext);
   const { keycloak } = useKeycloak();
 
@@ -84,7 +84,16 @@ const ChatThread = ({ thread, index, messageCount }) => {
           <Flex justifyContent="between">
             <h6 className="mb-0 chat-contact-title">{thread.topic.title}</h6>
             <span className="message-time fs-11"></span>
-            {messageCount}
+            <span style={{ fontSize: '12px' }}>
+              <span>
+                {thread.unread_messages_count > 0 && (
+                  <>
+                    <span>{thread.unread_messages_count}</span>
+                    <span>Не прочитанных сообщений</span>
+                  </>
+                )}
+              </span>
+            </span>
           </Flex>
           <div className="min-w-0">
             <div className="chat-contact-content pe-3">
@@ -101,8 +110,7 @@ const ChatThread = ({ thread, index, messageCount }) => {
 
 ChatThread.propTypes = {
   thread: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired,
-  messageCount: PropTypes.number.isRequired
+  index: PropTypes.number.isRequired
 };
 
 export default ChatThread;
