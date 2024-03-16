@@ -14,7 +14,7 @@ const Chat = () => {
   const handleSelect = e => {
     setHideSidebar(false);
     setIsOpenThreadInfo(false);
-    const thread = threads.find((thread, index) => thread.id === parseInt(e));
+    const thread = threads.find(thread => thread.id === parseInt(e));
     setCurrentThread(thread);
     setScrollToBottom(true);
   };

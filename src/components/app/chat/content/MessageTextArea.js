@@ -37,13 +37,13 @@ const MessageTextArea = () => {
 
   const sendCuratorMessage = async () => {
     const formData = new FormData();
-    let messageType = 'text';
+    //let messageType = 'text';
 
     if (documents.length > 0) {
       documents.forEach(file => {
         formData.append('files', file);
       });
-      messageType = 'file';
+      //messageType = 'file';
     }
 
     formData.append('text', message);
@@ -93,7 +93,9 @@ const MessageTextArea = () => {
           id: currentThread.id,
           isUpdatedStart: true
         });
-      } catch (e) {}
+      } catch (error) {
+        return console.log(error);
+      }
     }
     setMessage('');
     setDocuments([]);

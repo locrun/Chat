@@ -42,12 +42,12 @@ const ChatSidebar = ({ hideSidebar, threads }) => {
       <div className="contacts-list">
         <SimpleBarReact style={{ height: '100%', minWidth: '65px' }}>
           <Nav className="border-0">
-            {threads.map((thread, index) => (
+            {threads.map(thread => (
               <ChatThread
+                key={thread.id}
                 thread={thread}
                 messageCount={unreadMessageCount}
                 index={thread.id}
-                key={thread.id}
               />
             ))}
           </Nav>
