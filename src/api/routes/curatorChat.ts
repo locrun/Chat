@@ -16,7 +16,10 @@ import {
 } from 'shared/types/curator';
 import { Message, CreateMessagePayload } from 'shared/types';
 import { AxiosPaginatedResponse } from 'types/api';
-import { ChatListMessagePayload } from 'shared/types/client';
+import {
+  ChatListMessagePayload,
+  MarkCharReadPayload
+} from 'shared/types/client';
 
 export const getCuratorChats = (
   params: ChatFilterParams
@@ -85,10 +88,10 @@ export const getCuratorTopics = (params: {
   return Apis.curator_api.get(endpoints_curator.topics_list, { params });
 };
 
-export const markChatMessagesAsReadCurator = (
-  chat_id: number,
-  message_id: number
-): AxiosPromise => {
+export const markChatMessagesAsReadCurator = ({
+  chat_id,
+  message_id
+}: MarkCharReadPayload): AxiosPromise => {
   return Apis.curator_api.get(
     endpoints_curator.mark_as_read_curator(chat_id, message_id)
   );

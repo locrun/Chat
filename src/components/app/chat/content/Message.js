@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Flex from 'components/common/Flex';
 import classNames from 'classnames';
 import s from './content.module.scss';
 
-const Message = ({ message, time, is_my, files }) => {
+const Message = ({ message, time, is_my, files, is_read }) => {
   const date = new Date(time);
 
   const NewTime = date
@@ -31,6 +31,13 @@ const Message = ({ message, time, is_my, files }) => {
         >
           <p>{message}</p>
         </div>
+        {is_my &&
+          (is_read ? (
+            <FontAwesomeIcon icon="check-double" color="rgb(182 193 210)" />
+          ) : (
+            <FontAwesomeIcon icon="check" color="rgb(182 193 210)" />
+          ))}
+
         {files.map(image => {
           return (
             <img
@@ -52,7 +59,8 @@ Message.propTypes = {
   message: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   time: PropTypes.string.isRequired,
   is_my: PropTypes.string.bol,
-  files: PropTypes.string
+  files: PropTypes.string,
+  is_read: PropTypes.string.bol
 };
 
 Message.defaultProps = { status: '' };

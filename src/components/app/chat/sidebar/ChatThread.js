@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { useKeycloak } from '@react-keycloak/web';
 import { checkAllRealmRolesAssigned } from 'helpers/utils';
 import keycloakRealmRoles from 'helpers/keycloakRealmRoles';
+
+import { getMessagesListCurator } from 'api/routes/curatorChat';
 import { getMessagesListClient } from 'api/routes/clientChat';
-import {
-  getMessagesListCurator
-  //markChatMessagesAsReadCurator
-} from 'api/routes/curatorChat';
+import { markChatMessagesAsReadClient } from 'api/routes/clientChat';
+import { markChatMessagesAsReadCurator } from 'api/routes/curatorChat';
 import Flex from 'components/common/Flex';
 import classNames from 'classnames';
 import Avatar from 'components/common/Avatar';
@@ -16,7 +16,7 @@ import { Nav } from 'react-bootstrap';
 import ChatSidebarDropdownAction from './ChatSidebarDropdownAction';
 import { ChatContext } from 'context/Context';
 
-const ChatThread = ({ thread, index }) => {
+const ChatThread = ({ thread, index, messageCount }) => {
   const { messagesDispatch } = useContext(ChatContext);
   const { keycloak } = useKeycloak();
 
@@ -41,7 +41,17 @@ const ChatThread = ({ thread, index }) => {
         payload: data.results
       });
 
-      // await markChatMessagesAsReadCurator(thread.id, thread.last_message.id);
+      if (isChatClient) {
+        await markChatMessagesAsReadClient({
+          chat_id: thread?.id,
+          message_id: thread.last_message.id
+        });
+      } else {
+        await markChatMessagesAsReadCurator({
+          chat_id: thread?.id,
+          message_id: thread.last_message.id
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -74,6 +84,7 @@ const ChatThread = ({ thread, index }) => {
           <Flex justifyContent="between">
             <h6 className="mb-0 chat-contact-title">{thread.topic.title}</h6>
             <span className="message-time fs-11"></span>
+            {messageCount}
           </Flex>
           <div className="min-w-0">
             <div className="chat-contact-content pe-3">
@@ -90,7 +101,8 @@ const ChatThread = ({ thread, index }) => {
 
 ChatThread.propTypes = {
   thread: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired
+  index: PropTypes.number.isRequired,
+  messageCount: PropTypes.number.isRequired
 };
 
 export default ChatThread;

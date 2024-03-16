@@ -7,7 +7,7 @@ import ChatContentBody from './ChatContentBody';
 import MessageTextArea from './MessageTextArea';
 
 const ChatContent = ({ setHideSidebar, hideSidebar }) => {
-  const { threads } = useContext(ChatContext);
+  const { messages, threads } = useContext(ChatContext);
 
   return (
     <Tab.Content className="card-chat-content">
@@ -18,7 +18,7 @@ const ChatContent = ({ setHideSidebar, hideSidebar }) => {
             setHideSidebar={setHideSidebar}
             hideSidebar={hideSidebar}
           />
-          <ChatContentBody thread={thread} />
+          <ChatContentBody thread={thread} messages={messages} />
         </Tab.Pane>
       ))}
       <MessageTextArea />

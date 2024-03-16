@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import Message from './Message';
 import SimpleBarReact from 'simplebar-react';
 import ThreadInfo from './ThreadInfo';
 import { ChatContext } from 'context/Context';
-import s from './content.module.scss';
+
 import NewDay from './NewDay';
 
 const ChatContentBody = ({ thread }) => {
@@ -44,7 +44,7 @@ const ChatContentBody = ({ thread }) => {
       <SimpleBarReact style={{ height: '100%' }}>
         <div className="chat-content-scroll-area">
           {threadMessages?.map(
-            ({ text, created_at, is_my_message, files }, index) => {
+            ({ text, created_at, is_my_message, files, is_read }, index) => {
               return (
                 <div key={index}>
                   {checkDayDiff(created_at)}
@@ -53,6 +53,7 @@ const ChatContentBody = ({ thread }) => {
                     time={created_at}
                     files={files}
                     is_my={is_my_message}
+                    is_read={is_read}
                   />
                 </div>
               );

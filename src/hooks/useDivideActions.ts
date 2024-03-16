@@ -11,15 +11,13 @@ export const useRolesActions = () => {
     curatorCallback: CallbackFunction
   ) => {
     if (
-      keycloak.realmAccess &&
-      checkAllRealmRolesAssigned(keycloak.realmAccess.roles, [
+      checkAllRealmRolesAssigned(keycloak?.realmAccess?.roles, [
         keycloakRealmRoles.CHAT_USER
       ])
     ) {
       return clientCallback();
     } else if (
-      keycloak.realmAccess &&
-      checkAllRealmRolesAssigned(keycloak.realmAccess.roles, [
+      checkAllRealmRolesAssigned(keycloak?.realmAccess?.roles, [
         keycloakRealmRoles.CHAT_MANAGER
       ])
     ) {
