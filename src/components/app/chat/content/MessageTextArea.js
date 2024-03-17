@@ -8,8 +8,8 @@ import { Button, Form } from 'react-bootstrap';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useAppContext } from 'Main';
 import { createCuratorMessage } from 'api/routes/curatorChat';
-import { useRolesActions } from 'hooks/useDivideActions';
 import { createClientMessage } from 'api/routes/clientChat';
+import { checkRoles } from 'helpers/checkRoles';
 
 const MessageTextArea = () => {
   const {
@@ -23,8 +23,6 @@ const MessageTextArea = () => {
   const [message, setMessage] = useState('');
   const [documents, setDocuments] = useState([]);
 
-  const divideAction = useRolesActions();
-
   const {
     config: { isDark }
   } = useAppContext();
@@ -34,6 +32,8 @@ const MessageTextArea = () => {
     setMessage(message + emoji);
     setPreviewEmoji(false);
   };
+
+  const isClient = checkRoles();
 
   const sendCuratorMessage = async () => {
     const formData = new FormData();
@@ -76,10 +76,10 @@ const MessageTextArea = () => {
 
     if (message.length > 0) {
       try {
-        const { data } = await divideAction(
-          sendClientMessage,
-          sendCuratorMessage
-        );
+        const { data } = isClient
+          ? await sendClientMessage()
+          : await sendCuratorMessage();
+
         messagesDispatch({
           type: 'EDIT',
           payload: data,

@@ -13,6 +13,7 @@ const ChatProvider = ({ children }) => {
   const [activeThreadId, setActiveThreadId] = useState(null);
   const [isOpenThreadInfo, setIsOpenThreadInfo] = useState(false);
   const [scrollToBottom, setScrollToBottom] = useState(true);
+  const [key, setKey] = useState(0);
 
   useEffect(() => {
     if (threads.length > 0) {
@@ -54,7 +55,9 @@ const ChatProvider = ({ children }) => {
     currentThread,
     setCurrentThread,
     scrollToBottom,
-    setScrollToBottom
+    setScrollToBottom,
+    key,
+    setKey
   };
 
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;

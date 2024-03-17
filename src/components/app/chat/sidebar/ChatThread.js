@@ -42,15 +42,19 @@ const ChatThread = ({ thread, index }) => {
       });
 
       if (isChatClient) {
-        await markChatMessagesAsReadClient({
-          chat_id: thread?.id,
-          message_id: thread.last_message.id
-        });
+        if (thread.last_message) {
+          await markChatMessagesAsReadClient({
+            chat_id: thread?.id,
+            message_id: thread.last_message.id
+          });
+        }
       } else {
-        await markChatMessagesAsReadCurator({
-          chat_id: thread?.id,
-          message_id: thread.last_message.id
-        });
+        if (thread.last_message) {
+          await markChatMessagesAsReadCurator({
+            chat_id: thread?.id,
+            message_id: thread.last_message?.id
+          });
+        }
       }
     } catch (error) {
       console.log(error);

@@ -6,8 +6,15 @@ import ChatContent from './content/ChatContent';
 import ChatSidebar from './sidebar/ChatSidebar';
 
 const Chat = () => {
-  const { threads, setIsOpenThreadInfo, setCurrentThread, setScrollToBottom } =
-    useContext(ChatContext);
+  const {
+    threads,
+    setIsOpenThreadInfo,
+    setCurrentThread,
+    setScrollToBottom,
+    messagesDispatch,
+    key,
+    setKey
+  } = useContext(ChatContext);
 
   const [hideSidebar, setHideSidebar] = useState(false);
 
@@ -17,12 +24,13 @@ const Chat = () => {
     const thread = threads.find(thread => thread.id === parseInt(e));
     setCurrentThread(thread);
     setScrollToBottom(true);
+    setKey(e);
   };
 
   return (
     <Tab.Container
       id="left-tabs-example"
-      defaultActiveKey={1}
+      activeKey={key}
       onSelect={handleSelect}
     >
       <Card className="card-chat overflow-hidden">

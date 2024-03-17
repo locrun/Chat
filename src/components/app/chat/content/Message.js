@@ -58,9 +58,9 @@ const Message = ({ message, time, is_my, files, is_read }) => {
 Message.propTypes = {
   message: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   time: PropTypes.string.isRequired,
-  is_my: PropTypes.string.bol,
-  files: PropTypes.string,
-  is_read: PropTypes.string.bol
+  is_my: PropTypes.bool,
+  files: PropTypes.array,
+  is_read: PropTypes.bool
 };
 
 Message.defaultProps = { status: '' };

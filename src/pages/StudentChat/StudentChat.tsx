@@ -7,11 +7,17 @@ import { ChatContext } from 'context/Context';
 import { usePage } from 'components/app/pagesProvider/PagesProvider';
 import { PageType } from 'shared/types';
 import s from './StudentChat.module.scss';
+import { getMessagesListCurator } from 'api/routes/curatorChat';
+import { getMessagesListClient } from 'api/routes/clientChat';
+import { checkRoles } from 'helpers/checkRoles';
 
 export const StudentChat = () => {
-  const { threadsDispatch } = useContext(ChatContext);
+  const { threadsDispatch, messagesDispatch, setKey, setCurrentThread } =
+    useContext(ChatContext);
   const [isThreadsEmpty, setIsThreadsEmpty] = useState(false);
   const { changePage } = usePage();
+
+  const isChatClient = checkRoles();
 
   useEffect(() => {
     const fetchClentDialogs = async () => {
@@ -25,7 +31,23 @@ export const StudentChat = () => {
         type: 'SET_DIALOGS',
         payload: data.results
       });
+
+      const thread = data.results[0];
+      if (thread) {
+        setKey(thread.id);
+        setCurrentThread(thread);
+
+        const { data: messages } = isChatClient
+          ? await getMessagesListClient({ id: thread.id })
+          : await getMessagesListCurator({ id: thread.id });
+
+        messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: messages.results
+        });
+      }
     };
+
     fetchClentDialogs();
   }, []);
 
