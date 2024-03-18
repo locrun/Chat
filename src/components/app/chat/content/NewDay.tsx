@@ -6,6 +6,9 @@ interface Props {
 }
 
 const NewDay: FC<Props> = ({ messageTime }) => {
+  const hours = messageTime.getHours().toString().padStart(2, '0');
+  const minutes = messageTime.getMinutes().toString().padStart(2, '0');
+
   const formattedTime = `${
     new Intl.DateTimeFormat('ru-RU', { month: 'long' })
       .format(messageTime)
@@ -14,13 +17,7 @@ const NewDay: FC<Props> = ({ messageTime }) => {
     new Intl.DateTimeFormat('ru-RU', { month: 'long' })
       .format(messageTime)
       .slice(1)
-  } ${messageTime.getDate()}, ${messageTime.getFullYear()}, ${messageTime
-    .toLocaleString('en-US', {
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: true
-    })
-    .toLowerCase()}`;
+  } ${messageTime.getDate()}, ${messageTime.getFullYear()}, ${hours}:${minutes}`;
 
   return <span className={s.newDay}>{formattedTime}</span>;
 };

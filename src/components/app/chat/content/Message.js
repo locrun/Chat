@@ -7,14 +7,10 @@ import s from './content.module.scss';
 
 const Message = ({ message, time, is_my, files, is_read }) => {
   const date = new Date(time);
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
 
-  const NewTime = date
-    .toLocaleTimeString('en-US', {
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true
-    })
-    .toLowerCase();
+  const NewTime = `${hours}:${minutes}`;
 
   return (
     <Flex
@@ -31,12 +27,6 @@ const Message = ({ message, time, is_my, files, is_read }) => {
         >
           <p>{message}</p>
         </div>
-        {is_my &&
-          (is_read ? (
-            <FontAwesomeIcon icon="check-double" color="rgb(182 193 210)" />
-          ) : (
-            <FontAwesomeIcon icon="check" color="rgb(182 193 210)" />
-          ))}
 
         {files.map(image => {
           return (
@@ -48,8 +38,20 @@ const Message = ({ message, time, is_my, files, is_read }) => {
             />
           );
         })}
-        <div className={s.time}>
-          <p>{NewTime}</p>
+        <div
+          className={classNames(s.messageFooter, {
+            [s.isMyFooter]: is_my
+          })}
+        >
+          <div className={s.time}>
+            <span>{NewTime}</span>
+          </div>
+          {is_my &&
+            (is_read ? (
+              <FontAwesomeIcon icon="check-double" color="rgb(182 193 210)" />
+            ) : (
+              <FontAwesomeIcon icon="check" color="rgb(182 193 210)" />
+            ))}
         </div>
       </div>
     </Flex>

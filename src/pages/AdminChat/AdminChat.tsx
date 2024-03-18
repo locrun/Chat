@@ -5,7 +5,7 @@ import {
   TopicsContextType
 } from 'components/app/topics/TopicsProvider';
 import { ChatContext } from 'context/Context';
-import { ProfileUserCard } from 'components/ProfileUserCard/ProfileUserCard';
+//import { ProfileUserCard } from 'components/ProfileUserCard/ProfileUserCard';
 import { ControlMessages } from 'components/ControlMessages/ControlMessages';
 import { FilterMessages } from 'components/FilterMessages/FilterMessages';
 import { getCuratorChats } from 'api/routes/curatorChat';
@@ -134,7 +134,7 @@ export const AdminChat = () => {
         <div className={s.chatWrapper}>
           <Chat />
         </div>
-        <ProfileUserCard />
+        {/*<ProfileUserCard />  TODO: remove temporarily*/}
       </div>
     </div>
   );

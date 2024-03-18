@@ -58,7 +58,6 @@ const App = () => {
         />
         <Route path="/silent-check-sso.html" onEnter={reload} />
       </Routes>
-      <SettingsToggle />
       <SettingsPanel />
       <ToastContainer
         closeButton={CloseButton}

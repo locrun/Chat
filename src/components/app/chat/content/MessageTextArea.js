@@ -37,17 +37,17 @@ const MessageTextArea = () => {
 
   const sendCuratorMessage = async () => {
     const formData = new FormData();
-    //let messageType = 'text';
+    let messageType = 'text';
 
     if (documents.length > 0) {
       documents.forEach(file => {
         formData.append('files', file);
       });
-      //messageType = 'file';
+      messageType = 'file';
     }
 
     formData.append('text', message);
-    formData.append('message_type', 'file');
+    formData.append('message_type', messageType);
     formData.append('chat', currentThread.id);
 
     return await createCuratorMessage(formData);
