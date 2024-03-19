@@ -1,0 +1,113 @@
+@import '../../../assets/scss/theme/colors';
+
+.form {
+  margin: 0 12px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: $light-gray;
+  border-radius: 8px;
+  padding: 15px 10px 10px 10px;
+  border: 1px solid $metallic;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 60px;
+  padding: 10px;
+  outline: none;
+  font-size: 10px !important;
+  box-shadow: none;
+  border: 1px solid $metallic;
+  border-radius: 4px;
+  resize: none;
+  &:focus {
+    outline: none;
+  }
+}
+.label {
+  font-family: SF UI Display;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 11px;
+  color: $turquoise;
+}
+.textarea::placeholder {
+  font-family: SF UI Display;
+  font-size: 10px !important;
+  color: $light-telegray;
+  outline: none;
+  font-weight: 400;
+  line-height: 11px;
+}
+
+.submitButton {
+  width: 106px;
+  height: 29px;
+  margin-top: 10px;
+  background: $light-gray;
+  border: 1px solid $turquoise;
+  font-family: SF UI Display;
+  font-size: 10px !important;
+  font-weight: 500;
+  line-height: 12px;
+  color: $turquoise;
+  border-radius: 4px;
+}
+.commentListWrapper {
+  margin: 0 12px;
+  border: 1px solid $smoky-white;
+  border-radius: 8px;
+  .header {
+    display: block;
+    margin-bottom: 0;
+    padding: 14px 10px;
+    background: $light-gray;
+  }
+}
+
+.commentList {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.commentItem {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid $smoky-white;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+.userName {
+  font-family: SF UI Display;
+  font-size: 8px;
+  font-weight: 400;
+  line-height: 8.8px;
+  text-align: left;
+  color: $telegrey;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+.time {
+  font-family: SF UI Display;
+  font-size: 8px;
+  font-weight: 400;
+  line-height: 8.8px;
+  text-align: right;
+  color: $telegrey;
+}
+.moveDB {
+  margin-top: 5px;
+  font-family: SF UI Display;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  text-align: left;
+  color: $black-brown;
+}

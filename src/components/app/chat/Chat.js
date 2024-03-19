@@ -11,7 +11,6 @@ const Chat = () => {
     setIsOpenThreadInfo,
     setCurrentThread,
     setScrollToBottom,
-    messagesDispatch,
     key,
     setKey
   } = useContext(ChatContext);
