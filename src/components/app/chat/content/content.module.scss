@@ -1,0 +1,56 @@
+@import '../../../../assets/scss/theme/colors';
+
+.message {
+  border-radius: 5px;
+  padding: 10px 8px;
+
+  p {
+    margin: 0 !important;
+  }
+}
+
+.another {
+  background-color: $gray-300;
+  color: $gray-800;
+}
+
+.isMy {
+  background-color: $message-blue;
+  color: $white;
+}
+
+.isMyMessage {
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.time {
+  color: $gray-800;
+  opacity: 0.7;
+}
+
+.newDay {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  color: $gray-800;
+  opacity: 0.7;
+}
+.image {
+  width: 150px;
+  height: 85px;
+  margin: 40px 0;
+}
+
+.messageFooter {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+  align-items: center;
+  gap: 8px;
+  justify-content: start;
+}
+
+.isMyFooter {
+  justify-content: end !important;
+}

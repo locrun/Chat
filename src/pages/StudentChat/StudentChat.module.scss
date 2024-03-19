@@ -1,0 +1,44 @@
+@import '../../assets/scss/theme/colors';
+
+.container {
+  margin: 0 auto;
+  max-width: 1180px;
+  height: 100vh;
+  padding: 0 15px;
+  padding-bottom: 111px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  @media (min-width: 428px) {
+    margin-top: 95px;
+  }
+}
+.chatWrapper {
+  width: 100%;
+  height: calc(100vh - 111px);
+}
+.linkButton {
+  min-width: 183px;
+  height: 47px;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 30px;
+  border-radius: 4px;
+  background-color: $turquoise !important;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  color: $white;
+  text-decoration: none;
+}
+.search {
+  display: block;
+  @media (min-width: 428px) {
+    display: none;
+  }
+}

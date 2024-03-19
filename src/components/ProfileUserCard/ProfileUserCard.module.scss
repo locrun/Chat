@@ -1,0 +1,101 @@
+@import '../../assets/scss/theme/colors';
+
+.card {
+  min-width: 285px;
+  min-height: 100vh;
+  font-family: Arial;
+  border-radius: 10px;
+  background-color: $white;
+  box-shadow: 2px 4px 15px 0px $aluminum;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.body {
+  max-width: 285px;
+  padding: 16px 12px;
+}
+
+.header {
+  padding: 16px 20px;
+  background-color: $dusty-blue;
+  border-radius: 10px 10px 0 0;
+  position: relative;
+}
+
+.headerInfo {
+  margin-left: 10px;
+}
+
+.userInfo {
+  font-family: Arial;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 12px;
+  color: $black;
+}
+
+.link {
+  font-family: Arial;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  color: $turquoise;
+  text-decoration: underline;
+}
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 11px 58px;
+  margin-top: 15px;
+  color: $turquoise;
+  font-family: Arial;
+  font-size: 10px !important;
+  font-weight: 400;
+  line-height: 12px;
+}
+
+.userInfoList {
+  margin: 0 10px 0 18px;
+  padding: 0;
+  list-style-type: none;
+}
+
+.listItem {
+  width: 100%;
+  padding: 6px 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid $smoky-white;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.key {
+  display: inline-block;
+  font-family: Arial;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  color: $telegrey;
+}
+
+.value {
+  display: inline-block;
+  font-family: Actor;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+}

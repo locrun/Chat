@@ -1,0 +1,58 @@
+@import '../../assets/scss/theme/colors';
+
+.controlsWrapper {
+  padding-bottom: 20px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.selectGroup {
+  display: flex;
+  align-items: center;
+  gap: 110px;
+  flex-wrap: wrap;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+.select {
+  outline: none;
+  border: none !important;
+  box-shadow: none;
+  background-color: #efefef !important;
+
+  border-radius: 8px;
+  box-shadow: none !important;
+  &:focus {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
+.typesMessagesSelectWrapper {
+  min-width: 294px;
+}
+.sortingSelectWrapper {
+  min-width: 142px;
+  margin-right: 10px;
+}
+
+.statusSelectWrapper {
+  min-width: 134px;
+}
+.label {
+  font-family: Arial;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  color: $telegrey;
+}
+option {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 13px;
+}

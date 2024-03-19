@@ -1,0 +1,41 @@
+@import '../../../assets/scss/theme/colors';
+
+.input {
+  background-color: $gray-light !important;
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+  line-height: 1.7;
+  border-radius: 50rem !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.searchCard {
+  width: calc(100% - 48%) !important;
+}
+
+.search {
+  width: 100% !important;
+}
+
+@media (max-width: 768px) {
+  .input {
+    font-size: 10px !important;
+    line-height: 12px !important;
+  }
+  svg {
+    left: 11px !important;
+  }
+}
+
+@media (max-width: 428px) {
+  .input {
+    display: none !important;
+  }
+  .search {
+    width: auto !important;
+  }
+  .resultMenu {
+    display: none !important;
+  }
+}

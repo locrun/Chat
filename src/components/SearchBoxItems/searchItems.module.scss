@@ -1,0 +1,39 @@
+.items {
+  display: flex;
+  align-items: center;
+  gap: 29px;
+
+  img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+
+  .avatar {
+    height: 50px;
+    width: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .items {
+    gap: 15.79px;
+    img {
+      width: 13px;
+      height: 13px;
+    }
+    .avatar {
+      height: 27px;
+      width: 27px;
+    }
+  }
+}
+
+@media (max-width: 428px) {
+  .items {
+    .avatar {
+      height: 18px;
+      width: 18px;
+    }
+  }
+}

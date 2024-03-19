@@ -1,0 +1,21 @@
+.LittleMenuLine {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 42px;
+
+    span {
+        font-size: 10px;
+    }
+
+    hr {
+        width: 75%;
+    }
+}
+
+.hideBtn {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 20px;
+}

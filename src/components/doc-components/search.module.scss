@@ -1,0 +1,30 @@
+.container {
+  margin: 20px 0;
+  @media (min-width: 1450px) {
+    margin: 60px 0;
+  }
+}
+
+.searchBody {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.body {
+  padding: 15px 30px !important;
+}
+
+@media (max-width: 768px) {
+  .body {
+    padding: 8.17px 16.34px !important;
+  }
+}
+
+.card {
+  width: 100%;
+}
+
+.card {
+  width: 100%;
+}
