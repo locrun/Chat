@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useKeycloak } from '@react-keycloak/web';
 import { checkAllRealmRolesAssigned } from 'helpers/utils';
 import keycloakRealmRoles from 'helpers/keycloakRealmRoles';
-
+import LastMessage from './LastMessage';
 import { getMessagesListCurator } from 'api/routes/curatorChat';
 import { getMessagesListClient } from 'api/routes/clientChat';
 import { markChatMessagesAsReadClient } from 'api/routes/clientChat';
@@ -23,12 +23,6 @@ const ChatThread = ({ thread, index }) => {
   const isChatClient = checkAllRealmRolesAssigned(keycloak.realmAccess.roles, [
     keycloakRealmRoles.CHAT_USER
   ]);
-
-  const options = {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  };
 
   const fetchMessagesList = async () => {
     try {
@@ -61,22 +55,24 @@ const ChatThread = ({ thread, index }) => {
     }
   };
 
-  const getFormattedDate = (time, formatOptions) => {
+  const getFormattedDate = time => {
     if (!time) {
       return '';
     }
-    const dateTime = new Date(time);
-    return new Date(dateTime).toLocaleDateString('ru-RU', formatOptions);
+    const monthName = new Intl.DateTimeFormat('ru-RU', {
+      month: 'long'
+    }).format(new Date(time));
+    return monthName.charAt(0).toUpperCase() + monthName.slice(1);
   };
-
+  console.log(thread);
   return (
     <Nav.Link
       eventKey={index}
       onClick={() => fetchMessagesList(index)}
       className={classNames(`chat-contact hover-actions-trigger p-3`, {
-        'unread-message': !thread.read,
-        'read-message': thread.read,
-        'delete-message': thread.status === 'closed'
+        'unread-message': !thread.last_message?.is_read,
+        'read-message': thread.last_message?.is_read,
+        'blocked-message': thread.status === 'closed'
       })}
     >
       <div className="d-md-none d-lg-block">
@@ -87,22 +83,15 @@ const ChatThread = ({ thread, index }) => {
         <div className="flex-1 chat-contact-body ms-2 d-md-none d-lg-block">
           <Flex justifyContent="between">
             <h6 className="mb-0 chat-contact-title">{thread.topic.title}</h6>
-            <span className="message-time fs-11"></span>
-            <span style={{ fontSize: '12px' }}>
-              <span>
-                {thread.unread_messages_count > 0 && (
-                  <>
-                    <span>{thread.unread_messages_count}</span>
-                    <span>Не прочитанных сообщений</span>
-                  </>
-                )}
-              </span>
+            <span className="message-time fs-11">
+              {getFormattedDate(thread.last_message?.created_at)}
             </span>
           </Flex>
           <div className="min-w-0">
             <div className="chat-contact-content pe-3">
-              {/* <LastMessage lastMessage={lastMessage} thread={thread} /> */}
-              {getFormattedDate(thread.last_message?.created_at, options)}
+              {!thread.last_message?.is_my_message && (
+                <LastMessage lastMessage={thread.last_message} />
+              )}
               <div className="position-absolute bottom-0 end-0 hover-hide"></div>
             </div>
           </div>

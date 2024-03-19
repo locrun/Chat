@@ -95,32 +95,40 @@
   position: relative;
   min-width: 0;
 }
-.chat-contact-title {
-  font-weight: $font-weight-normal;
-}
-.message-time {
-  color: var(--#{$prefix}gray-400);
-}
-.chat-contact-content {
-  font-size: map-get($font-sizes, 10);
-  color: var(--#{$prefix}gray-600);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+
+.read-message {
+  .chat-contact-title {
+    color: var(--#{$prefix}heading-color);
+  }
+  .chat-contact-content {
+    font-size: map-get($font-sizes, 10);
+    color: var(--#{$prefix}gray-600);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .message-time {
+    color: var(--#{$prefix}gray-400);
+  }
 }
 .unread-message {
-  color: var(--#{$prefix}emphasis-color);
-  .chat-contact-title,
-  .chat-contact-content {
-    font-weight: $font-weight-semibold;
+  .chat-contact-title {
+    font-weight: 600;
     color: var(--#{$prefix}emphasis-color);
+  }
+  .chat-contact-content {
+    font-size: map-get($font-sizes, 10);
+    color: var(--#{$prefix}emphasis-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .message-time {
     color: var(--#{$prefix}primary);
   }
 }
 
-.delete-message {
+.blocked-message {
   opacity: 0.5;
   cursor: default;
 }

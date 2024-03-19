@@ -17,10 +17,12 @@ export const ControlMessages = ({
   handleTypeTopicChange
 }: ColtrolMessagesProps) => {
   const { currentThread } = useContext(ChatContext);
+  console.log(currentThread);
 
   const assignCuratorHandler = () => {
     const params: AssignCuratorParams = {
       chat: currentThread.id,
+      // TODO curator
       curator: ''
     };
     if (currentThread) assignCurator(params);

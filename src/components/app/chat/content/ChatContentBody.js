@@ -52,6 +52,7 @@ const ChatContentBody = ({ thread }) => {
                     message={text}
                     time={created_at}
                     files={files}
+                    avatar={thread?.topic?.logo}
                     is_my={is_my_message}
                     is_read={is_read}
                   />

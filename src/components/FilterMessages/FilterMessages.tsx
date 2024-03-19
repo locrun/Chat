@@ -50,10 +50,6 @@ export const FilterMessages = ({
   ];
   const statusMessaggesItems = [
     {
-      item: 'Открытые',
-      value: 'open'
-    },
-    {
       item: 'Новые',
       value: 'new'
     },

@@ -42,7 +42,6 @@ export const AdminChat = () => {
     if (hasCheckedCheckbox) {
       setSelectedRadioValue('');
     }
-
     setCheckboxList(prevCheckboxes => {
       return prevCheckboxes.map(checkbox => {
         if (checkbox.id === id)
@@ -59,6 +58,13 @@ export const AdminChat = () => {
       .filter(checkbox => checkbox.isChecked)
       .map(checkbox => checkbox.value);
     setChosenCheckboxes(selectedValues);
+
+    const hasCheckedCheckbox = checkboxList.every(item => {
+      return item.isChecked;
+    });
+    if (hasCheckedCheckbox) {
+      setSelectedRadioValue('all');
+    }
   }, [checkboxList]);
 
   useEffect(() => {

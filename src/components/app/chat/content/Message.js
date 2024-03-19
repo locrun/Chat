@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Flex from 'components/common/Flex';
+import Avatar from 'components/common/Avatar';
 import classNames from 'classnames';
 import s from './content.module.scss';
 
-const Message = ({ message, time, is_my, files, is_read }) => {
+const Message = ({ avatar, message, time, is_my, files, is_read }) => {
   const date = new Date(time);
   const hours = date.getHours().toString().padStart(2, '0');
   const minutes = date.getMinutes().toString().padStart(2, '0');
@@ -19,6 +20,7 @@ const Message = ({ message, time, is_my, files, is_read }) => {
       })}
     >
       <div>
+        {!is_my && <Avatar size="l" className="me-2" src={avatar} />}
         <div
           className={classNames(s.message, {
             [s.isMy]: is_my,
@@ -62,7 +64,8 @@ Message.propTypes = {
   time: PropTypes.string.isRequired,
   is_my: PropTypes.bool,
   files: PropTypes.array,
-  is_read: PropTypes.bool
+  is_read: PropTypes.bool,
+  avatar: PropTypes.string
 };
 
 Message.defaultProps = { status: '' };
