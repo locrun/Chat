@@ -12,8 +12,13 @@ import { getMessagesListClient } from 'api/routes/clientChat';
 import { checkRoles } from 'helpers/checkRoles';
 
 export const StudentChat = () => {
-  const { threadsDispatch, messagesDispatch, setKey, setCurrentThread } =
-    useContext(ChatContext);
+  const {
+    threadsDispatch,
+    messagesDispatch,
+    setKey,
+    setCurrentThread,
+    setScrollToBottom
+  } = useContext(ChatContext);
   const [isThreadsEmpty, setIsThreadsEmpty] = useState(false);
   const { changePage } = usePage();
 
@@ -45,6 +50,7 @@ export const StudentChat = () => {
           type: 'SET_MESSAGES',
           payload: messages.results
         });
+        setScrollToBottom(true);
       }
     };
 

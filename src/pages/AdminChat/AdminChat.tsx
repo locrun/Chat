@@ -8,14 +8,25 @@ import { ChatContext } from 'context/Context';
 //import { ProfileUserCard } from 'components/ProfileUserCard/ProfileUserCard';
 import { ControlMessages } from 'components/ControlMessages/ControlMessages';
 import { FilterMessages } from 'components/FilterMessages/FilterMessages';
-import { getCuratorChats } from 'api/routes/curatorChat';
+import {
+  getCuratorChats,
+  getMessagesListCurator
+} from 'api/routes/curatorChat';
 import { checkboxData } from 'data/checkboxData';
 
 import s from './AdminChat.module.scss';
+import { checkRoles } from 'helpers/checkRoles';
+import { getMessagesListClient } from 'api/routes/clientChat';
 
 export const AdminChat = () => {
   const { topics } = useContext(TopicsContext) as TopicsContextType;
-  const { threadsDispatch } = useContext(ChatContext);
+  const {
+    threadsDispatch,
+    setKey,
+    setCurrentThread,
+    messagesDispatch,
+    setScrollToBottom
+  } = useContext(ChatContext);
   const [checkboxList, setCheckboxList] = useState(checkboxData);
 
   const [typeMessages, setTypeMessages] = useState('');
@@ -24,6 +35,8 @@ export const AdminChat = () => {
   const [selectedRadioValue, setSelectedRadioValue] = useState<string>('');
   const [chosenCheckboxes, setChosenCheckboxes] = useState<string[]>([]);
   const [topicType, setTopicType] = useState('');
+
+  const isChatClient = checkRoles();
 
   const handleChangeRadio = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedRadioValue(event.target.value);
@@ -85,6 +98,22 @@ export const AdminChat = () => {
         type: 'SET_DIALOGS',
         payload: data.results
       });
+
+      const thread = data.results[0];
+      if (thread) {
+        setKey(thread.id);
+        setCurrentThread(thread);
+
+        const { data: messages } = isChatClient
+          ? await getMessagesListClient({ id: thread.id })
+          : await getMessagesListCurator({ id: thread.id });
+
+        messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: messages.results
+        });
+        setScrollToBottom(true);
+      }
     };
 
     fetchDialogs();
