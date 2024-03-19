@@ -3,20 +3,42 @@
 .message {
   border-radius: 5px;
   padding: 10px 8px;
-
+  display: inline-block;
+  width: auto;
   p {
     margin: 0 !important;
   }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.filesWrapper {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 15px;
 }
 
 .another {
   background-color: $gray-300;
   color: $gray-800;
+  a {
+    color: $gray-800;
+  }
 }
 
 .isMy {
   background-color: $message-blue;
   color: $white;
+  a {
+    color: $white;
+  }
+}
+
+.messageBlock {
+  display: flex;
+  justify-content: flex-start;
 }
 
 .isMyMessage {
@@ -36,11 +58,6 @@
   color: $gray-800;
   opacity: 0.7;
 }
-.image {
-  width: 150px;
-  height: 85px;
-  margin: 40px 0;
-}
 
 .messageFooter {
   display: flex;
@@ -53,4 +70,35 @@
 
 .isMyFooter {
   justify-content: end !important;
+}
+
+.images {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px;
+  max-width: 500px;
+  margin: 20px 0 10px;
+
+  img {
+    width: 150px;
+    height: 85px;
+  }
+}
+
+.filesList {
+  display: flex !important;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.myFiles {
+  justify-content: flex-end !important;
+}
+
+.fileItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }

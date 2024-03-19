@@ -10,6 +10,7 @@ import { useAppContext } from 'Main';
 import { createCuratorMessage } from 'api/routes/curatorChat';
 import { createClientMessage } from 'api/routes/clientChat';
 import { checkRoles } from 'helpers/checkRoles';
+import { INPUT_FILE_FORMATS } from 'constants';
 
 const MessageTextArea = () => {
   const {
@@ -35,12 +36,12 @@ const MessageTextArea = () => {
 
   const isClient = checkRoles();
 
-  const sendCuratorMessage = async () => {
+  const sendCuratorMessage = async (files = []) => {
     const formData = new FormData();
     let messageType = 'text';
 
-    if (documents.length > 0) {
-      documents.forEach(file => {
+    if (files.length > 0) {
+      files.forEach(file => {
         formData.append('files', file);
       });
       messageType = 'file';
@@ -53,12 +54,12 @@ const MessageTextArea = () => {
     return await createCuratorMessage(formData);
   };
 
-  const sendClientMessage = () => {
+  const sendClientMessage = (files = []) => {
     const formData = new FormData();
     let messageType = 'text';
 
-    if (documents.length > 0) {
-      documents.forEach(file => {
+    if (files.length > 0) {
+      files.forEach(file => {
         formData.append('files', file);
       });
       messageType = 'file';
@@ -71,35 +72,40 @@ const MessageTextArea = () => {
     return createClientMessage(formData);
   };
 
+  const sendMessage = async (files = []) => {
+    const { data } = isClient
+      ? await sendClientMessage(files)
+      : await sendCuratorMessage(files);
+
+    messagesDispatch({
+      type: 'EDIT',
+      payload: data,
+      id: currentThread.id,
+      isUpdatedStart: true
+    });
+
+    threadsDispatch({
+      type: 'EDIT',
+      payload: currentThread,
+      id: currentThread.id,
+      isUpdatedStart: true
+    });
+  };
+
   const handleSubmit = async e => {
-    e.preventDefault();
+    e?.preventDefault();
 
-    if (message.length > 0) {
+    if (message.length > 0 || documents.length > 0) {
       try {
-        const { data } = isClient
-          ? await sendClientMessage()
-          : await sendCuratorMessage();
-
-        messagesDispatch({
-          type: 'EDIT',
-          payload: data,
-          id: currentThread.id,
-          isUpdatedStart: true
-        });
-
-        threadsDispatch({
-          type: 'EDIT',
-          payload: currentThread,
-          id: currentThread.id,
-          isUpdatedStart: true
-        });
+        sendMessage();
       } catch (error) {
         return console.log(error);
+      } finally {
+        setMessage('');
+        setDocuments([]);
+        setScrollToBottom(true);
       }
     }
-    setMessage('');
-    setDocuments([]);
-    setScrollToBottom(true);
   };
 
   useEffect(() => {
@@ -118,12 +124,19 @@ const MessageTextArea = () => {
     return filesArray;
   };
 
-  const handleInputFiles = event => {
+  const handleInputFiles = async event => {
+    /*  TODO: wait changes
     setDocuments(prevDocuments => [
       ...prevDocuments,
       ...fileListToFiles(event.target.files)
-    ]);
+    ]);*/
+    const files = fileListToFiles(event.target.files);
+    await sendMessage(files);
+    setDocuments([]);
+    setScrollToBottom(true);
   };
+
+  const acceptedTypes = INPUT_FILE_FORMATS.join(',');
 
   return (
     <Form className="chat-editor-area" onSubmit={handleSubmit}>
@@ -146,6 +159,8 @@ const MessageTextArea = () => {
           onChange={handleInputFiles}
           type="file"
           className="d-none"
+          accept={acceptedTypes}
+          multiple
         />
       </Form.Group>
 

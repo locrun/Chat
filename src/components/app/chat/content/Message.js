@@ -5,6 +5,7 @@ import Flex from 'components/common/Flex';
 import Avatar from 'components/common/Avatar';
 import classNames from 'classnames';
 import s from './content.module.scss';
+import { Files } from './Files/Files';
 
 const Message = ({ avatar, message, time, is_my, files, is_read }) => {
   const date = new Date(time);
@@ -22,24 +23,20 @@ const Message = ({ avatar, message, time, is_my, files, is_read }) => {
       <div>
         {!is_my && <Avatar size="l" className="me-2" src={avatar} />}
         <div
-          className={classNames(s.message, {
-            [s.isMy]: is_my,
-            [s.another]: !is_my
+          className={classNames(s.messageBlock, {
+            [s.isMyMessage]: is_my
           })}
         >
-          <p>{message}</p>
+          <div
+            className={classNames(s.message, {
+              [s.isMy]: is_my && message,
+              [s.another]: !is_my && message
+            })}
+          >
+            <p>{message}</p>
+          </div>
         </div>
-
-        {files.map(image => {
-          return (
-            <img
-              className={s.image}
-              key={image.id}
-              src={image?.file}
-              alt="picture"
-            />
-          );
-        })}
+        <Files files={files} isMy={is_my} />
         <div
           className={classNames(s.messageFooter, {
             [s.isMyFooter]: is_my
