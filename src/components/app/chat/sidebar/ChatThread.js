@@ -64,7 +64,7 @@ const ChatThread = ({ thread, index }) => {
     }).format(new Date(time));
     return monthName.charAt(0).toUpperCase() + monthName.slice(1);
   };
-  console.log(thread);
+
   return (
     <Nav.Link
       eventKey={index}

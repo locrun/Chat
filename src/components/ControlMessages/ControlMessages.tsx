@@ -10,14 +10,15 @@ import { AssignCuratorParams } from 'shared/types/curator';
 interface ColtrolMessagesProps {
   topics: Topics[];
   handleTypeTopicChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  unreadMessagesCount: number;
 }
 
 export const ControlMessages = ({
   topics,
-  handleTypeTopicChange
+  handleTypeTopicChange,
+  unreadMessagesCount
 }: ColtrolMessagesProps) => {
   const { currentThread } = useContext(ChatContext);
-  console.log(currentThread);
 
   const assignCuratorHandler = () => {
     const params: AssignCuratorParams = {
@@ -38,18 +39,21 @@ export const ControlMessages = ({
         <div className={s.selectGroup}>
           <div className={s.topicsSelect}>
             <span className={s.label}>Обращения</span>
-            <Form.Select
-              className={s.select}
-              onChange={e => handleTypeTopicChange(e)}
-            >
-              {topics.map(item => {
-                return (
-                  <option key={item.title} value={item.id}>
-                    {item.title}
-                  </option>
-                );
-              })}
-            </Form.Select>
+            <div className={s.selectWrapper}>
+              <Form.Select
+                className={s.select}
+                onChange={e => handleTypeTopicChange(e)}
+              >
+                {topics.map(item => {
+                  return (
+                    <option key={item.id} value={item.id}>
+                      {item.title}
+                    </option>
+                  );
+                })}
+              </Form.Select>
+              <div className={s.unreadCount}>{unreadMessagesCount}</div>
+            </div>
           </div>
           <div className={s.topicsSelect}>
             <span className={s.label}>Обращения</span>
@@ -59,7 +63,7 @@ export const ControlMessages = ({
             >
               {topics.map(item => {
                 return (
-                  <option key={item.title} value={item.id}>
+                  <option key={item.id} value={item.id}>
                     {item.title}
                   </option>
                 );

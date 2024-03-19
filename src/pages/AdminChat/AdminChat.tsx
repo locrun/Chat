@@ -17,6 +17,7 @@ import { checkboxData } from 'data/checkboxData';
 import s from './AdminChat.module.scss';
 import { checkRoles } from 'helpers/checkRoles';
 import { getMessagesListClient } from 'api/routes/clientChat';
+import { ChatList } from 'shared/types/curator';
 
 export const AdminChat = () => {
   const { topics } = useContext(TopicsContext) as TopicsContextType;
@@ -35,6 +36,7 @@ export const AdminChat = () => {
   const [selectedRadioValue, setSelectedRadioValue] = useState<string>('');
   const [chosenCheckboxes, setChosenCheckboxes] = useState<string[]>([]);
   const [topicType, setTopicType] = useState('');
+  const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
 
   const isChatClient = checkRoles();
 
@@ -94,6 +96,9 @@ export const AdminChat = () => {
       };
 
       const { data } = await getCuratorChats(params);
+
+      getUnreadMessages(data.results);
+
       threadsDispatch({
         type: 'SET_DIALOGS',
         payload: data.results
@@ -125,6 +130,17 @@ export const AdminChat = () => {
     chosenCheckboxes,
     topicType
   ]);
+
+  const getUnreadMessages = (threads: ChatList[]) => {
+    let unreadMessage = 0;
+    threads.forEach(thread => {
+      if (thread.unread_messages_count) {
+        unreadMessage += thread.unread_messages_count;
+      }
+    });
+
+    setUnreadMessageCount(unreadMessage);
+  };
 
   const handleTypeMessagesChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setTypeMessages(event.target.value);
@@ -162,6 +178,7 @@ export const AdminChat = () => {
         <ControlMessages
           topics={topics}
           handleTypeTopicChange={handleTypeTopicChange}
+          unreadMessagesCount={unreadMessageCount}
         />
       )}
 
