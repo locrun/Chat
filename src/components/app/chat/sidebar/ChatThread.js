@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useKeycloak } from '@react-keycloak/web';
 import { checkAllRealmRolesAssigned } from 'helpers/utils';
 import keycloakRealmRoles from 'helpers/keycloakRealmRoles';
@@ -18,6 +19,7 @@ import { ChatContext } from 'context/Context';
 
 const ChatThread = ({ thread, index }) => {
   const { messagesDispatch } = useContext(ChatContext);
+
   const { keycloak } = useKeycloak();
 
   const isChatClient = checkAllRealmRolesAssigned(keycloak.realmAccess.roles, [
@@ -65,6 +67,7 @@ const ChatThread = ({ thread, index }) => {
     return monthName.charAt(0).toUpperCase() + monthName.slice(1);
   };
 
+  const is_read = thread?.last_message?.is_read;
   return (
     <Nav.Link
       eventKey={index}
@@ -89,10 +92,14 @@ const ChatThread = ({ thread, index }) => {
           </Flex>
           <div className="min-w-0">
             <div className="chat-contact-content pe-3">
-              {!thread.last_message?.is_my_message && (
-                <LastMessage lastMessage={thread.last_message} />
-              )}
-              <div className="position-absolute bottom-0 end-0 hover-hide"></div>
+              <LastMessage lastMessage={thread.last_message} />
+
+              <FontAwesomeIcon
+                icon={is_read ? 'check-double' : 'check'}
+                size="xs"
+                className="position-absolute bottom-0 end-0 hover-hide"
+                color="rgb(182 193 210)"
+              />
             </div>
           </div>
         </div>

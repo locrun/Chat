@@ -9,7 +9,7 @@ interface FileItemProps {
 export const FileItem: FC<FileItemProps> = ({ file }) => {
   const fileName = file.substring(file.lastIndexOf('/') + 1);
   if (file.endsWith('.png') || file.endsWith('.jpg')) {
-    return <img src={file} alt="picture" />;
+    return <img className={s.fileItemImage} src={file} alt="picture" />;
   } else {
     return (
       <a
