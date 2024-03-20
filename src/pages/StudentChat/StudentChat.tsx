@@ -17,7 +17,9 @@ export const StudentChat = () => {
     messagesDispatch,
     setKey,
     setCurrentThread,
-    setScrollToBottom
+    setScrollToBottom,
+    isAddNewChat,
+    setIsAddNewChat
   } = useContext(ChatContext);
   const [isThreadsEmpty, setIsThreadsEmpty] = useState(false);
   const { changePage } = usePage();
@@ -38,7 +40,7 @@ export const StudentChat = () => {
       });
 
       const thread = data.results[0];
-      if (thread) {
+      if (thread && isAddNewChat) {
         setKey(thread.id);
         setCurrentThread(thread);
 
@@ -50,6 +52,8 @@ export const StudentChat = () => {
           type: 'SET_MESSAGES',
           payload: messages.results
         });
+
+        setIsAddNewChat(false);
         setScrollToBottom(true);
       }
     };

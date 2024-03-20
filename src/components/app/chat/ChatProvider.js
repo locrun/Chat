@@ -14,6 +14,7 @@ const ChatProvider = ({ children }) => {
   const [isOpenThreadInfo, setIsOpenThreadInfo] = useState(false);
   const [scrollToBottom, setScrollToBottom] = useState(true);
   const [key, setKey] = useState(0);
+  const [isAddNewChat, setIsAddNewChat] = useState(false);
 
   useEffect(() => {
     if (threads.length > 0) {
@@ -57,7 +58,9 @@ const ChatProvider = ({ children }) => {
     scrollToBottom,
     setScrollToBottom,
     key,
-    setKey
+    setKey,
+    isAddNewChat,
+    setIsAddNewChat
   };
 
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;

@@ -26,7 +26,9 @@ export const AdminChat = () => {
     setKey,
     setCurrentThread,
     messagesDispatch,
-    setScrollToBottom
+    setScrollToBottom,
+    isAddNewChat,
+    setIsAddNewChat
   } = useContext(ChatContext);
   const [checkboxList, setCheckboxList] = useState(checkboxData);
 
@@ -105,7 +107,7 @@ export const AdminChat = () => {
       });
 
       const thread = data.results[0];
-      if (thread) {
+      if (thread && isAddNewChat) {
         setKey(thread.id);
         setCurrentThread(thread);
 
@@ -117,6 +119,7 @@ export const AdminChat = () => {
           type: 'SET_MESSAGES',
           payload: messages.results
         });
+        setIsAddNewChat(false);
         setScrollToBottom(true);
       }
     };

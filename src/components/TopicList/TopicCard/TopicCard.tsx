@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import s from './TopicCard.module.scss';
 import { Topics } from 'types/topics';
 import { createClientChats } from 'api/routes/clientChat';
 import { usePage } from 'components/app/pagesProvider/PagesProvider';
 import { PageType } from 'shared/types';
+import { ChatContext } from 'context/Context';
 
 interface TopicCardProps {
   topics: Topics[];
@@ -11,11 +12,13 @@ interface TopicCardProps {
 
 export const TopicCard = ({ topics }: TopicCardProps) => {
   const { changePage } = usePage();
+  const { setIsAddNewChat } = useContext(ChatContext);
 
   const onClick = async (id: number) => {
     await createClientChats({
       topic: id
     });
+    setIsAddNewChat(true);
     changePage(PageType.CHAT);
   };
 
