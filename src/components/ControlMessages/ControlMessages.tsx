@@ -1,10 +1,8 @@
 import React, { ChangeEvent, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
-import SocketApi from 'api/socket';
 import classnames from 'classnames';
 import { Topics } from 'types/topics';
 import { ChatContext } from 'context/Context';
-
 import s from './ControlMessages.module.scss';
 import { assignCurator, closeCurrentDialog } from 'api/routes/curatorChat';
 import { AssignCuratorParams } from 'shared/types/curator';
@@ -25,12 +23,9 @@ export const ControlMessages = ({
   const assignCuratorHandler = () => {
     const params: AssignCuratorParams = {
       chat: currentThread.id,
-      curator: 'chat_man'
+      // TODO curator
+      curator: ''
     };
-    SocketApi.sendDataToServer('assign_curator', {
-      chat_id: currentThread.id,
-      curator_id: 'chat_man'
-    });
     if (currentThread) assignCurator(params);
   };
 

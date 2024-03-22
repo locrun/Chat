@@ -13,10 +13,11 @@ import {
   getMessagesListCurator
 } from 'api/routes/curatorChat';
 import { checkboxData } from 'data/checkboxData';
+
+import s from './AdminChat.module.scss';
 import { checkRoles } from 'helpers/checkRoles';
 import { getMessagesListClient } from 'api/routes/clientChat';
 import { ChatList } from 'shared/types/curator';
-import s from './AdminChat.module.scss';
 
 export const AdminChat = () => {
   const { topics } = useContext(TopicsContext) as TopicsContextType;
