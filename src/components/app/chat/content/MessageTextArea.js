@@ -97,7 +97,7 @@ const MessageTextArea = () => {
 
     if (message.length > 0 || documents.length > 0) {
       try {
-        sendMessage();
+        await sendMessage();
       } catch (error) {
         return console.log(error);
       } finally {
@@ -138,9 +138,23 @@ const MessageTextArea = () => {
 
   const acceptedTypes = INPUT_FILE_FORMATS.join(',');
 
+  const enterHandler = event => {
+    if (event.key === 'Enter') {
+      if (event.ctrlKey) {
+        setMessage(prevText => prevText + '\n');
+        event.target.style.height = '';
+        event.target.style.height = event.target.scrollHeight + 26 + 'px';
+      } else {
+        event.preventDefault();
+        handleSubmit();
+      }
+    }
+  };
+
   return (
     <Form className="chat-editor-area" onSubmit={handleSubmit}>
       <TextareaAutosize
+        onKeyDown={enterHandler}
         minRows={1}
         maxRows={6}
         disabled={currentThread?.status === 'closed'}
