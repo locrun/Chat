@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Col, Row } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
+import { useConnectSocket } from 'hooks/useConnectSocket';
 import { ChatContext } from 'context/Context';
 
 const ChatContentHeader = ({ setHideSidebar, hideSidebar }) => {
   const { currentThread } = useContext(ChatContext);
+  const { userStatus } = useConnectSocket();
 
   return (
     <>
@@ -24,7 +26,7 @@ const ChatContentHeader = ({ setHideSidebar, hideSidebar }) => {
                 <h5 className="mb-0 text-truncate fs-9">
                   {currentThread?.topic.title}
                 </h5>
-                <div className="fs-11 text-400">Online</div>
+                <div className="fs-11 text-400">{userStatus?.data.status}</div>
               </div>
             </Col>
             <Col xs="auto"></Col>

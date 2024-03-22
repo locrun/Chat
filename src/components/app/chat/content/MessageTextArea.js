@@ -1,11 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { ChatContext } from 'context/Context';
+import SocketApi from 'api/socket';
 import Picker from '@emoji-mart/react';
 import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
 import TextareaAutosize from 'react-textarea-autosize';
+
 import { useAppContext } from 'Main';
 import { createCuratorMessage } from 'api/routes/curatorChat';
 import { createClientMessage } from 'api/routes/clientChat';
@@ -94,7 +97,7 @@ const MessageTextArea = () => {
 
   const handleSubmit = async e => {
     e?.preventDefault();
-
+    SocketApi.sendDataToServer('new_message', message);
     if (message.length > 0 || documents.length > 0) {
       try {
         sendMessage();

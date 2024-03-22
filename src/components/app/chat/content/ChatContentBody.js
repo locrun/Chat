@@ -5,16 +5,34 @@ import Message from './Message';
 import SimpleBarReact from 'simplebar-react';
 import ThreadInfo from './ThreadInfo';
 import { ChatContext } from 'context/Context';
-
+import { useConnectSocket } from 'hooks/useConnectSocket';
 import NewDay from './NewDay';
 
 const ChatContentBody = ({ thread }) => {
   const messagesEndRef = useRef();
+  const socketMessage = useConnectSocket();
 
-  const { messages, scrollToBottom, setScrollToBottom } =
+  const { messages, messagesDispatch, scrollToBottom, setScrollToBottom } =
     useContext(ChatContext);
 
-  const threadMessages = messages.slice().reverse();
+  const sortedMessages = messages.sort((a, b) => {
+    return new Date(a.created_at) - new Date(b.created_at);
+  });
+  useEffect(() => {
+    const handleNewMessage = newMessage => {
+      messagesDispatch({
+        type: 'SET_MESSAGES',
+        payload: [...messages, newMessage]
+      });
+    };
+
+    if (socketMessage.socketMessage.event_type === 'new_message') {
+      const newMessageData = socketMessage.socketMessage.data;
+      if (!messages.some(message => message.id === newMessageData.id)) {
+        handleNewMessage(newMessageData);
+      }
+    }
+  }, [socketMessage, messages, messagesDispatch]);
 
   useEffect(() => {
     if (scrollToBottom) {
@@ -43,7 +61,7 @@ const ChatContentBody = ({ thread }) => {
       <ThreadInfo thread={thread} isOpenThreadInfo={true} />
       <SimpleBarReact style={{ height: '100%' }}>
         <div className="chat-content-scroll-area">
-          {threadMessages?.map(
+          {sortedMessages?.map(
             ({ text, created_at, is_my_message, files, is_read }, index) => {
               return (
                 <div key={index}>
