@@ -1,14 +1,15 @@
 import React from 'react';
-import { CommentList } from 'data/comments/commnets';
+
 import cn from 'classnames';
 import s from '../CommentForm.module.scss';
+import { IComments } from 'data/comments/commnets';
 
-interface ListContainerProps {
-  data: CommentList[];
+interface CommentListProps {
+  data: IComments[];
   title: string;
 }
 
-export const ListContainer = ({ data, title }: ListContainerProps) => {
+export const CommentList = ({ data, title }: CommentListProps) => {
   return (
     <div className={s.commentListWrapper}>
       <label className={cn(s.label, s.header)}>{title}</label>

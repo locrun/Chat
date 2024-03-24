@@ -3,7 +3,7 @@ import Flex from '../../common/Flex';
 import profile from 'assets/img/icons/profile.svg';
 import history from 'assets/img/icons/history.svg';
 import shopping from 'assets/img/icons/shopping.svg';
-import check from 'assets/img/icons/check.svg';
+import taskCheck from 'assets/img/icons/taskCheck.svg';
 import phone from 'assets/img/icons/phone.svg';
 import edit from 'assets/img/icons/edit.svg';
 import cn from 'classnames';
@@ -25,7 +25,7 @@ export const MenuPanel = () => {
       </Flex>
       <Flex className={s.flex}>
         <div className={s.button}>
-          <img src={check} alt="check" />
+          <img src={taskCheck} alt="check" />
         </div>
         <div className={s.button}>
           <img src={phone} alt="phone" />

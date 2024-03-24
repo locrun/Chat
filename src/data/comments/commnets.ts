@@ -1,11 +1,11 @@
-export interface CommentList {
+export interface IComments {
   id: number;
   userName: string;
   time: string;
   moveDB: string;
 }
 
-export const commentList: CommentList[] = [
+export const commentList: IComments[] = [
   {
     id: 0,
     userName: 'Евгений Свешников',

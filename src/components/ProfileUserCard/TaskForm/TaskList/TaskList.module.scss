@@ -1,0 +1,95 @@
+@import '../../../../assets/scss/theme/colors';
+
+.taskListWrapper {
+  margin: 0 12px;
+  border: 1px solid $smoky-white;
+  border-radius: 8px;
+  .header {
+    display: block;
+    margin-bottom: 0;
+    padding: 14px 10px;
+    background: $light-gray;
+  }
+}
+.taskLabel {
+  margin-bottom: 10px;
+  font-family: SF UI Display;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 11px;
+  color: $turquoise;
+}
+.taskList {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.taskItem {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-bottom: 1px solid $smoky-white;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+.taskName {
+  max-width: 93px;
+  font-family: SF UI Display;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  text-align: left;
+  color: #49c2bb;
+}
+.taskType {
+  font-family: SF UI Display;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  color: #242424;
+}
+.describeTask {
+  font-family: SF UI Display;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  color: #242424;
+}
+.notification {
+  max-width: 83px;
+  padding: 2px 9px 2px 9px;
+  display: flex;
+  align-items: center;
+  font-family: SF UI Display;
+  font-size: 9px;
+  font-weight: 400;
+  color: $turquoise;
+  border: 0.5px solid $turquoise;
+  border-radius: 12px;
+
+  line-height: 10px;
+
+  .check {
+    width: 13px;
+    height: 13px;
+    margin-right: 6px;
+    background-color: $turquoise;
+    border-radius: 50%;
+  }
+}
+
+.unassigned {
+  font-family: SF UI Display;
+  font-size: 8px;
+  font-weight: 400;
+  line-height: 8.8px;
+  text-align: left;
+  color: #8e8e8e;
+}

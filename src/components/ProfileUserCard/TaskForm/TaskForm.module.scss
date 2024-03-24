@@ -1,0 +1,164 @@
+@import '../../../assets/scss/theme/colors';
+
+.form {
+  margin: 0 12px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: $light-gray;
+  border-radius: 8px;
+  padding: 15px 10px 10px 10px;
+  border: 1px solid $metallic;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 6px;
+  gap: 15px;
+}
+.taskButtonsWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+.radio {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 10px;
+  font-family: SF UI Display;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  text-align: left;
+  color: #242424;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.taskNameInput {
+  width: 100%;
+  min-height: 30px;
+  margin-bottom: 6px;
+  padding: 10px;
+  outline: none;
+  font-size: 10px !important;
+  box-shadow: none;
+  border: 1px solid $metallic;
+  border-radius: 4px;
+  resize: none;
+  &:focus {
+    outline: none;
+  }
+}
+.backToInput {
+  width: 100%;
+  min-height: 30px;
+  margin-bottom: 6px;
+  padding: 10px;
+  outline: none;
+  font-size: 10px !important;
+  box-shadow: none;
+  border: 1px solid $metallic;
+  border-radius: 4px;
+  resize: none;
+  &:focus {
+    outline: none;
+  }
+}
+.inputSmall {
+  max-width: 120px;
+  height: 29px;
+}
+.input::placeholder {
+  font-family: SF UI Display;
+  font-size: 10px !important;
+  color: $light-telegray;
+  outline: none;
+  font-weight: 400;
+  line-height: 11px;
+}
+.textarea {
+  width: 100%;
+  min-height: 60px;
+  padding: 10px;
+  outline: none;
+  font-size: 10px !important;
+  box-shadow: none;
+  border: 1px solid $metallic;
+  border-radius: 4px;
+  resize: none;
+  &:focus {
+    outline: none;
+  }
+}
+.taskLabel {
+  margin-bottom: 10px;
+  font-family: SF UI Display;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 11px;
+  color: $turquoise;
+}
+.textarea::placeholder {
+  font-family: SF UI Display;
+  font-size: 10px !important;
+  color: $light-telegray;
+  outline: none;
+  font-weight: 400;
+  line-height: 11px;
+}
+.proccesBtn {
+  max-width: 50px;
+  padding: 0;
+  display: inline-block;
+  height: auto;
+  font-family: SF UI Display;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 11px;
+  text-align: left;
+  color: #49c2bb;
+  border: none;
+  text-decoration: underline;
+  background: none;
+}
+.select {
+  height: 29px;
+  padding: 0 10px;
+  margin-top: 6px;
+  border: 1px solid #eeeeee;
+  font-family: SF UI Display;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 4px;
+  background-image: url('../../../assets/img/icons/arrowDown.svg');
+  background-repeat: no-repeat;
+  background-position: calc(100% - 15px) center;
+
+  &:focus-visible {
+    outline: none !important;
+  }
+}
+.select::-ms-expand {
+  display: none;
+}
+.submitButton {
+  width: 106px;
+  height: 29px;
+
+  background: $light-gray;
+  border: 1px solid $turquoise;
+  font-family: SF UI Display;
+  font-size: 10px !important;
+  font-weight: 500;
+  line-height: 12px;
+  color: $turquoise;
+  border-radius: 4px;
+}

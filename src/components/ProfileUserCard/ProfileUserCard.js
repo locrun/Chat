@@ -4,9 +4,8 @@ import { Button } from 'react-bootstrap';
 import { MenuPanel } from 'components/ProfileUserCard/MenuPanel/MenuPanel';
 import { HeaderProfile } from './HeaderProfile/HeaderProfile';
 import { BodyProfile } from './BodyProfile/BodyProfile';
-import { commentList } from 'data/comments/commnets';
 import { CommentForm } from './CommentForm/CommentForm';
-import { ListContainer } from './CommentForm/ListContainer/ListContainer';
+import { TaskForm } from './TaskForm/TaskForm';
 import profileUserData from 'data/ProfileUserData/profileUserData';
 // import OrderStatusCard from 'components/OrderStatusCard/OrderStatusCard';
 // import orderStatusInfo from 'data/ProfileUserData/orderStatusInfo';
@@ -24,8 +23,9 @@ export const ProfileUserCard = () => {
         <MenuPanel />
       </div>
       {/* <OrderStatusCard {...orderStatusInfo} /> */}
+
+      <TaskForm />
       <CommentForm />
-      <ListContainer data={commentList} title={'комментарии'} />
     </Flex>
   );
 };
