@@ -19,7 +19,7 @@ import { ChatContext } from 'context/Context';
 import { getUserLMS } from 'helpers/getUserLMS';
 
 const ChatThread = ({ thread, index }) => {
-  const { messagesDispatch } = useContext(ChatContext);
+  const { messagesDispatch, setCurrentLmsUser } = useContext(ChatContext);
 
   const { keycloak } = useKeycloak();
 
@@ -29,6 +29,8 @@ const ChatThread = ({ thread, index }) => {
 
   const fetchMessagesList = async () => {
     try {
+      setCurrentLmsUser(user ? user : {});
+
       const { data } = isChatClient
         ? await getMessagesListClient({ id: thread.id })
         : await getMessagesListCurator({ id: thread.id });

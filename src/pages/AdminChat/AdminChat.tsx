@@ -30,7 +30,9 @@ export const AdminChat = () => {
     setScrollToBottom,
     isAddNewChat,
     setIsAddNewChat,
-    setLmsUsers
+    setLmsUsers,
+    profileCardVisible,
+    currentLmsUser
   } = useContext(ChatContext);
   const [checkboxList, setCheckboxList] = useState(checkboxData);
 
@@ -195,7 +197,7 @@ export const AdminChat = () => {
         <div className={s.chatWrapper}>
           <Chat />
         </div>
-        <ProfileUserCard />
+        {profileCardVisible && currentLmsUser && <ProfileUserCard />}
       </div>
     </div>
   );

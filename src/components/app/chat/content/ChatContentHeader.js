@@ -4,9 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Col, Row } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
 import { ChatContext } from 'context/Context';
+import profileInfo from 'assets/img/chat/ProfileInfo.svg';
+import s from './content.module.scss';
 
 const ChatContentHeader = ({ setHideSidebar, hideSidebar }) => {
-  const { currentThread } = useContext(ChatContext);
+  const { currentThread, setProfileCardVisible } = useContext(ChatContext);
 
   return (
     <>
@@ -27,7 +29,14 @@ const ChatContentHeader = ({ setHideSidebar, hideSidebar }) => {
                 <div className="fs-11 text-400">Online</div>
               </div>
             </Col>
-            <Col xs="auto"></Col>
+            <Col xs="auto">
+              <img
+                src={profileInfo}
+                alt="info"
+                className={s.profileInfoIcon}
+                onClick={() => setProfileCardVisible(true)}
+              />
+            </Col>
           </Row>
         </div>
       )}

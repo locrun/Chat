@@ -16,6 +16,8 @@ const ChatProvider = ({ children }) => {
   const [key, setKey] = useState(0);
   const [isAddNewChat, setIsAddNewChat] = useState(false);
   const [lmsUsers, setLmsUsers] = useState([]);
+  const [profileCardVisible, setProfileCardVisible] = useState(true);
+  const [currentLmsUser, setCurrentLmsUser] = useState(null);
 
   useEffect(() => {
     if (threads.length > 0) {
@@ -63,7 +65,11 @@ const ChatProvider = ({ children }) => {
     isAddNewChat,
     setIsAddNewChat,
     lmsUsers,
-    setLmsUsers
+    setLmsUsers,
+    profileCardVisible,
+    setProfileCardVisible,
+    currentLmsUser,
+    setCurrentLmsUser
   };
 
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;
