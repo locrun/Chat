@@ -21,12 +21,12 @@ const Message = ({ avatar, message, time, is_my, files, is_read }) => {
       })}
     >
       <div>
-        {!is_my && <Avatar size="l" className="me-2" src={avatar} />}
         <div
           className={classNames(s.messageBlock, {
             [s.isMyMessage]: is_my
           })}
         >
+          {!is_my && <Avatar size="l" className="me-2" src={avatar} />}
           <div
             className={classNames(s.message, {
               [s.isMy]: is_my && message,

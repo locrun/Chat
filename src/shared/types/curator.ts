@@ -45,6 +45,7 @@ export interface Curator {
 export interface Client {
   id: number;
   is_online: string;
+  username: string;
 }
 
 export interface ChatInfo {

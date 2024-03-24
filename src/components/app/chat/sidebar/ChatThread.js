@@ -16,6 +16,7 @@ import { Nav } from 'react-bootstrap';
 
 import ChatSidebarDropdownAction from './ChatSidebarDropdownAction';
 import { ChatContext } from 'context/Context';
+import { getUserLMS } from 'helpers/getUserLMS';
 
 const ChatThread = ({ thread, index }) => {
   const { messagesDispatch } = useContext(ChatContext);
@@ -57,6 +58,12 @@ const ChatThread = ({ thread, index }) => {
     }
   };
 
+  const user = getUserLMS(thread.client);
+
+  let userAvatar = user?.profile_image?.image_url_medium
+    ? user.profile_image.image_url_medium
+    : thread.topic.logo;
+
   const getFormattedDate = time => {
     if (!time) {
       return '';
@@ -82,10 +89,12 @@ const ChatThread = ({ thread, index }) => {
         <ChatSidebarDropdownAction />
       </div>
       <Flex justifyContent="center">
-        <Avatar className={thread.status} src={thread.topic.logo} size="xl" />
+        <Avatar className={thread.status} src={userAvatar} size="xl" />
         <div className="flex-1 chat-contact-body ms-2 d-md-none d-lg-block">
           <Flex justifyContent="between">
-            <h6 className="mb-0 chat-contact-title">{thread.topic.title}</h6>
+            <h6 className="mb-0 chat-contact-title">
+              {user ? user.username : thread.topic.title}
+            </h6>
             <span className="message-time fs-11">
               {getFormattedDate(thread.last_message?.created_at)}
             </span>

@@ -18,6 +18,7 @@ import s from './AdminChat.module.scss';
 import { checkRoles } from 'helpers/checkRoles';
 import { getMessagesListClient } from 'api/routes/clientChat';
 import { ChatList } from 'shared/types/curator';
+import { LMSAccounts } from 'api/routes/newLMS';
 
 export const AdminChat = () => {
   const { topics } = useContext(TopicsContext) as TopicsContextType;
@@ -28,7 +29,8 @@ export const AdminChat = () => {
     messagesDispatch,
     setScrollToBottom,
     isAddNewChat,
-    setIsAddNewChat
+    setIsAddNewChat,
+    setLmsUsers
   } = useContext(ChatContext);
   const [checkboxList, setCheckboxList] = useState(checkboxData);
 
@@ -96,6 +98,10 @@ export const AdminChat = () => {
         chats: selectedValuesString || selectedRadioValue,
         topic: topicType
       };
+
+      const { data: users } = await LMSAccounts();
+
+      setLmsUsers(users);
 
       const { data } = await getCuratorChats(params);
 

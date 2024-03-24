@@ -13,11 +13,14 @@ import { usePage } from 'components/app/pagesProvider/PagesProvider';
 import { PageType } from 'shared/types';
 import { Chats } from './Chats';
 
+
 const MainLayout = () => {
   const { hash, pathname } = useLocation();
 
   const { keycloak } = useKeycloak();
   const { page } = usePage();
+
+ 
 
   if (
     checkAllRealmRolesAssigned(keycloak.realmAccess.roles, [
