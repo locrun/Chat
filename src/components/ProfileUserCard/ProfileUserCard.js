@@ -10,6 +10,7 @@ import profileUserData from 'data/ProfileUserData/profileUserData';
 // import OrderStatusCard from 'components/OrderStatusCard/OrderStatusCard';
 // import orderStatusInfo from 'data/ProfileUserData/orderStatusInfo';
 import s from './ProfileUserCard.module.scss';
+import { CallsForm } from './CallsForm/CallsForm';
 import { ChatContext } from 'context/Context';
 
 export const ProfileUserCard = () => {
@@ -26,7 +27,7 @@ export const ProfileUserCard = () => {
         <MenuPanel />
       </div>
       {/* <OrderStatusCard {...orderStatusInfo} /> */}
-
+      <CallsForm />
       <TaskForm />
       <CommentForm />
     </Flex>
