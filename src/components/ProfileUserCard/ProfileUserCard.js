@@ -6,6 +6,7 @@ import { HeaderProfile } from './HeaderProfile/HeaderProfile';
 import { BodyProfile } from './BodyProfile/BodyProfile';
 import { CommentForm } from './CommentForm/CommentForm';
 import { TaskForm } from './TaskForm/TaskForm';
+import { Payment } from './Payment/Payment';
 import profileUserData from 'data/ProfileUserData/profileUserData';
 // import OrderStatusCard from 'components/OrderStatusCard/OrderStatusCard';
 // import orderStatusInfo from 'data/ProfileUserData/orderStatusInfo';
@@ -26,7 +27,8 @@ export const ProfileUserCard = () => {
         </Button>
         <MenuPanel />
       </div>
-      {/* <OrderStatusCard {...orderStatusInfo} /> */}
+
+      <Payment />
       <CallsForm />
       <TaskForm />
       <CommentForm />

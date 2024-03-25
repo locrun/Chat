@@ -1,0 +1,62 @@
+@import '../../../assets/scss/theme/colors';
+
+.historyWrapper {
+  margin-bottom: 10px;
+  border: 1px solid $smoky-white;
+  border-radius: 8px;
+  font-family: SF UI Display;
+}
+
+.header {
+  display: block;
+  margin-bottom: 0;
+  padding: 14px 10px;
+  background: $light-gray;
+  border: 1px solid $light-gray;
+  border-radius: 8px;
+}
+.label {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 11px;
+  color: $turquoise;
+}
+.historyList {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.historyItem {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid $smoky-white;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+.info {
+  font-size: 8px;
+  font-weight: 400;
+  line-height: 9px;
+  color: $telegrey;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+.time {
+  font-size: 8px;
+  font-weight: 400;
+  line-height: 9px;
+  color: $telegrey;
+}
+.status {
+  margin-top: 5px;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  color: $black-brown;
+}
