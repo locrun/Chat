@@ -10,7 +10,7 @@ import { ChatContext } from 'context/Context';
 export const HeaderProfile = props => {
   const { setProfileCardVisible } = useContext(ChatContext);
 
-  const { profile_image, username, avatar, userName, linkProfile } = props;
+  const { profile_image, username, userName } = props;
 
   const userAvatar = profile_image?.image_url_medium;
   return (
@@ -36,5 +36,9 @@ HeaderProfile.propTypes = {
   linkProfile: PropTypes.shape({
     name: PropTypes.string.isRequired,
     path: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  profile_image: PropTypes.shape({
+    image_url_medium: PropTypes.string
+  }),
+  username: PropTypes.string
 };

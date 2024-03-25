@@ -41,5 +41,8 @@ export const BodyProfile = ({ email, phone_number, country }) => {
 };
 
 BodyProfile.propTypes = {
-  userInfo: PropTypes.arrayOf(PropTypes.object)
+  userInfo: PropTypes.arrayOf(PropTypes.object),
+  email: PropTypes.string,
+  phone_number: PropTypes.string,
+  country: PropTypes.string
 };
