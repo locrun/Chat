@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
 import Flex from '../common/Flex';
+import { ChatContext } from 'context/Context';
 import { Button } from 'react-bootstrap';
+import { CallsForm } from './CallsForm/CallsForm';
+import { UpdateProfileForm } from './UpdateProfileForm/UpdateProfileForm';
 import { MenuPanel } from 'components/ProfileUserCard/MenuPanel/MenuPanel';
 import { HeaderProfile } from './HeaderProfile/HeaderProfile';
 import { BodyProfile } from './BodyProfile/BodyProfile';
@@ -11,8 +14,6 @@ import profileUserData from 'data/ProfileUserData/profileUserData';
 // import OrderStatusCard from 'components/OrderStatusCard/OrderStatusCard';
 // import orderStatusInfo from 'data/ProfileUserData/orderStatusInfo';
 import s from './ProfileUserCard.module.scss';
-import { CallsForm } from './CallsForm/CallsForm';
-import { ChatContext } from 'context/Context';
 
 export const ProfileUserCard = () => {
   const { currentLmsUser } = useContext(ChatContext);
@@ -27,7 +28,7 @@ export const ProfileUserCard = () => {
         </Button>
         <MenuPanel />
       </div>
-
+      <UpdateProfileForm />
       <Payment />
       <CallsForm />
       <TaskForm />

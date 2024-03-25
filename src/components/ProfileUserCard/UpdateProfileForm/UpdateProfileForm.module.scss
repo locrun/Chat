@@ -1,0 +1,75 @@
+@import '../../../assets/scss/theme/colors';
+
+.form {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  border: 1px solid $metallic;
+}
+.profileInfoWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  border: 1px solid $metallic;
+}
+.header {
+  padding: 12px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fafafa;
+  border-radius: 10px;
+  position: relative;
+}
+.label {
+  font-family: SF UI Display;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 11px;
+  color: $turquoise;
+}
+.editBtn {
+  width: 80px;
+  height: 16px;
+  padding: 0px 9px 0px 9px;
+  border-radius: 12px;
+  border: 0.5px solid #49c2bb;
+  font-family: SF UI Display;
+  background-color: #fafafa;
+  font-size: 9px;
+  font-weight: 400;
+  line-height: 9.99px;
+  color: #49c2bb;
+}
+.clientDataList {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.listItem {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  padding: 10px;
+  border-bottom: 1px solid #efefef;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+.fieldName {
+  font-family: SF UI Display;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  color: #8e8e8e;
+}
+.fieldValue {
+  font-family: SF UI Display;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  color: #242424;
+}

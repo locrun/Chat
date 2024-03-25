@@ -1,7 +1,6 @@
 @import '../../../assets/scss/theme/colors';
 
 .form {
-  margin: 0 12px 10px 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -55,7 +54,6 @@
   border-radius: 4px;
 }
 .commentListWrapper {
-  margin: 0 12px;
   border: 1px solid $smoky-white;
   border-radius: 8px;
   .header {
