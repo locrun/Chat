@@ -33,10 +33,6 @@ export const HeaderProfile = props => {
 HeaderProfile.propTypes = {
   userName: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
-  linkProfile: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    path: PropTypes.string.isRequired
-  }).isRequired,
   profile_image: PropTypes.shape({
     image_url_medium: PropTypes.string
   }),

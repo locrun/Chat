@@ -1,11 +1,13 @@
 import React, { ChangeEvent, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
-import classnames from 'classnames';
+import { useKeycloak } from '@react-keycloak/web';
 import { Topics } from 'types/topics';
+import { assignCurator } from 'api/routes/curatorChat';
 import { ChatContext } from 'context/Context';
-import s from './ControlMessages.module.scss';
-import { assignCurator, closeCurrentDialog } from 'api/routes/curatorChat';
+import { closeCurrentDialog } from 'api/routes/curatorChat';
 import { AssignCuratorParams } from 'shared/types/curator';
+import classnames from 'classnames';
+import s from './ControlMessages.module.scss';
 
 interface ColtrolMessagesProps {
   topics: Topics[];
@@ -18,13 +20,13 @@ export const ControlMessages = ({
   handleTypeTopicChange,
   unreadMessagesCount
 }: ColtrolMessagesProps) => {
+  const { keycloak } = useKeycloak();
   const { currentThread } = useContext(ChatContext);
 
   const assignCuratorHandler = () => {
     const params: AssignCuratorParams = {
       chat: currentThread.id,
-      // TODO curator
-      curator: ''
+      curator: keycloak.idTokenParsed?.preferred_username
     };
     if (currentThread) assignCurator(params);
   };
