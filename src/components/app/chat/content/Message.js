@@ -21,22 +21,26 @@ const Message = ({ avatar, message, time, is_my, files, is_read }) => {
       })}
     >
       <div>
-        <div
-          className={classNames(s.messageBlock, {
-            [s.isMyMessage]: is_my
-          })}
-        >
-          {!is_my && <Avatar size="l" className="me-2" src={avatar} />}
+        <div className={s.messageWrapper}>
           <div
-            className={classNames(s.message, {
-              [s.isMy]: is_my && message,
-              [s.another]: !is_my && message
+            className={classNames(s.messageBlock, {
+              [s.isMyMessage]: is_my
             })}
           >
-            <p>{message}</p>
+            {!is_my && <Avatar size="l" className="me-2" src={avatar} />}
+            {message && (
+              <div
+                className={classNames(s.message, {
+                  [s.isMy]: is_my && message,
+                  [s.another]: !is_my && message
+                })}
+              >
+                <p>{message}</p>
+              </div>
+            )}
           </div>
+          <Files files={files} isMy={is_my} />
         </div>
-        <Files files={files} isMy={is_my} />
         <div
           className={classNames(s.messageFooter, {
             [s.isMyFooter]: is_my

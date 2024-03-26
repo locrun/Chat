@@ -104,9 +104,6 @@ const ChatThread = ({ thread, index }) => {
         'blocked-message': thread.status === 'closed'
       })}
     >
-      <div className="d-md-none d-lg-block">
-        <ChatSidebarDropdownAction />
-      </div>
       <Flex justifyContent="center">
         <Avatar className={thread.status} src={userAvatar} size="xl" />
         <div className="flex-1 chat-contact-body ms-2 d-md-none d-lg-block">
@@ -124,7 +121,7 @@ const ChatThread = ({ thread, index }) => {
               <FontAwesomeIcon
                 icon={is_read ? 'check-double' : 'check'}
                 size="xs"
-                className="position-absolute bottom-0 end-0 hover-hide"
+                className="position-absolute bottom-0 end-0"
                 color="rgb(182 193 210)"
               />
             </div>

@@ -14,10 +14,14 @@
   }
 }
 
+.messageWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
 .filesWrapper {
   display: flex;
   justify-content: flex-start;
-  margin-top: 15px;
 }
 
 .another {

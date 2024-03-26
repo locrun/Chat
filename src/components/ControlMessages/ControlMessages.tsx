@@ -78,25 +78,27 @@ export const ControlMessages = ({
             </Form.Select>
           </div>
         </div>
-        <div className={s.buttons}>
-          <div className={s.flexCol}>
-            <span className={s.label}>Нет менеджера</span>
-            <button className={s.button} onClick={assignCuratorHandler}>
-              Взять себе
-            </button>
+        {currentThread && (
+          <div className={s.buttons}>
+            <div className={s.flexCol}>
+              <span className={s.label}>Нет менеджера</span>
+              <button className={s.button} onClick={assignCuratorHandler}>
+                Взять себе
+              </button>
+            </div>
+            <div className={s.flexCol}>
+              <span className={s.label}>
+                Открыт <span className={s.date}>Пн 09.10.23. 14:41</span>
+              </span>
+              <button
+                className={classnames(s.button, s.openButton)}
+                onClick={deleteDialogHandler}
+              >
+                Закрыть
+              </button>
+            </div>
           </div>
-          <div className={s.flexCol}>
-            <span className={s.label}>
-              Открыт <span className={s.date}>Пн 09.10.23. 14:41</span>
-            </span>
-            <button
-              className={classnames(s.button, s.openButton)}
-              onClick={deleteDialogHandler}
-            >
-              Закрыть
-            </button>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

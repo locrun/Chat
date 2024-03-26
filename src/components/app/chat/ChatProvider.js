@@ -19,13 +19,6 @@ const ChatProvider = ({ children }) => {
   const [profileCardVisible, setProfileCardVisible] = useState(true);
   const [currentLmsUser, setCurrentLmsUser] = useState(null);
 
-  useEffect(() => {
-    if (threads.length > 0) {
-      setCurrentThread(threads[0]);
-      setActiveThreadId(threads[0].id);
-    }
-  }, [threads]);
-
   const getUser = thread => {
     let user = {};
     if (thread.type === 'group') {
