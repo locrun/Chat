@@ -6,7 +6,8 @@
   min-height: 100vh;
   font-family: Arial;
   border-radius: 10px;
-
+  display: flex;
+  flex-direction: column;
   background-color: $white;
 
   box-shadow: 2px 4px 15px 0px $aluminum;

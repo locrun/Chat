@@ -1,11 +1,40 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import Avatar from '../common/Avatar';
 import { CgCheck } from 'react-icons/cg';
 import classnames from 'classnames';
 import s from './OrderStatusCard.module.scss';
 
-const OrderStatusCard = ({
+interface OrderStatusInfo {
+  statusId: string;
+  avatar: string;
+  currentStatus: string;
+  name: string;
+  price: number;
+  date: string;
+  time: string;
+  statusChanged: {
+    statusName: string;
+    time: string;
+    statusTransition?: string;
+    name?: string;
+    date?: string;
+  };
+  orderCreated: {
+    statusName: string;
+    time: string;
+    name?: string;
+    date?: string;
+  };
+  userAddedToGroup: {
+    statusName: string;
+    time: string;
+    name?: string;
+    date?: string;
+  };
+}
+
+export const OrderStatusCard = ({
   statusId,
   avatar,
   currentStatus,
@@ -16,7 +45,7 @@ const OrderStatusCard = ({
   statusChanged,
   orderCreated,
   userAddedToGroup
-}) => {
+}: OrderStatusInfo) => {
   return (
     <div>
       <div className={s.container}>
@@ -76,25 +105,3 @@ const OrderStatusCard = ({
     </div>
   );
 };
-
-const statusPropTypes = PropTypes.shape({
-  statusName: PropTypes.string.isRequired,
-  time: PropTypes.string.isRequired,
-  statusTransition: PropTypes.string,
-  name: PropTypes.string,
-  date: PropTypes.string
-});
-
-OrderStatusCard.propTypes = {
-  statusId: PropTypes.string.isRequired,
-  avatar: PropTypes.string.isRequired,
-  currentStatus: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  date: PropTypes.string.isRequired,
-  time: PropTypes.string.isRequired,
-  statusChanged: statusPropTypes.isRequired,
-  orderCreated: statusPropTypes.isRequired,
-  userAddedToGroup: statusPropTypes.isRequired
-};
-export default OrderStatusCard;
