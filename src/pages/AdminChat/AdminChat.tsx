@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext, ChangeEvent } from 'react';
 import Chat from 'components/app/chat/Chat';
+import { useConnectSocket } from 'hooks/useConnectSocket';
 import {
   TopicsContext,
   TopicsContextType
@@ -13,12 +14,11 @@ import {
   getMessagesListCurator
 } from 'api/routes/curatorChat';
 import { checkboxData } from 'data/checkboxData';
-
-import s from './AdminChat.module.scss';
 import { checkRoles } from 'helpers/checkRoles';
 import { getMessagesListClient } from 'api/routes/clientChat';
 import { ChatList } from 'shared/types/curator';
 import { LMSAccounts } from 'api/routes/newLMS';
+import s from './AdminChat.module.scss';
 
 export const AdminChat = () => {
   const { topics } = useContext(TopicsContext) as TopicsContextType;
@@ -45,7 +45,7 @@ export const AdminChat = () => {
   const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
 
   const isChatClient = checkRoles();
-
+  useConnectSocket();
   const handleChangeRadio = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedRadioValue(event.target.value);
     setCheckboxList(prevCheckboxes => {

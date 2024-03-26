@@ -1,11 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { ChatContext } from 'context/Context';
+
 import Picker from '@emoji-mart/react';
 import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
 import TextareaAutosize from 'react-textarea-autosize';
+import { useConnectSocket } from 'hooks/useConnectSocket';
 import { useAppContext } from 'Main';
 import { createCuratorMessage } from 'api/routes/curatorChat';
 import { createClientMessage } from 'api/routes/clientChat';
@@ -23,7 +26,7 @@ const MessageTextArea = () => {
   const [previewEmoji, setPreviewEmoji] = useState(false);
   const [message, setMessage] = useState('');
   const [documents, setDocuments] = useState([]);
-
+  useConnectSocket();
   const {
     config: { isDark }
   } = useAppContext();

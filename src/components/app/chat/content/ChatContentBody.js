@@ -5,6 +5,7 @@ import Message from './Message';
 import SimpleBarReact from 'simplebar-react';
 import ThreadInfo from './ThreadInfo';
 import { ChatContext } from 'context/Context';
+
 import { getUserLMS } from 'helpers/getUserLMS';
 import NewDay from './NewDay';
 
@@ -14,7 +15,9 @@ const ChatContentBody = ({ thread }) => {
   const { messages, scrollToBottom, setScrollToBottom } =
     useContext(ChatContext);
 
-  const threadMessages = messages.slice().reverse();
+  const sortedMessages = messages.sort((a, b) => {
+    return new Date(a.created_at) - new Date(b.created_at);
+  });
 
   useEffect(() => {
     if (scrollToBottom) {
@@ -49,7 +52,7 @@ const ChatContentBody = ({ thread }) => {
       <ThreadInfo thread={thread} isOpenThreadInfo={true} />
       <SimpleBarReact style={{ height: '100%' }}>
         <div className="chat-content-scroll-area">
-          {threadMessages?.map(
+          {sortedMessages?.map(
             ({ text, created_at, is_my_message, files, is_read }, index) => {
               return (
                 <div key={index}>

@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
+// import SocketApi from 'api/socket';
 import { useKeycloak } from '@react-keycloak/web';
 import { Topics } from 'types/topics';
 import { assignCurator } from 'api/routes/curatorChat';
@@ -28,6 +29,10 @@ export const ControlMessages = ({
       chat: currentThread.id,
       curator: keycloak.idTokenParsed?.preferred_username
     };
+    // SocketApi.sendDataToServer('assign_curator', {
+    //   chat_id: currentThread.id,
+    //   curator_id: keycloak.idTokenParsed?.preferred_username
+    // });
     if (currentThread) assignCurator(params);
   };
 

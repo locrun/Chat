@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import Chat from 'components/app/chat/Chat';
+import { useConnectSocket } from 'hooks/useConnectSocket';
 import Search from 'components/doc-components/Search';
 import { getClientChats } from 'api/routes/clientChat';
 import MessageStarting from 'components/message-starting/MessageStarting';
@@ -25,6 +26,8 @@ export const StudentChat = () => {
   const { changePage } = usePage();
 
   const isChatClient = checkRoles();
+
+  useConnectSocket();
 
   useEffect(() => {
     const fetchClentDialogs = async () => {

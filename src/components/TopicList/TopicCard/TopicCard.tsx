@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import s from './TopicCard.module.scss';
 import { Topics } from 'types/topics';
+
 import { createClientChats } from 'api/routes/clientChat';
 import { usePage } from 'components/app/pagesProvider/PagesProvider';
 import { PageType } from 'shared/types';
@@ -10,38 +11,50 @@ interface TopicCardProps {
   topics: Topics[];
 }
 
+// if (data) {
+//   SocketApi.sendDataToServer('new_chat', {
+//     user_id: 3,
+//     chat_id: data.id,
+//     chat_type: data.chat_type
+//   });
+// }
+
 export const TopicCard = ({ topics }: TopicCardProps) => {
   const { changePage } = usePage();
   const { setIsAddNewChat } = useContext(ChatContext);
 
-  const onClick = async (id: number) => {
+  const handleNewChatDialog = async (id: number) => {
     await createClientChats({
       topic: id
     });
+
     setIsAddNewChat(true);
     changePage(PageType.CHAT);
   };
 
   return (
     <>
-      {topics.map((card: Topics) => {
+      {topics.map((dialog: Topics) => {
         return (
-          <div key={card.id} className={s.card}>
+          <div key={dialog.id} className={s.card}>
             <div>
               <div className={s.flex2}>
                 <span className={s.image}>
-                  <img src={card.logo} alt="logo" />
+                  <img src={dialog.logo} alt="logo" />
                 </span>
-                <h3 className={s.title}>{card.title}</h3>
+                <h3 className={s.title}>{dialog.title}</h3>
               </div>
-              {card.description && (
+              {dialog.description && (
                 <span
                   className={s.text}
-                  dangerouslySetInnerHTML={{ __html: card.description }}
+                  dangerouslySetInnerHTML={{ __html: dialog.description }}
                 />
               )}
             </div>
-            <button onClick={() => onClick(card.id)} className={s.linkButton}>
+            <button
+              onClick={() => handleNewChatDialog(dialog.id)}
+              className={s.linkButton}
+            >
               Написать
             </button>
           </div>
