@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useContext, useEffect } from 'react';
+import React, { ChangeEvent, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useConnectSocket } from 'hooks/useConnectSocket';
 import { useKeycloak } from '@react-keycloak/web';

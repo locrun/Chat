@@ -17,7 +17,6 @@ import Flex from 'components/common/Flex';
 import classNames from 'classnames';
 import Avatar from 'components/common/Avatar';
 import { Nav } from 'react-bootstrap';
-import ChatSidebarDropdownAction from './ChatSidebarDropdownAction';
 
 import { getUserLMS } from 'helpers/getUserLMS';
 
