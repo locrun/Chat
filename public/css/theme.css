@@ -26778,32 +26778,38 @@ option:disabled {
   min-width: 0;
 }
 
-.chat-contact-title {
-  font-weight: 400;
+.read-message .chat-contact-title {
+  color: var(--falcon-heading-color);
 }
-
-.message-time {
-  color: var(--falcon-gray-400);
-}
-
-.chat-contact-content {
+.read-message .chat-contact-content {
   font-size: 0.8333333333rem;
   color: var(--falcon-gray-600);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-.unread-message {
-  color: var(--falcon-emphasis-color);
+.read-message .message-time {
+  color: var(--falcon-gray-400);
 }
-.unread-message .chat-contact-title,
-.unread-message .chat-contact-content {
+
+.unread-message .chat-contact-title {
   font-weight: 600;
   color: var(--falcon-emphasis-color);
 }
+.unread-message .chat-contact-content {
+  font-size: 0.8333333333rem;
+  color: var(--falcon-emphasis-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .unread-message .message-time {
   color: var(--falcon-primary);
+}
+
+.blocked-message {
+  opacity: 0.5;
+  cursor: default;
 }
 
 .contacts-search-wrapper {
@@ -26979,6 +26985,7 @@ option:disabled {
     height: calc(100% - 2.188rem);
   }
   .card-chat {
+    width: 100%;
     height: 100%;
   }
 }
