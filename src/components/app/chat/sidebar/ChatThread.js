@@ -6,7 +6,7 @@ import { checkRoles } from 'helpers/checkRoles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LastMessage from './LastMessage';
 import { ChatContext } from 'context/Context';
-
+import { getCuratorChats } from 'api/routes/curatorChat';
 // import { getClientChats } from 'api/routes/clientChat';
 // import { getCuratorChats } from 'api/routes/curatorChat';
 import { getMessagesListCurator } from 'api/routes/curatorChat';
@@ -22,11 +22,26 @@ import ChatSidebarDropdownAction from './ChatSidebarDropdownAction';
 import { getUserLMS } from 'helpers/getUserLMS';
 
 const ChatThread = ({ thread, index }) => {
-  const { messages, messagesDispatch, setCurrentLmsUser } =
+  const { threadsDispatch, messages, messagesDispatch, setCurrentLmsUser } =
     useContext(ChatContext);
 
   const isClient = checkRoles();
-  const socketMessage = useConnectSocket();
+  const { socketMessage, newChat } = useConnectSocket();
+
+  useEffect(() => {
+    const fetchDialogs = async () => {
+      const { data } = await getCuratorChats({});
+      if (data)
+        threadsDispatch({
+          type: 'SET_DIALOGS',
+          payload: data?.results
+        });
+    };
+    if (newChat && newChat?.data) {
+      fetchDialogs();
+    }
+  }, [newChat]);
+
   useEffect(() => {
     const handleNewMessage = newMessage => {
       messagesDispatch({
@@ -35,13 +50,12 @@ const ChatThread = ({ thread, index }) => {
       });
     };
 
-    if (socketMessage.socketMessage.event_type === 'new_message') {
-      const newMessageData = socketMessage.socketMessage.data;
+    if (socketMessage.event_type === 'new_message') {
+      const newMessageData = socketMessage.data;
       if (!messages.some(message => message.id === newMessageData.id)) {
         handleNewMessage(newMessageData);
       }
     }
-    console.log('socketNewMessage', socketMessage);
   }, [socketMessage, messages]);
 
   const fetchMessagesList = async () => {
@@ -105,7 +119,7 @@ const ChatThread = ({ thread, index }) => {
       })}
     >
       <Flex justifyContent="center">
-        <Avatar className={thread.status} src={userAvatar} size="xl" />
+        <Avatar className={thread.status} size="xl" src={userAvatar} />
         <div className="flex-1 chat-contact-body ms-2 d-md-none d-lg-block">
           <Flex justifyContent="between">
             <h6 className="mb-0 chat-contact-title">

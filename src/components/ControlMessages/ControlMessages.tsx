@@ -1,6 +1,6 @@
-import React, { ChangeEvent, useContext } from 'react';
+import React, { ChangeEvent, useContext, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
-// import SocketApi from 'api/socket';
+import { useConnectSocket } from 'hooks/useConnectSocket';
 import { useKeycloak } from '@react-keycloak/web';
 import { Topics } from 'types/topics';
 import { assignCurator } from 'api/routes/curatorChat';
@@ -22,6 +22,9 @@ export const ControlMessages = ({
   unreadMessagesCount
 }: ColtrolMessagesProps) => {
   const { keycloak } = useKeycloak();
+
+  useConnectSocket();
+
   const { currentThread, isChatClosed, setIsChatClose } =
     useContext(ChatContext);
 
@@ -30,10 +33,7 @@ export const ControlMessages = ({
       chat: currentThread.id,
       curator: keycloak.idTokenParsed?.preferred_username
     };
-    // SocketApi.sendDataToServer('assign_curator', {
-    //   chat_id: currentThread.id,
-    //   curator_id: keycloak.idTokenParsed?.preferred_username
-    // });
+
     if (currentThread) assignCurator(params);
   };
 
@@ -55,6 +55,9 @@ export const ControlMessages = ({
                 className={s.select}
                 onChange={e => handleTypeTopicChange(e)}
               >
+                <option className={s.default} value="">
+                  Все
+                </option>
                 {topics.map(item => {
                   return (
                     <option key={item.id} value={item.id}>
@@ -72,6 +75,9 @@ export const ControlMessages = ({
               className={s.select}
               onChange={e => handleTypeTopicChange(e)}
             >
+              <option className={s.default} value="">
+                Все
+              </option>
               {topics.map(item => {
                 return (
                   <option key={item.id} value={item.id}>

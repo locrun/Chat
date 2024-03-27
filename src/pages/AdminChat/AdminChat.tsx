@@ -46,7 +46,13 @@ export const AdminChat = () => {
   const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
 
   const isChatClient = checkRoles();
-  useConnectSocket();
+
+  const changeСhatStatus = useConnectSocket();
+
+  useEffect(() => {
+    console.log('changeСhatStatus', changeСhatStatus);
+  }, [changeСhatStatus]);
+
   const handleChangeRadio = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedRadioValue(event.target.value);
     setCheckboxList(prevCheckboxes => {
