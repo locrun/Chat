@@ -21,7 +21,9 @@ const MessageTextArea = () => {
     threadsDispatch,
     currentThread,
     setScrollToBottom,
-    isOpenThreadInfo
+    isOpenThreadInfo,
+    isChatClosed,
+    setIsChatClose
   } = useContext(ChatContext);
   const [previewEmoji, setPreviewEmoji] = useState(false);
   const [message, setMessage] = useState('');
@@ -112,6 +114,14 @@ const MessageTextArea = () => {
   };
 
   useEffect(() => {
+    if (currentThread?.status === 'closed') {
+      setIsChatClose(true);
+    } else {
+      setIsChatClose(false);
+    }
+  }, [currentThread]);
+
+  useEffect(() => {
     if (isOpenThreadInfo) {
       setPreviewEmoji(false);
     }
@@ -160,7 +170,7 @@ const MessageTextArea = () => {
         onKeyDown={enterHandler}
         minRows={1}
         maxRows={6}
-        disabled={currentThread?.status === 'closed'}
+        disabled={isChatClosed}
         value={message}
         placeholder="Написать сообщение..."
         onChange={({ target }) => setMessage(target.value)}

@@ -16,7 +16,7 @@ import {
 import { checkboxData } from 'data/checkboxData';
 import { checkRoles } from 'helpers/checkRoles';
 import { getMessagesListClient } from 'api/routes/clientChat';
-import { ChatList } from 'shared/types/curator';
+//import { ChatList } from 'shared/types/curator';
 import { LMSAccounts } from 'api/routes/newLMS';
 import cn from 'classnames';
 import s from './AdminChat.module.scss';
@@ -108,7 +108,7 @@ export const AdminChat = () => {
 
       const { data } = await getCuratorChats(params);
 
-      getUnreadMessages(data.results);
+      setUnreadMessageCount(data.results.length);
 
       threadsDispatch({
         type: 'SET_DIALOGS',
@@ -143,6 +143,7 @@ export const AdminChat = () => {
     topicType
   ]);
 
+  /* TODO: wait changes
   const getUnreadMessages = (threads: ChatList[]) => {
     let unreadMessage = 0;
     threads.forEach(thread => {
@@ -152,7 +153,7 @@ export const AdminChat = () => {
     });
 
     setUnreadMessageCount(unreadMessage);
-  };
+  };*/
 
   const handleTypeMessagesChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setTypeMessages(event.target.value);

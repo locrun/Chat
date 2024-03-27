@@ -18,6 +18,7 @@ const ChatProvider = ({ children }) => {
   const [lmsUsers, setLmsUsers] = useState([]);
   const [profileCardVisible, setProfileCardVisible] = useState(true);
   const [currentLmsUser, setCurrentLmsUser] = useState(null);
+  const [isChatClosed, setIsChatClose] = useState(false);
 
   const getUser = thread => {
     let user = {};
@@ -62,7 +63,9 @@ const ChatProvider = ({ children }) => {
     profileCardVisible,
     setProfileCardVisible,
     currentLmsUser,
-    setCurrentLmsUser
+    setCurrentLmsUser,
+    isChatClosed,
+    setIsChatClose
   };
 
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;

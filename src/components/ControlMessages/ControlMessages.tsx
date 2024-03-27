@@ -22,7 +22,8 @@ export const ControlMessages = ({
   unreadMessagesCount
 }: ColtrolMessagesProps) => {
   const { keycloak } = useKeycloak();
-  const { currentThread } = useContext(ChatContext);
+  const { currentThread, isChatClosed, setIsChatClose } =
+    useContext(ChatContext);
 
   const assignCuratorHandler = () => {
     const params: AssignCuratorParams = {
@@ -37,7 +38,10 @@ export const ControlMessages = ({
   };
 
   const deleteDialogHandler = () => {
-    if (currentThread) closeCurrentDialog(currentThread.id);
+    if (currentThread) {
+      closeCurrentDialog(currentThread.id);
+      setIsChatClose(true);
+    }
   };
 
   return (
@@ -93,6 +97,7 @@ export const ControlMessages = ({
               <button
                 className={classnames(s.button, s.openButton)}
                 onClick={deleteDialogHandler}
+                disabled={isChatClosed}
               >
                 Закрыть
               </button>
