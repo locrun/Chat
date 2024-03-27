@@ -109,6 +109,9 @@ export const FilterMessages = ({
               className={s.select}
               onChange={e => handleStatusMessagesChange(e)}
             >
+              <option className={s.default} value={''}>
+                Все
+              </option>
               {statusMessaggesItems.map(item => {
                 return (
                   <option key={item.value} value={item.value}>

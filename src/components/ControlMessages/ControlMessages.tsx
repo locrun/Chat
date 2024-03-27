@@ -55,6 +55,9 @@ export const ControlMessages = ({
                 className={s.select}
                 onChange={e => handleTypeTopicChange(e)}
               >
+                <option className={s.default} value="">
+                  Все
+                </option>
                 {topics.map(item => {
                   return (
                     <option key={item.id} value={item.id}>
@@ -72,6 +75,9 @@ export const ControlMessages = ({
               className={s.select}
               onChange={e => handleTypeTopicChange(e)}
             >
+              <option className={s.default} value="">
+                Все
+              </option>
               {topics.map(item => {
                 return (
                   <option key={item.id} value={item.id}>
