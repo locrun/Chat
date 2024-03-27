@@ -9,12 +9,25 @@
   flex-direction: column;
   justify-content: flex-start;
 }
+
 .chatWrapper {
   width: 100%;
   height: calc(100vh - 180px);
-}
-.flex {
   display: flex;
   justify-content: space-between;
   gap: 10px;
+}
+.extraChatWrapper {
+  width: 100%;
+  height: calc(100vh - 282px);
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.profileCardWrapper {
+  height: calc(100vh - 247px);
+}
+.extraProfileCardWrapper {
+  height: calc(100vh - 348px);
 }

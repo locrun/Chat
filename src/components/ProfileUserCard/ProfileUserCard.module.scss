@@ -2,16 +2,15 @@
 
 .card {
   min-width: 285px;
-  padding: 0 12px;
-  min-height: 100vh;
+  height: 100%;
+  padding: 0 12px 12px 12px;
+  overflow: auto;
   font-family: Arial;
-  border-radius: 10px;
+  border-radius: 0 0 10px 10px;
   display: flex;
   flex-direction: column;
   background-color: $white;
-
   box-shadow: 2px 4px 15px 0px $aluminum;
-  flex-grow: 1;
 }
 
 .flex {
@@ -22,7 +21,7 @@
 
 .body {
   max-width: 285px;
-  padding: 16px 12px;
+  padding: 16px 0;
 }
 
 .header {
@@ -30,6 +29,7 @@
   background-color: $dusty-blue;
   border-radius: 10px 10px 0 0;
   position: relative;
+  border-bottom: 1px solid #efefef;
 }
 
 .headerInfo {

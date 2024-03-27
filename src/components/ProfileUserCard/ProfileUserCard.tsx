@@ -49,21 +49,26 @@ export const ProfileUserCard = () => {
   };
 
   return (
-    <div className={s.card}>
+    <>
       <HeaderProfile {...currentLmsUser} {...profileUserData} />
-      <div className={s.body}>
-        <BodyProfile userInfo={profileUserData.infoList} {...currentLmsUser} />
-        <Button variant="outline-success" className={s.submitButton}>
-          Отправить данные для входа
-        </Button>
-        <MenuPanel
-          renderByButtonType={(buttonType: ButtonType) =>
-            setSelectedButtonType(buttonType)
-          }
-        />
-      </div>
+      <div className={s.card}>
+        <div className={s.body}>
+          <BodyProfile
+            userInfo={profileUserData.infoList}
+            {...currentLmsUser}
+          />
+          <Button variant="outline-success" className={s.submitButton}>
+            Отправить данные для входа
+          </Button>
+          <MenuPanel
+            renderByButtonType={(buttonType: ButtonType) =>
+              setSelectedButtonType(buttonType)
+            }
+          />
+        </div>
 
-      {getByButtonType(selectedButtonType)}
-    </div>
+        {getByButtonType(selectedButtonType)}
+      </div>
+    </>
   );
 };

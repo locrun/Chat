@@ -18,6 +18,7 @@ import { checkRoles } from 'helpers/checkRoles';
 import { getMessagesListClient } from 'api/routes/clientChat';
 import { ChatList } from 'shared/types/curator';
 import { LMSAccounts } from 'api/routes/newLMS';
+import cn from 'classnames';
 import s from './AdminChat.module.scss';
 
 export const AdminChat = () => {
@@ -193,11 +194,19 @@ export const AdminChat = () => {
         />
       )}
 
-      <div className={s.flex}>
-        <div className={s.chatWrapper}>
-          <Chat />
+      <div
+        className={cn(s.chatWrapper, {
+          [s.extraChatWrapper]: typeMessages
+        })}
+      >
+        <Chat />
+        <div
+          className={cn(s.profileCardWrapper, {
+            [s.extraProfileCardWrapper]: typeMessages
+          })}
+        >
+          {profileCardVisible && currentLmsUser && <ProfileUserCard />}
         </div>
-        {profileCardVisible && currentLmsUser && <ProfileUserCard />}
       </div>
     </div>
   );
