@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Flex from 'components/common/Flex';
 
-// import { useConnectSocket } from 'hooks/useConnectSocket';
+import { useConnectSocket } from 'hooks/useConnectSocket';
 import { ChatContext } from 'context/Context';
 import { Card, Tab } from 'react-bootstrap';
 import ChatContent from './content/ChatContent';
@@ -16,7 +16,7 @@ const Chat = () => {
     key,
     setKey
   } = useContext(ChatContext);
-  // useConnectSocket();
+  useConnectSocket();
 
   const [hideSidebar, setHideSidebar] = useState(false);
 

@@ -9,7 +9,7 @@ export const useConnectSocket = () => {
   const [newChat, setNewChat] = useState(null);
   const [assignCuratorState, setAssignCuratorState] = useState(null);
   const [readChatMessage, setReadChatMessage] = useState(null);
-
+  const [changeСhatStatus, setChangeСhatStatus] = useState(null);
   useEffect(() => {
     const connectSocket = () => {
       WebSocketApi.createConnection(keycloak.token!);
@@ -38,21 +38,26 @@ export const useConnectSocket = () => {
         if (data.event_type === 'read_chat_message') {
           setReadChatMessage({ ...data });
         }
+        if (data.event_type === 'update_chat_status') {
+          setChangeСhatStatus({ ...data });
+        }
       };
     }
 
-    // const pingInterval = setInterval(() => {
-    //   if (
-    //     WebSocketApi.socket &&
-    //     WebSocketApi.socket.readyState === WebSocket.OPEN
-    //   ) {
-    //     WebSocketApi.socket.send('ping');
-    //   }
-    // }, 15000);
+    const pingInterval = setInterval(() => {
+      if (
+        WebSocketApi.socket &&
+        WebSocketApi.socket.readyState === WebSocket.OPEN
+      ) {
+        WebSocketApi.socket.send(
+          JSON.stringify({ Authorization: keycloak.token! })
+        );
+      }
+    }, 15000);
 
-    // return () => {
-    //   clearInterval(pingInterval);
-    // };
+    return () => {
+      clearInterval(pingInterval);
+    };
   }, [keycloak.token]);
 
   return {
@@ -60,6 +65,7 @@ export const useConnectSocket = () => {
     readChatMessage,
     socketMessage,
     userStatus,
-    newChat
+    newChat,
+    changeСhatStatus
   };
 };
