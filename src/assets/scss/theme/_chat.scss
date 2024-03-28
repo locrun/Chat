@@ -103,9 +103,6 @@
   .chat-contact-content {
     font-size: map-get($font-sizes, 10);
     color: var(--#{$prefix}gray-600);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
   .message-time {
     color: var(--#{$prefix}gray-400);
@@ -119,9 +116,6 @@
   .chat-contact-content {
     font-size: map-get($font-sizes, 10);
     color: var(--#{$prefix}emphasis-color);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
   .message-time {
     color: var(--#{$prefix}primary);

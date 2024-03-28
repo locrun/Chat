@@ -131,10 +131,11 @@ const ChatThread = ({ thread, index }) => {
           <div className="min-w-0">
             <div className="chat-contact-content pe-3">
               <LastMessage lastMessage={thread?.last_message} />
+
               <FontAwesomeIcon
                 icon={is_read ? 'check-double' : 'check'}
                 size="xs"
-                className="position-absolute bottom-0 end-0"
+                className="position-absolute bottom-4 end-0"
                 color="rgb(182 193 210)"
               />
             </div>
