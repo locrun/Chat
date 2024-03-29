@@ -20,12 +20,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #fafafa;
+  background-color: $light-gray;
   border-radius: 10px;
   position: relative;
 }
 .label {
-  font-family: SF UI Display;
   font-size: 10px;
   font-weight: 500;
   line-height: 11px;
@@ -36,13 +35,12 @@
   height: 16px;
   padding: 0px 9px 0px 9px;
   border-radius: 12px;
-  border: 0.5px solid #49c2bb;
-  font-family: SF UI Display;
-  background-color: #fafafa;
+  border: 0.5px solid $turquoise;
+  background-color: $light-gray;
   font-size: 9px;
   font-weight: 400;
   line-height: 9.99px;
-  color: #49c2bb;
+  color: $turquoise;
 }
 .clientDataList {
   margin: 0;
@@ -53,23 +51,21 @@
   display: grid;
   grid-template-columns: 2fr 1fr;
   padding: 10px;
-  border-bottom: 1px solid #efefef;
+  border-bottom: 1px solid $smoky-white;
 
   &:last-child {
     border-bottom: none;
   }
 }
 .fieldName {
-  font-family: SF UI Display;
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;
-  color: #8e8e8e;
+  color: $telegrey;
 }
 .fieldValue {
-  font-family: SF UI Display;
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;
-  color: #242424;
+  color: $black-brown;
 }

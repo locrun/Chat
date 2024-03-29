@@ -28,14 +28,12 @@
 }
 .label {
   margin-bottom: 10px;
-  font-family: SF UI Display;
   font-size: 10px;
   font-weight: 500;
   line-height: 11px;
   color: $turquoise;
 }
 .textarea::placeholder {
-  font-family: SF UI Display;
   font-size: 10px !important;
   color: $light-telegray;
   outline: none;
@@ -49,7 +47,6 @@
   margin-top: 10px;
   background: $light-gray;
   border: 1px solid $turquoise;
-  font-family: SF UI Display;
   font-size: 10px !important;
   font-weight: 500;
   line-height: 12px;
@@ -106,7 +103,6 @@
 
 .text {
   margin-left: 4px;
-  font-family: SF UI Display;
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;

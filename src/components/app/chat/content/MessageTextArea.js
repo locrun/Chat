@@ -174,7 +174,7 @@ const MessageTextArea = () => {
         value={message}
         placeholder="Написать сообщение..."
         onChange={({ target }) => setMessage(target.value)}
-        className="form-control outline-none resize-none rounded-0 border-0 emojiarea-editor"
+        className="scrollbar form-control outline-none resize-none rounded-0 border-0 emojiarea-editor"
       />
 
       <Form.Group controlId="chatFileUpload">

@@ -244,14 +244,16 @@
 }
 .chat-editor-area {
   width: 100%;
-  height: 40px;
   border-top: 1px solid var(--#{$prefix}border-color);
+  border-top: 1px solid var(--falcon-border-color);
   display: flex;
   align-items: center;
 
   .form-control {
-    min-height: 2rem;
+    min-height: 39px;
+    line-height: 28px;
   }
+
   .emoji-icon {
     padding: 0 map-get($spacers, 1);
     margin-right: map-get($spacers, 2);
@@ -276,6 +278,9 @@
       pointer-events: none;
       color: var(--#{$prefix}gray-400);
     }
+  }
+  .emojiarea-editor::placeholder {
+    line-height: 28px;
   }
 }
 .chat-option {

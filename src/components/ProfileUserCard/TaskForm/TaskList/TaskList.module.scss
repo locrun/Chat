@@ -12,7 +12,6 @@
 }
 .taskLabel {
   margin-bottom: 10px;
-  font-family: SF UI Display;
   font-size: 10px;
   font-weight: 500;
   line-height: 11px;
@@ -40,33 +39,29 @@
 }
 .taskName {
   max-width: 93px;
-  font-family: SF UI Display;
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;
   text-align: left;
-  color: #49c2bb;
+  color: $turquoise;
 }
 .taskType {
-  font-family: SF UI Display;
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;
-  color: #242424;
+  color: $black-brown;
 }
 .describeTask {
-  font-family: SF UI Display;
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;
-  color: #242424;
+  color: $black-brown;
 }
 .notification {
   max-width: 83px;
   padding: 2px 9px 2px 9px;
   display: flex;
   align-items: center;
-  font-family: SF UI Display;
   font-size: 9px;
   font-weight: 400;
   color: $turquoise;
@@ -85,10 +80,9 @@
 }
 
 .unassigned {
-  font-family: SF UI Display;
   font-size: 8px;
   font-weight: 400;
   line-height: 8.8px;
   text-align: left;
-  color: #8e8e8e;
+  color: $telegrey;
 }

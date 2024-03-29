@@ -1,14 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
 import { useConnectSocket } from 'hooks/useConnectSocket';
 import { checkRoles } from 'helpers/checkRoles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LastMessage from './LastMessage';
 import { ChatContext } from 'context/Context';
 import { getCuratorChats } from 'api/routes/curatorChat';
-// import { getClientChats } from 'api/routes/clientChat';
-// import { getCuratorChats } from 'api/routes/curatorChat';
 import { getMessagesListCurator } from 'api/routes/curatorChat';
 import { getMessagesListClient } from 'api/routes/clientChat';
 import { markChatMessagesAsReadClient } from 'api/routes/clientChat';
@@ -25,7 +22,7 @@ const ChatThread = ({ thread, index }) => {
     useContext(ChatContext);
 
   const isClient = checkRoles();
-  const { socketMessage, newChat } = useConnectSocket();
+  const { userStatus, socketMessage, newChat } = useConnectSocket();
 
   useEffect(() => {
     const fetchDialogs = async () => {
@@ -107,6 +104,7 @@ const ChatThread = ({ thread, index }) => {
   };
 
   const is_read = thread?.last_message?.is_read;
+
   return (
     <Nav.Link
       eventKey={index}
@@ -118,7 +116,13 @@ const ChatThread = ({ thread, index }) => {
       })}
     >
       <Flex justifyContent="center">
-        <Avatar className={thread.status} size="xl" src={userAvatar} />
+        <Avatar
+          className={thread.status}
+          size={classNames('avatar avatar-xl', {
+            'status-online': userStatus?.data.status === 'online'
+          })}
+          src={userAvatar}
+        />
         <div className="flex-1 chat-contact-body ms-2 d-md-none d-lg-block">
           <Flex justifyContent="between">
             <h6 className="mb-0 chat-contact-title">

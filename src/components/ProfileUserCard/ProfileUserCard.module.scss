@@ -1,16 +1,24 @@
 @import '../../assets/scss/theme/colors';
 
 .card {
-  min-width: 285px;
+  width: 285px;
   height: 100%;
-  padding: 0 12px 12px 12px;
-  overflow: auto;
-  font-family: Arial;
+  padding: 0 5px 12px 12px;
+  overflow-y: scroll;
   border-radius: 0 0 10px 10px;
   display: flex;
   flex-direction: column;
   background-color: $white;
   box-shadow: 2px 4px 15px 0px $aluminum;
+}
+
+.card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.card::-webkit-scrollbar-thumb {
+  background-color: $silver-gray;
+  border-radius: 8px;
 }
 
 .flex {
@@ -29,7 +37,7 @@
   background-color: $dusty-blue;
   border-radius: 10px 10px 0 0;
   position: relative;
-  border-bottom: 1px solid #efefef;
+  border-bottom: 1px solid $smoky-white;
 }
 
 .headerInfo {
@@ -37,7 +45,6 @@
 }
 
 .userInfo {
-  font-family: Arial;
   font-size: 12px;
   font-weight: 400;
   line-height: 12px;
@@ -45,7 +52,6 @@
 }
 
 .link {
-  font-family: Arial;
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;
@@ -64,7 +70,6 @@
   padding: 11px 58px;
   margin-top: 15px;
   color: $turquoise;
-  font-family: Arial;
   font-size: 10px !important;
   font-weight: 400;
   line-height: 12px;
@@ -90,7 +95,6 @@
 
 .key {
   display: inline-block;
-  font-family: Arial;
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;
@@ -99,7 +103,6 @@
 
 .value {
   display: inline-block;
-  font-family: Actor;
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;
