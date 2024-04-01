@@ -6,6 +6,7 @@ import SimpleBarReact from 'simplebar-react';
 import ThreadInfo from './ThreadInfo';
 import { ChatContext } from 'context/Context';
 
+import { getUserLMS } from 'helpers/getUserLMS';
 import NewDay from './NewDay';
 
 const ChatContentBody = ({ thread }) => {
@@ -14,7 +15,9 @@ const ChatContentBody = ({ thread }) => {
   const { messages, scrollToBottom, setScrollToBottom } =
     useContext(ChatContext);
 
-  const threadMessages = messages.slice().reverse();
+  const sortedMessages = messages.sort((a, b) => {
+    return new Date(a.created_at) - new Date(b.created_at);
+  });
 
   useEffect(() => {
     if (scrollToBottom) {
@@ -38,12 +41,18 @@ const ChatContentBody = ({ thread }) => {
     return null;
   };
 
+  const user = getUserLMS(thread.client);
+
+  let userAvatar = user?.profile_image?.image_url_medium
+    ? user.profile_image.image_url_medium
+    : thread.topic.logo;
+
   return (
     <div className="chat-content-body" style={{ display: 'inherit' }}>
       <ThreadInfo thread={thread} isOpenThreadInfo={true} />
       <SimpleBarReact style={{ height: '100%' }}>
         <div className="chat-content-scroll-area">
-          {threadMessages?.map(
+          {sortedMessages?.map(
             ({ text, created_at, is_my_message, files, is_read }, index) => {
               return (
                 <div key={index}>
@@ -52,7 +61,7 @@ const ChatContentBody = ({ thread }) => {
                     message={text}
                     time={created_at}
                     files={files}
-                    avatar={thread?.topic?.logo}
+                    avatar={userAvatar}
                     is_my={is_my_message}
                     is_read={is_read}
                   />

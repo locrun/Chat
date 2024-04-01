@@ -5,6 +5,7 @@ import { Nav } from 'react-bootstrap';
 import ChatThread from './ChatThread';
 import SimpleBarReact from 'simplebar-react';
 import ChatContactsSearch from './ChatContactSearch';
+
 import classNames from 'classnames';
 
 const ChatSidebar = ({ hideSidebar, threads }) => {

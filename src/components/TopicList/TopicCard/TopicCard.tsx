@@ -1,9 +1,12 @@
-import React from 'react';
-import s from './TopicCard.module.scss';
+import React, { useContext } from 'react';
+import { ChatContext } from 'context/Context';
 import { Topics } from 'types/topics';
+import { useConnectSocket } from 'hooks/useConnectSocket';
 import { createClientChats } from 'api/routes/clientChat';
 import { usePage } from 'components/app/pagesProvider/PagesProvider';
 import { PageType } from 'shared/types';
+
+import s from './TopicCard.module.scss';
 
 interface TopicCardProps {
   topics: Topics[];
@@ -11,34 +14,42 @@ interface TopicCardProps {
 
 export const TopicCard = ({ topics }: TopicCardProps) => {
   const { changePage } = usePage();
+  const { setIsAddNewChat } = useContext(ChatContext);
 
-  const onClick = async (id: number) => {
+  useConnectSocket();
+
+  const handleNewChatDialog = async (id: number) => {
     await createClientChats({
       topic: id
     });
+
+    setIsAddNewChat(true);
     changePage(PageType.CHAT);
   };
 
   return (
     <>
-      {topics.map((card: Topics) => {
+      {topics.map((dialog: Topics) => {
         return (
-          <div key={card.id} className={s.card}>
+          <div key={dialog.id} className={s.card}>
             <div>
               <div className={s.flex2}>
                 <span className={s.image}>
-                  <img src={card.logo} alt="logo" />
+                  <img src={dialog.logo} alt="logo" />
                 </span>
-                <h3 className={s.title}>{card.title}</h3>
+                <h3 className={s.title}>{dialog.title}</h3>
               </div>
-              {card.description && (
+              {dialog.description && (
                 <span
                   className={s.text}
-                  dangerouslySetInnerHTML={{ __html: card.description }}
+                  dangerouslySetInnerHTML={{ __html: dialog.description }}
                 />
               )}
             </div>
-            <button onClick={() => onClick(card.id)} className={s.linkButton}>
+            <button
+              onClick={() => handleNewChatDialog(dialog.id)}
+              className={s.linkButton}
+            >
               Написать
             </button>
           </div>

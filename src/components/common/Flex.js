@@ -37,7 +37,7 @@ const Flex = ({
 };
 
 Flex.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   justifyContent: PropTypes.string,
   inline: PropTypes.bool,
   alignItems: PropTypes.string,

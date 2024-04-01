@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useState, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { ChatContext } from 'context/Context';
 import users from 'data/people';
@@ -14,13 +14,11 @@ const ChatProvider = ({ children }) => {
   const [isOpenThreadInfo, setIsOpenThreadInfo] = useState(false);
   const [scrollToBottom, setScrollToBottom] = useState(true);
   const [key, setKey] = useState(0);
-
-  useEffect(() => {
-    if (threads.length > 0) {
-      setCurrentThread(threads[0]);
-      setActiveThreadId(threads[0].id);
-    }
-  }, [threads]);
+  const [isAddNewChat, setIsAddNewChat] = useState(false);
+  const [lmsUsers, setLmsUsers] = useState([]);
+  const [profileCardVisible, setProfileCardVisible] = useState(true);
+  const [currentLmsUser, setCurrentLmsUser] = useState(null);
+  const [isChatClosed, setIsChatClose] = useState(false);
 
   const getUser = thread => {
     let user = {};
@@ -57,7 +55,17 @@ const ChatProvider = ({ children }) => {
     scrollToBottom,
     setScrollToBottom,
     key,
-    setKey
+    setKey,
+    isAddNewChat,
+    setIsAddNewChat,
+    lmsUsers,
+    setLmsUsers,
+    profileCardVisible,
+    setProfileCardVisible,
+    currentLmsUser,
+    setCurrentLmsUser,
+    isChatClosed,
+    setIsChatClose
   };
 
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;

@@ -1,11 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { ChatContext } from 'context/Context';
+
 import Picker from '@emoji-mart/react';
 import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
 import TextareaAutosize from 'react-textarea-autosize';
+import { useConnectSocket } from 'hooks/useConnectSocket';
 import { useAppContext } from 'Main';
 import { createCuratorMessage } from 'api/routes/curatorChat';
 import { createClientMessage } from 'api/routes/clientChat';
@@ -18,12 +21,14 @@ const MessageTextArea = () => {
     threadsDispatch,
     currentThread,
     setScrollToBottom,
-    isOpenThreadInfo
+    isOpenThreadInfo,
+    isChatClosed,
+    setIsChatClose
   } = useContext(ChatContext);
   const [previewEmoji, setPreviewEmoji] = useState(false);
   const [message, setMessage] = useState('');
   const [documents, setDocuments] = useState([]);
-
+  useConnectSocket();
   const {
     config: { isDark }
   } = useAppContext();
@@ -97,7 +102,7 @@ const MessageTextArea = () => {
 
     if (message.length > 0 || documents.length > 0) {
       try {
-        sendMessage();
+        await sendMessage();
       } catch (error) {
         return console.log(error);
       } finally {
@@ -107,6 +112,14 @@ const MessageTextArea = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (currentThread?.status === 'closed') {
+      setIsChatClose(true);
+    } else {
+      setIsChatClose(false);
+    }
+  }, [currentThread]);
 
   useEffect(() => {
     if (isOpenThreadInfo) {
@@ -138,16 +151,30 @@ const MessageTextArea = () => {
 
   const acceptedTypes = INPUT_FILE_FORMATS.join(',');
 
+  const enterHandler = event => {
+    if (event.key === 'Enter') {
+      if (event.ctrlKey) {
+        setMessage(prevText => prevText + '\n');
+        event.target.style.height = '';
+        event.target.style.height = event.target.scrollHeight + 26 + 'px';
+      } else {
+        event.preventDefault();
+        handleSubmit();
+      }
+    }
+  };
+
   return (
     <Form className="chat-editor-area" onSubmit={handleSubmit}>
       <TextareaAutosize
+        onKeyDown={enterHandler}
         minRows={1}
         maxRows={6}
-        disabled={currentThread?.status === 'closed'}
+        disabled={isChatClosed}
         value={message}
         placeholder="Написать сообщение..."
         onChange={({ target }) => setMessage(target.value)}
-        className="form-control outline-none resize-none rounded-0 border-0 emojiarea-editor"
+        className="scrollbar form-control outline-none resize-none rounded-0 border-0 emojiarea-editor"
       />
 
       <Form.Group controlId="chatFileUpload">

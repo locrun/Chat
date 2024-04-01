@@ -4,20 +4,30 @@
   margin: 0 auto;
   max-width: 1180px;
   min-width: 1150px;
-  height: 100vh;
-  padding: 0 15px;
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding: 40px 15px 0 15px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
+
 .chatWrapper {
   width: 100%;
-  height: calc(100vh - 380px);
-}
-.flex {
+  height: calc(100vh - 180px);
   display: flex;
   justify-content: space-between;
   gap: 10px;
+}
+.extraChatWrapper {
+  width: 100%;
+  height: calc(100vh - 282px);
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.profileCardWrapper {
+  height: calc(100vh - 247px);
+}
+.extraProfileCardWrapper {
+  height: calc(100vh - 348px);
 }

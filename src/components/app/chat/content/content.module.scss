@@ -14,10 +14,14 @@
   }
 }
 
+.messageWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
 .filesWrapper {
   display: flex;
   justify-content: flex-start;
-  margin-top: 15px;
 }
 
 .another {
@@ -39,6 +43,7 @@
 .messageBlock {
   display: flex;
   justify-content: flex-start;
+  align-items: center;
 }
 
 .isMyMessage {
@@ -101,4 +106,12 @@
   flex-direction: row;
   align-items: center;
   gap: 10px;
+}
+.fileItemImage {
+  width: 20px;
+  height: 20px;
+}
+
+.profileInfoIcon {
+  cursor: pointer;
 }

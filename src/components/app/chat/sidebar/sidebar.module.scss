@@ -1,0 +1,16 @@
+.lastMessage {
+  display: flex;
+  flex-direction: row;
+  max-width: 280px;
+
+  span:nth-child(2) {
+    max-width: 240px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.lastDocument {
+  gap: 3px;
+}

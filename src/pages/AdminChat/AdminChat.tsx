@@ -1,21 +1,40 @@
 import React, { useEffect, useState, useContext, ChangeEvent } from 'react';
 import Chat from 'components/app/chat/Chat';
+import { useConnectSocket } from 'hooks/useConnectSocket';
 import {
   TopicsContext,
   TopicsContextType
 } from 'components/app/topics/TopicsProvider';
 import { ChatContext } from 'context/Context';
-//import { ProfileUserCard } from 'components/ProfileUserCard/ProfileUserCard';
+import { ProfileUserCard } from 'components/ProfileUserCard/ProfileUserCard';
 import { ControlMessages } from 'components/ControlMessages/ControlMessages';
 import { FilterMessages } from 'components/FilterMessages/FilterMessages';
-import { getCuratorChats } from 'api/routes/curatorChat';
+import {
+  getCuratorChats,
+  getMessagesListCurator
+} from 'api/routes/curatorChat';
 import { checkboxData } from 'data/checkboxData';
-
+import { checkRoles } from 'helpers/checkRoles';
+import { getMessagesListClient } from 'api/routes/clientChat';
+//import { ChatList } from 'shared/types/curator';
+import { LMSAccounts } from 'api/routes/newLMS';
+import cn from 'classnames';
 import s from './AdminChat.module.scss';
 
 export const AdminChat = () => {
   const { topics } = useContext(TopicsContext) as TopicsContextType;
-  const { threadsDispatch } = useContext(ChatContext);
+  const {
+    threadsDispatch,
+    setKey,
+    setCurrentThread,
+    messagesDispatch,
+    setScrollToBottom,
+    isAddNewChat,
+    setIsAddNewChat,
+    setLmsUsers,
+    profileCardVisible,
+    currentLmsUser
+  } = useContext(ChatContext);
   const [checkboxList, setCheckboxList] = useState(checkboxData);
 
   const [typeMessages, setTypeMessages] = useState('');
@@ -24,6 +43,15 @@ export const AdminChat = () => {
   const [selectedRadioValue, setSelectedRadioValue] = useState<string>('');
   const [chosenCheckboxes, setChosenCheckboxes] = useState<string[]>([]);
   const [topicType, setTopicType] = useState('');
+  const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
+
+  const isChatClient = checkRoles();
+
+  const changeСhatStatus = useConnectSocket();
+
+  useEffect(() => {
+    console.log('changeСhatStatus', changeСhatStatus);
+  }, [changeСhatStatus]);
 
   const handleChangeRadio = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedRadioValue(event.target.value);
@@ -80,11 +108,35 @@ export const AdminChat = () => {
         topic: topicType
       };
 
+      const { data: users } = await LMSAccounts();
+
+      setLmsUsers(users);
+
       const { data } = await getCuratorChats(params);
+
+      setUnreadMessageCount(data.results.length);
+
       threadsDispatch({
         type: 'SET_DIALOGS',
         payload: data.results
       });
+
+      const thread = data.results[0];
+      if (thread && isAddNewChat) {
+        setKey(thread.id);
+        setCurrentThread(thread);
+
+        const { data: messages } = isChatClient
+          ? await getMessagesListClient({ id: thread.id })
+          : await getMessagesListCurator({ id: thread.id });
+
+        messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: messages.results
+        });
+        setIsAddNewChat(false);
+        setScrollToBottom(true);
+      }
     };
 
     fetchDialogs();
@@ -96,6 +148,18 @@ export const AdminChat = () => {
     chosenCheckboxes,
     topicType
   ]);
+
+  /* TODO: wait changes
+  const getUnreadMessages = (threads: ChatList[]) => {
+    let unreadMessage = 0;
+    threads.forEach(thread => {
+      if (thread.unread_messages_count) {
+        unreadMessage += thread.unread_messages_count;
+      }
+    });
+
+    setUnreadMessageCount(unreadMessage);
+  };*/
 
   const handleTypeMessagesChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setTypeMessages(event.target.value);
@@ -133,14 +197,23 @@ export const AdminChat = () => {
         <ControlMessages
           topics={topics}
           handleTypeTopicChange={handleTypeTopicChange}
+          unreadMessagesCount={unreadMessageCount}
         />
       )}
 
-      <div className={s.flex}>
-        <div className={s.chatWrapper}>
-          <Chat />
+      <div
+        className={cn(s.chatWrapper, {
+          [s.extraChatWrapper]: typeMessages
+        })}
+      >
+        <Chat />
+        <div
+          className={cn(s.profileCardWrapper, {
+            [s.extraProfileCardWrapper]: typeMessages
+          })}
+        >
+          {profileCardVisible && currentLmsUser && <ProfileUserCard />}
         </div>
-        {/*<ProfileUserCard />  TODO: remove temporarily*/}
       </div>
     </div>
   );

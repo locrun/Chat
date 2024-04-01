@@ -1,7 +1,7 @@
 @import '../../assets/scss/theme/colors';
 
 .container {
-  margin: 0 12px 10px 12px;
+  margin-bottom: 10px;
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid $smoky-white;
@@ -20,8 +20,8 @@
 }
 
 .header {
-  padding: 9px 11px;
-  background-color: $white;
+  padding: 12px 10px;
+  background-color: $light-gray;
   border-radius: 8px;
 }
 
@@ -36,7 +36,6 @@
   padding: 2px 9px 2px 9px;
   display: flex;
   align-items: center;
-  font-family: Arial;
   font-size: 9px;
   font-weight: 400;
   color: $turquoise;
@@ -53,14 +52,12 @@
 }
 .name {
   max-width: 140px;
-  font-family: Arial;
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;
   color: $black-brown;
 }
 .price {
-  font-family: Actor;
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;
@@ -70,7 +67,6 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
-  font-family: Actor;
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;
@@ -105,14 +101,12 @@
   border-bottom: 1px solid $smoky-white;
   .status {
     margin-bottom: 3px;
-    font-family: Arial;
     font-size: 10px;
     font-weight: 400;
     line-height: 11px;
     color: $telegrey;
   }
   .statusName {
-    font-family: Arial;
     font-size: 10px;
     font-weight: 400;
     line-height: 11px;
@@ -121,11 +115,10 @@
   .time {
     align-self: flex-start;
     margin-left: auto;
-    font-family: Arial;
     font-size: 10px;
     font-weight: 400;
     line-height: 11px;
-    color: $telegrey;
+    color: $light-telegray;
   }
 }
 
@@ -136,7 +129,6 @@
 
   .orderStatus {
     margin-bottom: 3px;
-    font-family: Arial;
     font-size: 10px;
     font-weight: 400;
     line-height: 11px;
@@ -145,7 +137,6 @@
 
   .orderName {
     max-width: 120px;
-    font-family: Arial;
     font-size: 10px;
     font-weight: 400;
     line-height: 11px;
@@ -172,7 +163,6 @@
 
   .status {
     margin-bottom: 3px;
-    font-family: Arial;
     font-size: 10px;
     font-weight: 400;
     line-height: 11px;
@@ -180,7 +170,6 @@
   }
   .statusName {
     max-width: 130px;
-    font-family: Arial;
     font-size: 10px;
     font-weight: 400;
     line-height: 11px;
@@ -193,7 +182,6 @@
   .time {
     align-self: flex-start;
     margin-left: auto;
-    font-family: Arial;
     font-size: 10px;
     font-weight: 400;
     line-height: 11px;

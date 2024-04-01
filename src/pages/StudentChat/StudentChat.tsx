@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import Chat from 'components/app/chat/Chat';
+import { useConnectSocket } from 'hooks/useConnectSocket';
 import Search from 'components/doc-components/Search';
 import { getClientChats } from 'api/routes/clientChat';
 import MessageStarting from 'components/message-starting/MessageStarting';
@@ -12,12 +13,21 @@ import { getMessagesListClient } from 'api/routes/clientChat';
 import { checkRoles } from 'helpers/checkRoles';
 
 export const StudentChat = () => {
-  const { threadsDispatch, messagesDispatch, setKey, setCurrentThread } =
-    useContext(ChatContext);
+  const {
+    threadsDispatch,
+    messagesDispatch,
+    setKey,
+    setCurrentThread,
+    setScrollToBottom,
+    isAddNewChat,
+    setIsAddNewChat
+  } = useContext(ChatContext);
   const [isThreadsEmpty, setIsThreadsEmpty] = useState(false);
   const { changePage } = usePage();
 
   const isChatClient = checkRoles();
+
+  useConnectSocket();
 
   useEffect(() => {
     const fetchClentDialogs = async () => {
@@ -33,7 +43,7 @@ export const StudentChat = () => {
       });
 
       const thread = data.results[0];
-      if (thread) {
+      if (thread && isAddNewChat) {
         setKey(thread.id);
         setCurrentThread(thread);
 
@@ -45,6 +55,9 @@ export const StudentChat = () => {
           type: 'SET_MESSAGES',
           payload: messages.results
         });
+
+        setIsAddNewChat(false);
+        setScrollToBottom(true);
       }
     };
 

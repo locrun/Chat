@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Col, Row } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
+import { useConnectSocket } from 'hooks/useConnectSocket';
 import { ChatContext } from 'context/Context';
+import profileInfo from 'assets/img/chat/ProfileInfo.svg';
+import s from './content.module.scss';
 
 const ChatContentHeader = ({ setHideSidebar, hideSidebar }) => {
-  const { currentThread } = useContext(ChatContext);
+  const { userStatus } = useConnectSocket();
+  const { currentThread, setProfileCardVisible } = useContext(ChatContext);
 
   return (
     <>
@@ -24,10 +28,17 @@ const ChatContentHeader = ({ setHideSidebar, hideSidebar }) => {
                 <h5 className="mb-0 text-truncate fs-9">
                   {currentThread?.topic.title}
                 </h5>
-                <div className="fs-11 text-400">Online</div>
+                <div className="fs-11 text-400">{userStatus?.data.status}</div>
               </div>
             </Col>
-            <Col xs="auto"></Col>
+            <Col xs="auto">
+              <img
+                src={profileInfo}
+                alt="info"
+                className={s.profileInfoIcon}
+                onClick={() => setProfileCardVisible(true)}
+              />
+            </Col>
           </Row>
         </div>
       )}

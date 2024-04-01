@@ -58,3 +58,7 @@ export interface File {
   id: number;
   file: string;
 }
+
+export interface LmsUser {
+  username: string;
+}

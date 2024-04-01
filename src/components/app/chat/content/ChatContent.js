@@ -10,7 +10,7 @@ const ChatContent = ({ setHideSidebar, hideSidebar }) => {
   const { messages, threads } = useContext(ChatContext);
 
   return (
-    <Tab.Content className="card-chat-content">
+    <Tab.Content className="card-chat-content" style={{ width: '100px' }}>
       {threads.map((thread, index) => (
         <Tab.Pane key={index} eventKey={thread.id} className="card-chat-pane">
           <ChatContentHeader
