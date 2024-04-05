@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useConnectSocket } from 'hooks/useConnectSocket';
 import { checkRoles } from 'helpers/checkRoles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LastMessage from './LastMessage';
@@ -17,12 +16,18 @@ import { Nav } from 'react-bootstrap';
 
 import { getUserLMS } from 'helpers/getUserLMS';
 
-const ChatThread = ({ thread, index }) => {
-  const { threadsDispatch, messages, messagesDispatch, setCurrentLmsUser } =
-    useContext(ChatContext);
+const ChatThread = ({ thread, index, newChat }) => {
+  const {
+    userStatus,
+    chatStatus,
+    currentThread,
+    readChatMessage,
+    threadsDispatch,
+    messagesDispatch,
+    setCurrentLmsUser
+  } = useContext(ChatContext);
 
   const isClient = checkRoles();
-  const { userStatus, socketMessage, newChat } = useConnectSocket();
 
   useEffect(() => {
     const fetchDialogs = async () => {
@@ -38,22 +43,6 @@ const ChatThread = ({ thread, index }) => {
     }
   }, [newChat]);
 
-  useEffect(() => {
-    const handleNewMessage = newMessage => {
-      messagesDispatch({
-        type: 'SET_MESSAGES',
-        payload: [...messages, newMessage]
-      });
-    };
-
-    if (socketMessage.event_type === 'new_message') {
-      const newMessageData = socketMessage.data;
-      if (!messages.some(message => message.id === newMessageData.id)) {
-        handleNewMessage(newMessageData);
-      }
-    }
-  }, [socketMessage, messages]);
-
   const fetchMessagesList = async () => {
     try {
       setCurrentLmsUser(user ? user : {});
@@ -67,18 +56,20 @@ const ChatThread = ({ thread, index }) => {
         payload: data.results
       });
 
+      let lastElement = data.results.at(1);
+
       if (isClient) {
-        if (thread.last_message) {
+        if (lastElement) {
           await markChatMessagesAsReadClient({
             chat_id: thread?.id,
-            message_id: thread.last_message.id
+            message_id: lastElement.id + 1
           });
         }
       } else {
-        if (thread.last_message) {
+        if (lastElement) {
           await markChatMessagesAsReadCurator({
             chat_id: thread?.id,
-            message_id: thread.last_message?.id
+            message_id: lastElement.id + 1
           });
         }
       }
@@ -103,23 +94,24 @@ const ChatThread = ({ thread, index }) => {
     return monthName.charAt(0).toUpperCase() + monthName.slice(1);
   };
 
-  const is_read = thread?.last_message?.is_read;
+  const is_read_message = currentThread?.id === readChatMessage?.data.chat_id;
 
   return (
     <Nav.Link
       eventKey={index}
       onClick={() => fetchMessagesList()}
       className={classNames(`chat-contact hover-actions-trigger p-3`, {
-        'unread-message': !thread.last_message?.is_read,
-        'read-message': thread.last_message?.is_read,
-        'blocked-message': thread.status === 'closed'
+        'unread-message': !is_read_message,
+        'read-message': is_read_message || currentThread,
+        'blocked-message':
+          thread.status === 'closed' || chatStatus?.data.chat_id === thread.id
       })}
     >
       <Flex justifyContent="center">
         <Avatar
           className={thread.status}
-          size={classNames('avatar avatar-xl', {
-            'status-online': userStatus?.data.status === 'online'
+          size={classNames('xl', {
+            'status-online': userStatus && userStatus?.data.status === 'online'
           })}
           src={userAvatar}
         />
@@ -137,7 +129,9 @@ const ChatThread = ({ thread, index }) => {
               <LastMessage lastMessage={thread?.last_message} />
 
               <FontAwesomeIcon
-                icon={is_read ? 'check-double' : 'check'}
+                icon={
+                  is_read_message || currentThread ? 'check-double' : 'check'
+                }
                 size="xs"
                 className="position-absolute bottom-4 end-0"
                 color="rgb(182 193 210)"
@@ -152,7 +146,9 @@ const ChatThread = ({ thread, index }) => {
 
 ChatThread.propTypes = {
   thread: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired
+  index: PropTypes.number.isRequired,
+  newChat: PropTypes.any,
+  chatStatus: PropTypes.any
 };
 
 export default ChatThread;

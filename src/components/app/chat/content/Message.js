@@ -7,7 +7,14 @@ import classNames from 'classnames';
 import s from './content.module.scss';
 import { Files } from './Files/Files';
 
-const Message = ({ avatar, message, time, is_my, files, is_read }) => {
+const Message = ({
+  avatar,
+  message,
+  time,
+  is_my,
+  files,
+  is_read_currentMessage
+}) => {
   const date = new Date(time);
   const hours = date.getHours().toString().padStart(2, '0');
   const minutes = date.getMinutes().toString().padStart(2, '0');
@@ -50,7 +57,9 @@ const Message = ({ avatar, message, time, is_my, files, is_read }) => {
             <span>{NewTime}</span>
           </div>
           {is_my &&
-            (is_read ? (
+            (is_read_currentMessage.is_read_message ||
+            is_read_currentMessage.is_read ||
+            is_read_currentMessage.currentThread ? (
               <FontAwesomeIcon icon="check-double" color="rgb(182 193 210)" />
             ) : (
               <FontAwesomeIcon icon="check" color="rgb(182 193 210)" />
@@ -65,7 +74,23 @@ Message.propTypes = {
   time: PropTypes.string.isRequired,
   is_my: PropTypes.bool,
   files: PropTypes.array,
-  is_read: PropTypes.bool,
+  is_read_currentMessage: PropTypes.shape({
+    is_read_message: PropTypes.bool,
+    is_read: PropTypes.bool,
+    currentThread: PropTypes.shape({
+      id: PropTypes.number,
+      chat_type: PropTypes.string,
+      created_at: PropTypes.string,
+      last_message: PropTypes.any,
+      status: PropTypes.string,
+      topic: PropTypes.shape({
+        id: PropTypes.number,
+        title: PropTypes.string,
+        logo: PropTypes.string
+      }),
+      unread_messages_count: PropTypes.number
+    })
+  }),
   avatar: PropTypes.string
 };
 

@@ -6,6 +6,13 @@ import groups from 'data/chat/groups';
 import { arrayReducer } from 'reducers/arrayReducer';
 
 const ChatProvider = ({ children }) => {
+  const [userStatus, setUserStatus] = useState(null);
+  const [chatStatus, setChatStatus] = useState(null);
+  const [readChatMessage, setReadChatMessage] = useState(null);
+  const [newChat, setNewChat] = useState(null);
+  const [assignCurator, setAssignCurator] = useState(null);
+  const [newMessageSocket, setNewMessageSocket] = useState(null);
+
   const [messages, messagesDispatch] = useReducer(arrayReducer, []);
   const [threads, threadsDispatch] = useReducer(arrayReducer, []);
   const [currentThread, setCurrentThread] = useState(null);
@@ -38,6 +45,18 @@ const ChatProvider = ({ children }) => {
 
   const value = {
     users,
+    userStatus,
+    setUserStatus,
+    chatStatus,
+    setChatStatus,
+    readChatMessage,
+    setReadChatMessage,
+    newChat,
+    setNewChat,
+    assignCurator,
+    setAssignCurator,
+    newMessageSocket,
+    setNewMessageSocket,
     groups,
     threads,
     getUser,

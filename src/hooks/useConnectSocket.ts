@@ -1,32 +1,40 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { useKeycloak } from '@react-keycloak/web';
 import WebSocketApi from 'api/socket';
 
+import { ChatContext } from 'context/Context';
+
 export const useConnectSocket = () => {
   const { keycloak } = useKeycloak();
-  const [socketMessage, setSocketMessage] = useState('');
-  const [userStatus, setUserStatus] = useState(null);
-  const [newChat, setNewChat] = useState(null);
-  const [assignCuratorState, setAssignCuratorState] = useState(null);
-  const [readChatMessage, setReadChatMessage] = useState(null);
-  const [changeСhatStatus, setChangeСhatStatus] = useState(null);
+
+  const {
+    setUserStatus,
+    setChatStatus,
+    setNewMessageSocket,
+    setReadChatMessage,
+    setNewChat,
+    setAssignCuratorState
+  } = useContext(ChatContext);
+
   useEffect(() => {
     const connectSocket = () => {
       WebSocketApi.createConnection(keycloak.token!);
     };
 
-    connectSocket();
+    if (!WebSocketApi.socket) {
+      connectSocket();
+    }
 
     if (WebSocketApi.socket) {
       WebSocketApi.socket.onmessage = function (event) {
         const data = JSON.parse(event.data);
 
-        if (data.event_type === 'new_message') {
-          setSocketMessage(data);
-        }
-
         if (data.event_type === 'update_status') {
           setUserStatus({ ...data });
+        }
+
+        if (data.event_type === 'new_message') {
+          setNewMessageSocket(data);
         }
         if (data.event_type === 'new_chat') {
           setNewChat({ ...data });
@@ -39,33 +47,23 @@ export const useConnectSocket = () => {
           setReadChatMessage({ ...data });
         }
         if (data.event_type === 'update_chat_status') {
-          setChangeСhatStatus({ ...data });
+          setChatStatus({ ...data });
         }
       };
+
+      const pingInterval = setInterval(() => {
+        if (
+          WebSocketApi.socket &&
+          WebSocketApi.socket.readyState === WebSocketApi.socket.OPEN
+        ) {
+          console.log('Ping server');
+          WebSocketApi.socket.send(JSON.stringify({}));
+        }
+      }, 15000);
+
+      return () => {
+        clearInterval(pingInterval);
+      };
     }
-
-    const pingInterval = setInterval(() => {
-      if (
-        WebSocketApi.socket &&
-        WebSocketApi.socket.readyState === WebSocket.OPEN
-      ) {
-        WebSocketApi.socket.send(
-          JSON.stringify({ Authorization: keycloak.token! })
-        );
-      }
-    }, 15000);
-
-    return () => {
-      clearInterval(pingInterval);
-    };
-  }, [keycloak.token]);
-
-  return {
-    assignCuratorState,
-    readChatMessage,
-    socketMessage,
-    userStatus,
-    newChat,
-    changeСhatStatus
-  };
+  }, []);
 };

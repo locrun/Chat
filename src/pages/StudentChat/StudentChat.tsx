@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
-import Chat from 'components/app/chat/Chat';
 import { useConnectSocket } from 'hooks/useConnectSocket';
+import Chat from 'components/app/chat/Chat';
 import Search from 'components/doc-components/Search';
 import { getClientChats } from 'api/routes/clientChat';
 import MessageStarting from 'components/message-starting/MessageStarting';
@@ -14,7 +14,10 @@ import { checkRoles } from 'helpers/checkRoles';
 
 export const StudentChat = () => {
   const {
+    newMessageSocket,
+    readChatMessage,
     threadsDispatch,
+    messages,
     messagesDispatch,
     setKey,
     setCurrentThread,
@@ -26,8 +29,40 @@ export const StudentChat = () => {
   const { changePage } = usePage();
 
   const isChatClient = checkRoles();
-
   useConnectSocket();
+  useEffect(() => {
+    if (newMessageSocket) {
+      if (
+        !messages.some(
+          (item: { id: number }) => item.id === newMessageSocket?.data.id
+        )
+      ) {
+        messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: [...messages, newMessageSocket.data]
+        });
+      } else {
+        return;
+      }
+    }
+  }, [newMessageSocket, messagesDispatch]);
+
+  useEffect(() => {
+    if (readChatMessage) {
+      const maps = messages.map((message: any) => {
+        if (message.id === readChatMessage.data.last_message_id) {
+          return { ...message, is_read: true };
+        }
+        return message;
+      });
+      if (JSON.stringify(maps) !== JSON.stringify(messages)) {
+        messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: maps
+        });
+      }
+    }
+  }, [readChatMessage, messages, isChatClient]);
 
   useEffect(() => {
     const fetchClentDialogs = async () => {
@@ -62,7 +97,7 @@ export const StudentChat = () => {
     };
 
     fetchClentDialogs();
-  }, []);
+  }, [messages]);
 
   return (
     <div className={s.container}>

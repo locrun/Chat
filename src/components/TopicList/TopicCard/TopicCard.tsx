@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ChatContext } from 'context/Context';
 import { Topics } from 'types/topics';
-import { useConnectSocket } from 'hooks/useConnectSocket';
+
 import { createClientChats } from 'api/routes/clientChat';
 import { usePage } from 'components/app/pagesProvider/PagesProvider';
 import { PageType } from 'shared/types';
@@ -15,8 +15,6 @@ interface TopicCardProps {
 export const TopicCard = ({ topics }: TopicCardProps) => {
   const { changePage } = usePage();
   const { setIsAddNewChat } = useContext(ChatContext);
-
-  useConnectSocket();
 
   const handleNewChatDialog = async (id: number) => {
     await createClientChats({
