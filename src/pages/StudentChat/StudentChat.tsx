@@ -11,11 +11,13 @@ import s from './StudentChat.module.scss';
 import { getMessagesListCurator } from 'api/routes/curatorChat';
 import { getMessagesListClient } from 'api/routes/clientChat';
 import { checkRoles } from 'helpers/checkRoles';
+import { Message } from 'types/chat';
 
 export const StudentChat = () => {
   const {
     newMessageSocket,
     readChatMessage,
+    currentThread,
     threadsDispatch,
     messages,
     messagesDispatch,
@@ -35,21 +37,26 @@ export const StudentChat = () => {
       if (
         !messages.some(
           (item: { id: number }) => item.id === newMessageSocket?.data.id
-        )
+        ) &&
+        currentThread.id === newMessageSocket.data.chat
       ) {
         messagesDispatch({
           type: 'SET_MESSAGES',
           payload: [...messages, newMessageSocket.data]
         });
       } else {
-        return;
+        return messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: messages
+        });
       }
     }
-  }, [newMessageSocket, messagesDispatch]);
+    return;
+  }, [newMessageSocket, messagesDispatch, currentThread]);
 
   useEffect(() => {
     if (readChatMessage) {
-      const maps = messages.map((message: any) => {
+      const maps = messages.map((message: Message) => {
         if (message.id === readChatMessage.data.last_message_id) {
           return { ...message, is_read: true };
         }
