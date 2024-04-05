@@ -11,6 +11,7 @@ import s from './StudentChat.module.scss';
 import { getMessagesListCurator } from 'api/routes/curatorChat';
 import { getMessagesListClient } from 'api/routes/clientChat';
 import { checkRoles } from 'helpers/checkRoles';
+import { Message } from 'types/chat';
 
 export const StudentChat = () => {
   const {
@@ -49,7 +50,7 @@ export const StudentChat = () => {
 
   useEffect(() => {
     if (readChatMessage) {
-      const maps = messages.map((message: any) => {
+      const maps = messages.map((message: Message) => {
         if (message.id === readChatMessage.data.last_message_id) {
           return { ...message, is_read: true };
         }

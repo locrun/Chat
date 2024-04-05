@@ -20,6 +20,7 @@ import { getMessagesListClient } from 'api/routes/clientChat';
 import { LMSAccounts } from 'api/routes/newLMS';
 import cn from 'classnames';
 import s from './AdminChat.module.scss';
+import { Message } from 'types/chat';
 
 export const AdminChat = () => {
   const { topics } = useContext(TopicsContext) as TopicsContextType;
@@ -71,9 +72,11 @@ export const AdminChat = () => {
     }
   }, [newMessageSocket, messagesDispatch]);
 
+  console.log(messages);
+
   useEffect(() => {
     if (readChatMessage) {
-      const maps = messages.map((message: any) => {
+      const maps = messages.map((message: Message) => {
         if (message.id === readChatMessage.data.last_message_id) {
           return { ...message, is_read: true };
         }
