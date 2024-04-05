@@ -17,6 +17,7 @@ export const StudentChat = () => {
   const {
     newMessageSocket,
     readChatMessage,
+    currentThread,
     threadsDispatch,
     messages,
     messagesDispatch,
@@ -36,17 +37,22 @@ export const StudentChat = () => {
       if (
         !messages.some(
           (item: { id: number }) => item.id === newMessageSocket?.data.id
-        )
+        ) &&
+        currentThread.id === newMessageSocket.data.chat
       ) {
         messagesDispatch({
           type: 'SET_MESSAGES',
           payload: [...messages, newMessageSocket.data]
         });
       } else {
-        return;
+        return messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: messages
+        });
       }
     }
-  }, [newMessageSocket, messagesDispatch]);
+    return;
+  }, [newMessageSocket, messagesDispatch, currentThread]);
 
   useEffect(() => {
     if (readChatMessage) {

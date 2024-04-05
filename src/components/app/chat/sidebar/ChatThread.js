@@ -18,6 +18,7 @@ import { getUserLMS } from 'helpers/getUserLMS';
 
 const ChatThread = ({ thread, index, newChat }) => {
   const {
+    newMessageSocket,
     userStatus,
     chatStatus,
     currentThread,
@@ -96,6 +97,11 @@ const ChatThread = ({ thread, index, newChat }) => {
 
   const is_read_message = currentThread?.id === readChatMessage?.data.chat_id;
 
+  const lastMessage =
+    thread.id === newMessageSocket?.data.chat
+      ? newMessageSocket?.data
+      : thread?.last_message;
+
   return (
     <Nav.Link
       eventKey={index}
@@ -126,7 +132,7 @@ const ChatThread = ({ thread, index, newChat }) => {
           </Flex>
           <div className="min-w-0">
             <div className="chat-contact-content pe-3">
-              <LastMessage lastMessage={thread?.last_message} />
+              <LastMessage lastMessage={lastMessage} />
 
               <FontAwesomeIcon
                 icon={

@@ -32,6 +32,7 @@ export const AdminChat = () => {
     threadsDispatch,
     messages,
     setKey,
+    currentThread,
     setCurrentThread,
     messagesDispatch,
     setScrollToBottom,
@@ -60,19 +61,22 @@ export const AdminChat = () => {
       if (
         !messages.some(
           (item: { id: number }) => item.id === newMessageSocket?.data.id
-        )
+        ) &&
+        currentThread.id === newMessageSocket.data.chat
       ) {
         messagesDispatch({
           type: 'SET_MESSAGES',
           payload: [...messages, newMessageSocket.data]
         });
       } else {
-        return;
+        return messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: messages
+        });
       }
     }
-  }, [newMessageSocket, messagesDispatch]);
-
-  console.log(messages);
+    return;
+  }, [newMessageSocket, messagesDispatch, currentThread]);
 
   useEffect(() => {
     if (readChatMessage) {
