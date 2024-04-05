@@ -8,7 +8,7 @@ import Picker from '@emoji-mart/react';
 import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
 import TextareaAutosize from 'react-textarea-autosize';
-import { useConnectSocket } from 'hooks/useConnectSocket';
+
 import { useAppContext } from 'Main';
 import { createCuratorMessage } from 'api/routes/curatorChat';
 import { createClientMessage } from 'api/routes/clientChat';
@@ -17,6 +17,7 @@ import { INPUT_FILE_FORMATS } from 'constants';
 
 const MessageTextArea = () => {
   const {
+    chatStatus,
     messagesDispatch,
     threadsDispatch,
     currentThread,
@@ -28,7 +29,13 @@ const MessageTextArea = () => {
   const [previewEmoji, setPreviewEmoji] = useState(false);
   const [message, setMessage] = useState('');
   const [documents, setDocuments] = useState([]);
-  useConnectSocket();
+
+  const isClosedChat = chatStatus?.data.status === 'closed';
+
+  const isInputAndButtonDisabled =
+    isChatClosed ||
+    (isClosedChat && chatStatus?.data.chat_id === currentThread.id);
+
   const {
     config: { isDark }
   } = useAppContext();
@@ -44,7 +51,6 @@ const MessageTextArea = () => {
   const sendCuratorMessage = async (files = []) => {
     const formData = new FormData();
     let messageType = 'text';
-
     if (files.length > 0) {
       files.forEach(file => {
         formData.append('files', file);
@@ -170,7 +176,7 @@ const MessageTextArea = () => {
         onKeyDown={enterHandler}
         minRows={1}
         maxRows={6}
-        disabled={isChatClosed}
+        disabled={isInputAndButtonDisabled}
         value={message}
         placeholder="Написать сообщение..."
         onChange={({ target }) => setMessage(target.value)}
@@ -188,6 +194,7 @@ const MessageTextArea = () => {
           className="d-none"
           accept={acceptedTypes}
           multiple
+          disabled={isInputAndButtonDisabled}
         />
       </Form.Group>
 
@@ -195,6 +202,7 @@ const MessageTextArea = () => {
         variant="link"
         className="emoji-icon "
         onClick={() => setPreviewEmoji(!previewEmoji)}
+        disabled={isInputAndButtonDisabled}
       >
         <FontAwesomeIcon
           icon={['far', 'laugh-beam']}
@@ -221,6 +229,7 @@ const MessageTextArea = () => {
           'text-primary': message.length > 0
         })}
         type="submit"
+        disabled={isInputAndButtonDisabled}
       >
         Отправить
       </Button>

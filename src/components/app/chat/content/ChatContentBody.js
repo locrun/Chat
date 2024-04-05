@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-
 import Message from './Message';
 import SimpleBarReact from 'simplebar-react';
 import ThreadInfo from './ThreadInfo';
@@ -12,8 +11,13 @@ import NewDay from './NewDay';
 const ChatContentBody = ({ thread }) => {
   const messagesEndRef = useRef();
 
-  const { messages, scrollToBottom, setScrollToBottom } =
-    useContext(ChatContext);
+  const {
+    readChatMessage,
+    currentThread,
+    messages,
+    scrollToBottom,
+    setScrollToBottom
+  } = useContext(ChatContext);
 
   const sortedMessages = messages.sort((a, b) => {
     return new Date(a.created_at) - new Date(b.created_at);
@@ -47,6 +51,8 @@ const ChatContentBody = ({ thread }) => {
     ? user.profile_image.image_url_medium
     : thread.topic.logo;
 
+  const is_read_message = currentThread?.id === readChatMessage?.data.chat_id;
+
   return (
     <div className="chat-content-body" style={{ display: 'inherit' }}>
       <ThreadInfo thread={thread} isOpenThreadInfo={true} />
@@ -63,7 +69,11 @@ const ChatContentBody = ({ thread }) => {
                     files={files}
                     avatar={userAvatar}
                     is_my={is_my_message}
-                    is_read={is_read}
+                    is_read_currentMessage={{
+                      currentThread,
+                      is_read_message,
+                      is_read
+                    }}
                   />
                 </div>
               );

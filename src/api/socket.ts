@@ -5,7 +5,6 @@ class WebSocketApi {
     const socket = new WebSocket(
       `wss://lms-api.mdev.uz/connect/?token=${token}`
     );
-
     socket.onopen = function () {
       socket.send(JSON.stringify({ Authorization: token }));
       console.log('Соединение открыто.');
@@ -14,8 +13,8 @@ class WebSocketApi {
       console.log('Соединение закрыто.');
     };
 
-    socket.onerror = function (error) {
-      console.error('Ошибка:', error);
+    socket.onerror = function (event) {
+      console.error('Ошибка:', event);
     };
     this.socket = socket;
   }

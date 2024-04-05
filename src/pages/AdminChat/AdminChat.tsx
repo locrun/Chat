@@ -24,7 +24,12 @@ import s from './AdminChat.module.scss';
 export const AdminChat = () => {
   const { topics } = useContext(TopicsContext) as TopicsContextType;
   const {
+    // setUserStatus,
+    // setChatStatus,
+    newMessageSocket,
+    readChatMessage,
     threadsDispatch,
+    messages,
     setKey,
     setCurrentThread,
     messagesDispatch,
@@ -47,11 +52,41 @@ export const AdminChat = () => {
 
   const isChatClient = checkRoles();
 
-  const changeСhatStatus = useConnectSocket();
+  useConnectSocket();
 
   useEffect(() => {
-    console.log('changeСhatStatus', changeСhatStatus);
-  }, [changeСhatStatus]);
+    if (newMessageSocket) {
+      if (
+        !messages.some(
+          (item: { id: number }) => item.id === newMessageSocket?.data.id
+        )
+      ) {
+        messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: [...messages, newMessageSocket.data]
+        });
+      } else {
+        return;
+      }
+    }
+  }, [newMessageSocket, messagesDispatch]);
+
+  useEffect(() => {
+    if (readChatMessage) {
+      const maps = messages.map((message: any) => {
+        if (message.id === readChatMessage.data.last_message_id) {
+          return { ...message, is_read: true };
+        }
+        return message;
+      });
+      if (JSON.stringify(maps) !== JSON.stringify(messages)) {
+        messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: maps
+        });
+      }
+    }
+  }, [readChatMessage, messages, isChatClient]);
 
   const handleChangeRadio = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedRadioValue(event.target.value);
@@ -146,7 +181,8 @@ export const AdminChat = () => {
     statusMessages,
     selectedRadioValue,
     chosenCheckboxes,
-    topicType
+    topicType,
+    messages
   ]);
 
   /* TODO: wait changes
