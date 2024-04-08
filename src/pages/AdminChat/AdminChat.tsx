@@ -60,9 +60,9 @@ export const AdminChat = () => {
     if (newMessageSocket) {
       if (
         !messages.some(
-          (item: { id: number }) => item.id === newMessageSocket?.data.id
+          (item: Message) => item.id === newMessageSocket?.data.id
         ) &&
-        currentThread.id === newMessageSocket.data.chat
+        currentThread?.id === newMessageSocket.data.chat
       ) {
         messagesDispatch({
           type: 'SET_MESSAGES',
