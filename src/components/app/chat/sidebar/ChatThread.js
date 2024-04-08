@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { checkRoles } from 'helpers/checkRoles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,11 +16,12 @@ import { Nav } from 'react-bootstrap';
 
 import { getUserLMS } from 'helpers/getUserLMS';
 
-const ChatThread = ({ thread, index, newChat }) => {
+const ChatThread = ({ thread, index }) => {
   const {
     newMessageSocket,
     userStatus,
     chatStatus,
+    newChat,
     currentThread,
     readChatMessage,
     threadsDispatch,
@@ -102,16 +103,50 @@ const ChatThread = ({ thread, index, newChat }) => {
       ? newMessageSocket?.data
       : thread?.last_message;
 
+  useEffect(() => {
+    if (currentThread?.id === readChatMessage?.data.chat_id) {
+      const selector = `[data-rr-ui-event-key='${currentThread?.id}']`;
+      const element = document.querySelector(selector);
+      element?.classList.remove('unread-message');
+    } else {
+      const selector = `[data-rr-ui-event-key='${currentThread?.id}']`;
+      const element = document.querySelector(selector);
+      element?.classList.add('read-message');
+    }
+  }, [currentThread, readChatMessage]);
+
+  const [newMessage, setNewMessage] = useState(null);
+
+  useEffect(() => {
+    setNewMessage(null);
+  }, [currentThread]);
+
+  useEffect(() => {
+    setNewMessage(newMessageSocket?.data.chat);
+  }, [newMessageSocket]);
+
   return (
     <Nav.Link
       eventKey={index}
-      onClick={() => fetchMessagesList()}
-      className={classNames(`chat-contact hover-actions-trigger p-3`, {
-        'unread-message': !is_read_message,
-        'read-message': is_read_message || currentThread,
-        'blocked-message':
-          thread.status === 'closed' || chatStatus?.data.chat_id === thread.id
-      })}
+      onClick={() => {
+        setNewMessage(null);
+        fetchMessagesList();
+      }}
+      className={classNames(
+        `chat-contact hover-actions-trigger p-3 read-message`,
+        {
+          'read-message':
+            thread.last_message?.is_read ||
+            is_read_message ||
+            currentThread?.last_message?.id ===
+              readChatMessage?.data.last_message_id,
+
+          'unread-message': thread?.id === newMessage,
+
+          'blocked-message':
+            thread.status === 'closed' || chatStatus?.data.chat_id === thread.id
+        }
+      )}
     >
       <Flex justifyContent="center">
         <Avatar
@@ -152,9 +187,7 @@ const ChatThread = ({ thread, index, newChat }) => {
 
 ChatThread.propTypes = {
   thread: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired,
-  newChat: PropTypes.any,
-  chatStatus: PropTypes.any
+  index: PropTypes.number.isRequired
 };
 
 export default ChatThread;
