@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Card, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import createMarkup from 'helpers/createMarkup';
 import Background from 'components/common/Background';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SubtleBadge from 'components/common/SubtleBadge';
@@ -108,7 +109,7 @@ const TaskCard = ({
               )}
               <p
                 className="mb-0 fw-medium font-sans-serif stretched-link"
-                dangerouslySetInnerHTML={{ __html: title }}
+                dangerouslySetInnerHTML={createMarkup(title)}
               />
               {(members || attachments || checklist) && (
                 <div className="kanban-item-footer cursor-default">
