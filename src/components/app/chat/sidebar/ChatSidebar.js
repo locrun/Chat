@@ -13,8 +13,6 @@ import classNames from 'classnames';
 const ChatSidebar = ({ hideSidebar, threads }) => {
   const { chatStatus, newChat, userStatus } = useContext(ChatContext);
 
-  //console.log('currentThread', currentThread);
-
   return (
     <div className={classNames('chat-sidebar', { 'start-0': hideSidebar })}>
       <div className="contacts-list">

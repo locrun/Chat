@@ -14,9 +14,11 @@ export enum StatusType {
   CLOSED = 'closed'
 }
 
-export interface Chat {
+export interface IChat {
   id: number;
   topic: Topic;
+  client: { id: number; is_online: boolean; username: string };
+  curator: { id: number; is_online: boolean; username: string };
   created_at: string;
   status: StatusType;
   chat_type: MessageType;

@@ -13,7 +13,7 @@ export const useConnectSocket = () => {
     setNewMessageSocket,
     setReadChatMessage,
     setNewChat,
-    setAssignCuratorState
+    setAssignCurator
   } = useContext(ChatContext);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export const useConnectSocket = () => {
         }
 
         if (data.event_type === 'assign_curator') {
-          setAssignCuratorState({ ...data });
+          setAssignCurator({ ...data });
         }
         if (data.event_type === 'read_chat_message') {
           setReadChatMessage({ ...data });

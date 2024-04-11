@@ -23,7 +23,7 @@ const ChatProvider = ({ children }) => {
   const [key, setKey] = useState(0);
   const [isAddNewChat, setIsAddNewChat] = useState(false);
   const [lmsUsers, setLmsUsers] = useState([]);
-  const [profileCardVisible, setProfileCardVisible] = useState(true);
+  const [profileCardVisible, setProfileCardVisible] = useState(false);
   const [currentLmsUser, setCurrentLmsUser] = useState(null);
   const [isChatClosed, setIsChatClose] = useState(false);
 
