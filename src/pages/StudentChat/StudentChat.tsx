@@ -115,9 +115,7 @@ export const StudentChat = () => {
         <MessageStarting />
       ) : (
         <>
-          <div className={s.chatWrapper}>
-            <Chat />
-          </div>
+          <Chat />
           <button
             onClick={() => changePage(PageType.TOPIC)}
             className={s.linkButton}

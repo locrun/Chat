@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useAppContext } from 'Main';
+import createMarkup from 'helpers/createMarkup';
 import { Button, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
@@ -92,7 +93,7 @@ const CalendarEventModal = ({
           <EventModalMediaContent icon="map-marker-alt" heading="Location">
             <div
               className="mb-1"
-              dangerouslySetInnerHTML={{ __html: location }}
+              dangerouslySetInnerHTML={createMarkup(location)}
             />
           </EventModalMediaContent>
         )}

@@ -1,1 +1,2 @@
-export default html => ({ __html: html });
+import DOMPurify from 'dompurify';
+export default html => ({ __html: DOMPurify.sanitize(html) });

@@ -8,16 +8,12 @@
   padding-bottom: 40px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
 
   @media (min-width: 428px) {
-    margin-top: 95px;
+    padding-top: 85px;
   }
 }
-.chatWrapper {
-  width: 100%;
-  height: calc(100vh - 111px);
-}
+
 .linkButton {
   min-width: 183px;
   height: 47px;

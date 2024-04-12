@@ -12,7 +12,7 @@
 
 .selectGroup {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 110px;
   flex-wrap: wrap;
 }
@@ -25,6 +25,7 @@
   flex-direction: column;
 }
 .select {
+  height: 36px;
   outline: none;
   border: none !important;
   box-shadow: none;
@@ -72,8 +73,10 @@
 }
 
 .redirectSelect {
-  min-width: 264px;
+  width: 264px;
+  // margin-top: 20px;
 }
+
 .label {
   margin-bottom: 4px;
   font-size: 10px;

@@ -67,7 +67,7 @@ const Logs = ({
                   <ul>
                     {entry[1].map((mv, mi) => (
                       <li
-                        dangerouslySetInnerHTML={{ __html: mv }}
+                        dangerouslySetInnerHTML={createMarkup(mv)}
                         key={entry[0] + i + mi}
                       />
                     ))}

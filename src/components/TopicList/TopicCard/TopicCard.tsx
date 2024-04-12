@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { ChatContext } from 'context/Context';
 import { Topics } from 'types/topics';
-
 import { createClientChats } from 'api/routes/clientChat';
 import { usePage } from 'components/app/pagesProvider/PagesProvider';
 import { PageType } from 'shared/types';
 
 import s from './TopicCard.module.scss';
+import createMarkup from 'helpers/createMarkup';
 
 interface TopicCardProps {
   topics: Topics[];
@@ -40,7 +40,7 @@ export const TopicCard = ({ topics }: TopicCardProps) => {
               {dialog.description && (
                 <span
                   className={s.text}
-                  dangerouslySetInnerHTML={{ __html: dialog.description }}
+                  dangerouslySetInnerHTML={createMarkup(dialog.description)}
                 />
               )}
             </div>

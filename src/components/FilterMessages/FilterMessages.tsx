@@ -1,7 +1,10 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import RadioButton from 'components/RadioButton/RadioButton';
 import CheckBoxGroup from '../CheckBoxGroup/CheckBoxGroup';
+import { IChat, StatusType } from 'types/chat';
+import { useKeycloak } from '@react-keycloak/web';
+import { ChatContext } from 'context/Context';
 import { CheckBoxData } from 'data/checkboxData';
 import s from './FilterMessages.module.scss';
 
@@ -24,6 +27,16 @@ export const FilterMessages = ({
   handleSortingMessagesChange,
   handleStatusMessagesChange
 }: FilterMessagesProps) => {
+  const { threads } = useContext(ChatContext);
+  const { keycloak } = useKeycloak();
+
+  const isOthers = threads.some((chat: IChat) => {
+    return (
+      chat.status === StatusType.IN_PROGRESS &&
+      chat.curator.username === keycloak?.tokenParsed?.preferred_username
+    );
+  });
+
   const typeMessagesItems = [
     {
       item: 'Все сообщения',
@@ -50,20 +63,27 @@ export const FilterMessages = ({
   ];
   const statusMessaggesItems = [
     {
-      item: 'Новые',
+      item: 'Открытые',
       value: 'new'
     },
-    {
-      item: 'В процессе',
-      value: 'in_progress'
-    },
-    {
-      item: 'Спам',
-      value: 'spam'
-    },
+
+    isOthers
+      ? {
+          item: 'В работе',
+          value: 'in_progress'
+        }
+      : {
+          item: 'В работе у других',
+          value: 'in_progress'
+        },
+
     {
       item: 'Закрытые',
       value: 'closed'
+    },
+    {
+      item: 'Отложенные',
+      value: ''
     }
   ];
 
@@ -75,6 +95,7 @@ export const FilterMessages = ({
           <Form.Select
             className={s.select}
             onChange={e => handleTypeMessagesChange(e)}
+            defaultValue="topic"
           >
             {typeMessagesItems.map(item => {
               return (
@@ -112,10 +133,10 @@ export const FilterMessages = ({
               <option className={s.default} value={''}>
                 Все
               </option>
-              {statusMessaggesItems.map(item => {
+              {statusMessaggesItems.map(status => {
                 return (
-                  <option key={item.value} value={item.value}>
-                    {item.item}
+                  <option key={status.item} value={status.value}>
+                    {status.item}
                   </option>
                 );
               })}

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Form, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import createMarkup from 'helpers/createMarkup';
 import Fuse from 'fuse.js';
 import { Link } from 'react-router-dom';
 import Avatar from 'components/common/Avatar';
@@ -30,7 +31,7 @@ const MediaSearchContent = ({ item }) => {
           <h6 className="mb-0">{item.title}</h6>
           <p
             className="fs-11 mb-0"
-            dangerouslySetInnerHTML={{ __html: item.text || item.time }}
+            dangerouslySetInnerHTML={createMarkup(item.text || item.time)}
           />
         </div>
       </Flex>

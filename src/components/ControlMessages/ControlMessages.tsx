@@ -67,16 +67,19 @@ export const ControlMessages = ({
               <div className={s.unreadCount}>{unreadMessagesCount}</div>
             </div>
           </div>
-          <div className={s.topicsSelect}>
-            <span className={s.label}>Обращения</span>
+          <div className={s.redirectSelect}>
             <Form.Select
               className={s.select}
-              onChange={e => handleTypeTopicChange(e)}
+              defaultValue="Переадресовать в"
+              onChange={e => console.log(e)}
             >
-              <option className={s.default} value="">
-                Все
+              <option className={s.default} disabled hidden>
+                Переадресовать в
               </option>
-              {topics.map(item => {
+              {[
+                { id: 0, title: 'В Мусорку' },
+                { id: 1, title: 'В Спам' }
+              ].map(item => {
                 return (
                   <option key={item.id} value={item.id}>
                     {item.title}
