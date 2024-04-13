@@ -15,18 +15,16 @@ import {
 } from 'api/routes/curatorChat';
 import { checkboxData } from 'data/checkboxData';
 import { checkRoles } from 'helpers/checkRoles';
-import { getMessagesListClient } from 'api/routes/clientChat';
-//import { ChatList } from 'shared/types/curator';
+
 import { LMSAccounts } from 'api/routes/newLMS';
 import cn from 'classnames';
+
 import s from './AdminChat.module.scss';
-import { IChat, Message, StatusType } from 'types/chat';
-import { useKeycloak } from '@react-keycloak/web';
+import { Message } from 'types/chat';
 
 export const AdminChat = () => {
   const { topics } = useContext(TopicsContext) as TopicsContextType;
   const {
-    threads,
     newMessageSocket,
     readChatMessage,
     threadsDispatch,
@@ -44,7 +42,7 @@ export const AdminChat = () => {
   } = useContext(ChatContext);
   const [checkboxList, setCheckboxList] = useState(checkboxData);
 
-  const [typeMessages, setTypeMessages] = useState('topic');
+  const [typeMessages, setTypeMessages] = useState('');
   const [messagesByDate, setMessagesByDate] = useState('');
   const [statusMessages, setStatusMessages] = useState('');
   const [selectedRadioValue, setSelectedRadioValue] = useState<string>('');
@@ -55,15 +53,6 @@ export const AdminChat = () => {
   const isChatClient = checkRoles();
 
   useConnectSocket();
-
-  const { keycloak } = useKeycloak();
-
-  const isOthers = threads.some((chat: IChat) => {
-    return (
-      chat.status === StatusType.IN_PROGRESS &&
-      chat.curator.username === keycloak?.tokenParsed?.preferred_username
-    );
-  });
 
   useEffect(() => {
     if (newMessageSocket) {
@@ -152,59 +141,46 @@ export const AdminChat = () => {
 
     const fetchDialogs = async () => {
       const params = {
-        chat_type: typeMessages ? typeMessages : undefined,
-        ordering: messagesByDate ? messagesByDate : undefined,
-        status: statusMessages ? statusMessages : undefined,
-        chats:
-          selectedValuesString || selectedRadioValue
-            ? selectedValuesString || selectedRadioValue
-            : undefined,
-        topic: topicType ? topicType : undefined
+        chat_type: typeMessages,
+        ordering: messagesByDate,
+        status: statusMessages,
+        chats: selectedValuesString || selectedRadioValue,
+        topic: topicType
       };
 
-      if (statusMessages) {
-        if (!isOthers) params.chats = 'others';
-      }
-
-      const filteredParams = Object.fromEntries(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        Object.entries(params).filter(([_, v]) => v !== undefined)
-      );
       const { data: users } = await LMSAccounts();
 
       setLmsUsers(users);
 
-      if (Object.keys(filteredParams).length > 0) {
-        const { data } = await getCuratorChats(filteredParams);
+      const { data } = await getCuratorChats(params);
 
-        setUnreadMessageCount(data.results.length);
+      setUnreadMessageCount(data.results.length);
 
-        threadsDispatch({
-          type: 'SET_DIALOGS',
-          payload: data.results
+      threadsDispatch({
+        type: 'SET_DIALOGS',
+        payload: data.results
+      });
+
+      const thread = data.results[0];
+      if (thread && isAddNewChat) {
+        setKey(thread.id);
+        setCurrentThread(thread);
+
+        const { data: messages } = await getMessagesListCurator({
+          id: thread.id
         });
 
-        const thread = data.results[0];
-        if (thread && isAddNewChat) {
-          setKey(thread.id);
-          setCurrentThread(thread);
-
-          const { data: messages } = isChatClient
-            ? await getMessagesListClient({ id: thread.id })
-            : await getMessagesListCurator({ id: thread.id });
-
-          messagesDispatch({
-            type: 'SET_MESSAGES',
-            payload: messages.results
-          });
-          setIsAddNewChat(false);
-          setScrollToBottom(true);
-        }
+        messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: messages.results
+        });
+        setIsAddNewChat(false);
+        setScrollToBottom(true);
       }
     };
+
     fetchDialogs();
   }, [
-    isOthers,
     typeMessages,
     messagesByDate,
     statusMessages,

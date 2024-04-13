@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useContext } from 'react';
+import React, { ChangeEvent, useContext, useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 
 import { useKeycloak } from '@react-keycloak/web';
@@ -7,8 +7,25 @@ import { assignCurator } from 'api/routes/curatorChat';
 import { ChatContext } from 'context/Context';
 import { closeCurrentDialog } from 'api/routes/curatorChat';
 import { AssignCuratorParams } from 'shared/types/curator';
+import { fetchAccessTokenKeycloak } from 'api/routes/tokenKeycloak';
+import { getAdminMembers } from 'api/routes/getAdminMembers';
 import classnames from 'classnames';
 import s from './ControlMessages.module.scss';
+
+export interface ChatManager {
+  id: string;
+  createdTimestamp: number;
+  username: string;
+  enabled: boolean;
+  totp: boolean;
+  emailVerified: boolean;
+  firstName: string;
+  lastName: string;
+  email: string;
+  disableableCredentialTypes: unknown[];
+  requiredActions: unknown[];
+  notBefore: number;
+}
 
 interface ColtrolMessagesProps {
   topics: Topics[];
@@ -21,6 +38,7 @@ export const ControlMessages = ({
   handleTypeTopicChange,
   unreadMessagesCount
 }: ColtrolMessagesProps) => {
+  const [curatorsList, setCuratorsList] = useState([]);
   const { keycloak } = useKeycloak();
 
   const { currentThread, isChatClosed, setIsChatClose } =
@@ -35,12 +53,30 @@ export const ControlMessages = ({
     if (currentThread) assignCurator(params);
   };
 
+  const handleAssignCurator = (event: ChangeEvent<HTMLSelectElement>) => {
+    const params: AssignCuratorParams = {
+      chat: currentThread.id,
+      curator: event.target.value
+    };
+
+    if (currentThread) assignCurator(params);
+  };
+
   const deleteDialogHandler = () => {
     if (currentThread) {
       closeCurrentDialog(currentThread.id);
       setIsChatClose(true);
     }
   };
+
+  useEffect(() => {
+    const fetchCuratorList = async () => {
+      const { data: keycloak } = await fetchAccessTokenKeycloak();
+      const { data } = await getAdminMembers(keycloak.access_token);
+      setCuratorsList(data);
+    };
+    fetchCuratorList();
+  }, []);
 
   return (
     <div className={s.container}>
@@ -71,18 +107,15 @@ export const ControlMessages = ({
             <Form.Select
               className={s.select}
               defaultValue="Переадресовать в"
-              onChange={e => console.log(e)}
+              onChange={e => handleAssignCurator(e)}
             >
               <option className={s.default} disabled hidden>
                 Переадресовать в
               </option>
-              {[
-                { id: 0, title: 'В Мусорку' },
-                { id: 1, title: 'В Спам' }
-              ].map(item => {
+              {curatorsList.map((item: ChatManager) => {
                 return (
-                  <option key={item.id} value={item.id}>
-                    {item.title}
+                  <option key={item.username} value={item.username}>
+                    {item.username}
                   </option>
                 );
               })}
