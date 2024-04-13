@@ -6,6 +6,7 @@ import { IChat, StatusType } from 'types/chat';
 import { useKeycloak } from '@react-keycloak/web';
 import { ChatContext } from 'context/Context';
 import { CheckBoxData } from 'data/checkboxData';
+
 import s from './FilterMessages.module.scss';
 
 interface FilterMessagesProps {

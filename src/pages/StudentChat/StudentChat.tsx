@@ -9,7 +9,6 @@ import { usePage } from 'components/app/pagesProvider/PagesProvider';
 import { PageType } from 'shared/types';
 import s from './StudentChat.module.scss';
 import { getMessagesListCurator } from 'api/routes/curatorChat';
-import { getMessagesListClient } from 'api/routes/clientChat';
 import { checkRoles } from 'helpers/checkRoles';
 import { Message } from 'types/chat';
 
@@ -31,6 +30,7 @@ export const StudentChat = () => {
   const { changePage } = usePage();
 
   const isChatClient = checkRoles();
+
   useConnectSocket();
   useEffect(() => {
     if (newMessageSocket) {
@@ -89,9 +89,9 @@ export const StudentChat = () => {
         setKey(thread.id);
         setCurrentThread(thread);
 
-        const { data: messages } = isChatClient
-          ? await getMessagesListClient({ id: thread.id })
-          : await getMessagesListCurator({ id: thread.id });
+        const { data: messages } = await getMessagesListCurator({
+          id: thread.id
+        });
 
         messagesDispatch({
           type: 'SET_MESSAGES',
