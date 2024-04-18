@@ -60,7 +60,6 @@ const ChatThread = ({ thread, index }) => {
   };
 
   const user = getUserLMS(thread.client);
-
   let userAvatar = user?.profile_image?.image_url_medium
     ? user.profile_image.image_url_medium
     : thread.topic.logo;
@@ -108,7 +107,7 @@ const ChatThread = ({ thread, index }) => {
         <div className="flex-1 chat-contact-body ms-2 d-md-none d-lg-block">
           <Flex justifyContent="between">
             <h6 className="mb-0 chat-contact-title">
-              {user ? user.username : thread.topic.title}
+              {user ? user.name : thread.topic.title}
             </h6>
             <span className="message-time fs-11">
               {getFormattedDate(thread.last_message?.created_at)}
