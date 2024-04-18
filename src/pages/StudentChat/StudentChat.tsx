@@ -9,8 +9,9 @@ import { usePage } from 'components/app/pagesProvider/PagesProvider';
 import { PageType } from 'shared/types';
 import s from './StudentChat.module.scss';
 import { getMessagesListCurator } from 'api/routes/curatorChat';
-import { checkRoles } from 'helpers/checkRoles';
+
 import { Message } from 'types/chat';
+import { checkRoles } from 'helpers/checkRoles';
 
 export const StudentChat = () => {
   const {
@@ -30,7 +31,6 @@ export const StudentChat = () => {
   const { changePage } = usePage();
 
   const isChatClient = checkRoles();
-
   useConnectSocket();
   useEffect(() => {
     if (newMessageSocket) {
@@ -44,15 +44,10 @@ export const StudentChat = () => {
           type: 'SET_MESSAGES',
           payload: [...messages, newMessageSocket.data]
         });
-      } else {
-        return messagesDispatch({
-          type: 'SET_MESSAGES',
-          payload: messages
-        });
       }
     }
     return;
-  }, [newMessageSocket, messagesDispatch, currentThread]);
+  }, [newMessageSocket, currentThread, isChatClient]);
 
   useEffect(() => {
     if (readChatMessage) {
@@ -69,7 +64,7 @@ export const StudentChat = () => {
         });
       }
     }
-  }, [readChatMessage, messages, isChatClient]);
+  }, [readChatMessage, messages]);
 
   useEffect(() => {
     const fetchClentDialogs = async () => {

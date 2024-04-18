@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-
 import { ChatContext } from 'context/Context';
-
 import { Nav } from 'react-bootstrap';
 import ChatThread from './ChatThread';
 import SimpleBarReact from 'simplebar-react';
@@ -12,7 +10,6 @@ import classNames from 'classnames';
 
 const ChatSidebar = ({ hideSidebar, threads }) => {
   const { chatStatus, newChat, userStatus } = useContext(ChatContext);
-
   return (
     <div className={classNames('chat-sidebar', { 'start-0': hideSidebar })}>
       <div className="contacts-list">

@@ -14,16 +14,18 @@ import {
   getMessagesListCurator
 } from 'api/routes/curatorChat';
 import { checkboxData } from 'data/checkboxData';
-import { checkRoles } from 'helpers/checkRoles';
 
 import { LMSAccounts } from 'api/routes/newLMS';
 import cn from 'classnames';
 
 import s from './AdminChat.module.scss';
 import { Message } from 'types/chat';
+import { checkRoles } from 'helpers/checkRoles';
 
 export const AdminChat = () => {
   const { topics } = useContext(TopicsContext) as TopicsContextType;
+
+  const isChatClient = checkRoles();
   const {
     newMessageSocket,
     readChatMessage,
@@ -42,7 +44,7 @@ export const AdminChat = () => {
   } = useContext(ChatContext);
   const [checkboxList, setCheckboxList] = useState(checkboxData);
 
-  const [typeMessages, setTypeMessages] = useState('');
+  const [typeMessages, setTypeMessages] = useState('topic');
   const [messagesByDate, setMessagesByDate] = useState('');
   const [statusMessages, setStatusMessages] = useState('');
   const [selectedRadioValue, setSelectedRadioValue] = useState<string>('');
@@ -50,15 +52,13 @@ export const AdminChat = () => {
   const [topicType, setTopicType] = useState('');
   const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
 
-  const isChatClient = checkRoles();
-
   useConnectSocket();
 
   useEffect(() => {
     if (newMessageSocket) {
       if (
         !messages.some(
-          (item: Message) => item.id === newMessageSocket?.data.id
+          (item: Message) => item?.id === newMessageSocket?.data.id
         ) &&
         currentThread?.id === newMessageSocket.data.chat
       ) {
@@ -66,15 +66,10 @@ export const AdminChat = () => {
           type: 'SET_MESSAGES',
           payload: [...messages, newMessageSocket.data]
         });
-      } else {
-        return messagesDispatch({
-          type: 'SET_MESSAGES',
-          payload: messages
-        });
       }
     }
     return;
-  }, [newMessageSocket, messagesDispatch, currentThread]);
+  }, [newMessageSocket, currentThread]);
 
   useEffect(() => {
     if (readChatMessage) {

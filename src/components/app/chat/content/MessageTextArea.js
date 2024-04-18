@@ -78,7 +78,7 @@ const MessageTextArea = () => {
 
     formData.append('text', message);
     formData.append('message_type', messageType);
-    formData.append('chat', currentThread.id);
+    formData.append('chat', currentThread?.id);
 
     return createClientMessage(formData);
   };

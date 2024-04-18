@@ -1,6 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { checkRoles } from 'helpers/checkRoles';
 import Flex from 'components/common/Flex';
-
+import { markChatMessagesAsReadClient } from 'api/routes/clientChat';
+import { markChatMessagesAsReadCurator } from 'api/routes/curatorChat';
+import { getCuratorChats } from 'api/routes/curatorChat';
+import { getClientChats } from 'api/routes/clientChat';
 import { ChatContext } from 'context/Context';
 import { Card, Tab } from 'react-bootstrap';
 import ChatContent from './content/ChatContent';
@@ -8,23 +12,68 @@ import ChatSidebar from './sidebar/ChatSidebar';
 
 const Chat = () => {
   const {
+    threadsDispatch,
+    readChatMessage,
+    newMessageSocket,
+    setCurrentThread,
     threads,
     setIsOpenThreadInfo,
-    setCurrentThread,
     setScrollToBottom,
     key,
     setKey
   } = useContext(ChatContext);
+  const isChatClient = checkRoles();
 
   const [hideSidebar, setHideSidebar] = useState(false);
 
-  const handleSelect = e => {
+  useEffect(() => {
+    const fetchChats = async () => {
+      if (isChatClient) {
+        const { data } = await getClientChats({});
+        threadsDispatch({
+          type: 'SET_DIALOGS',
+          payload: data.results
+        });
+      }
+      if (!isChatClient) {
+        const { data } = await getCuratorChats({});
+        threadsDispatch({
+          type: 'SET_DIALOGS',
+          payload: data.results
+        });
+      }
+    };
+    if (newMessageSocket || readChatMessage) fetchChats();
+  }, [newMessageSocket, isChatClient, readChatMessage]);
+
+  const handleSelect = async e => {
     setHideSidebar(false);
-    setIsOpenThreadInfo(false);
-    const thread = threads.find(thread => thread.id === parseInt(e));
-    setCurrentThread(thread);
-    setScrollToBottom(true);
-    setKey(e);
+
+    if (isChatClient) {
+      const { data } = await getClientChats({});
+      const thread = data.results.find(thread => thread.id === parseInt(e));
+      setCurrentThread(thread);
+      await markChatMessagesAsReadClient({
+        chat_id: thread.id,
+        message_id: thread.last_message.id
+      });
+      setIsOpenThreadInfo(false);
+      setScrollToBottom(true);
+      setKey(e);
+    }
+
+    if (!isChatClient) {
+      const { data } = await getCuratorChats({});
+      const thread = data.results.find(thread => thread.id === parseInt(e));
+      await markChatMessagesAsReadCurator({
+        chat_id: thread.id,
+        message_id: thread.last_message.id
+      });
+      setCurrentThread(thread);
+      setIsOpenThreadInfo(false);
+      setScrollToBottom(true);
+      setKey(e);
+    }
   };
 
   return (
