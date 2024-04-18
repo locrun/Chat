@@ -11,7 +11,6 @@ import s from './content.module.scss';
 const ChatContentHeader = ({ setHideSidebar, hideSidebar }) => {
   const { userStatus, currentThread, setProfileCardVisible } =
     useContext(ChatContext);
-
   return (
     <>
       {!hideSidebar && (
@@ -30,7 +29,10 @@ const ChatContentHeader = ({ setHideSidebar, hideSidebar }) => {
                 </h5>
 
                 <div className="fs-11 text-400">
-                  {userStatus && userStatus.data.status}
+                  {(userStatus &&
+                    userStatus.data.user_id === currentThread.client.id &&
+                    userStatus?.data.status) ||
+                    'offline'}
                 </div>
               </div>
             </Col>

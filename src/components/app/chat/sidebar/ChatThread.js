@@ -27,7 +27,6 @@ const ChatThread = ({ thread, index }) => {
   } = useContext(ChatContext);
 
   const isClient = checkRoles();
-
   useEffect(() => {
     const fetchDialogs = async () => {
       const { data } = await getCuratorChats({});
@@ -100,7 +99,10 @@ const ChatThread = ({ thread, index }) => {
         <Avatar
           className={thread.status}
           size={classNames('xl', {
-            'status-online': userStatus && userStatus?.data.status === 'online'
+            'status-online':
+              userStatus &&
+              userStatus.data.user_id === thread.client.id &&
+              userStatus?.data.status === 'online'
           })}
           src={userAvatar}
         />
