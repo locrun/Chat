@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { checkRoles } from 'helpers/checkRoles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,8 +7,7 @@ import { ChatContext } from 'context/Context';
 import { getCuratorChats } from 'api/routes/curatorChat';
 import { getMessagesListCurator } from 'api/routes/curatorChat';
 import { getMessagesListClient } from 'api/routes/clientChat';
-import { markChatMessagesAsReadClient } from 'api/routes/clientChat';
-import { markChatMessagesAsReadCurator } from 'api/routes/curatorChat';
+
 import Flex from 'components/common/Flex';
 import classNames from 'classnames';
 import Avatar from 'components/common/Avatar';
@@ -22,8 +21,6 @@ const ChatThread = ({ thread, index }) => {
     userStatus,
     chatStatus,
     newChat,
-    currentThread,
-    readChatMessage,
     threadsDispatch,
     messagesDispatch,
     setCurrentLmsUser
@@ -57,24 +54,6 @@ const ChatThread = ({ thread, index }) => {
         type: 'SET_MESSAGES',
         payload: data.results
       });
-
-      let lastElement = data.results.at(1);
-
-      if (isClient) {
-        if (lastElement) {
-          await markChatMessagesAsReadClient({
-            chat_id: thread?.id,
-            message_id: lastElement.id + 1
-          });
-        }
-      } else {
-        if (lastElement) {
-          await markChatMessagesAsReadCurator({
-            chat_id: thread?.id,
-            message_id: lastElement.id + 1
-          });
-        }
-      }
     } catch (error) {
       console.log(error);
     }
@@ -96,52 +75,22 @@ const ChatThread = ({ thread, index }) => {
     return monthName.charAt(0).toUpperCase() + monthName.slice(1);
   };
 
-  const is_read_message = currentThread?.id === readChatMessage?.data.chat_id;
-
   const lastMessage =
     thread.id === newMessageSocket?.data.chat
       ? newMessageSocket?.data
       : thread?.last_message;
 
-  useEffect(() => {
-    if (currentThread?.id === readChatMessage?.data.chat_id) {
-      const selector = `[data-rr-ui-event-key='${currentThread?.id}']`;
-      const element = document.querySelector(selector);
-      element?.classList.remove('unread-message');
-    } else {
-      const selector = `[data-rr-ui-event-key='${currentThread?.id}']`;
-      const element = document.querySelector(selector);
-      element?.classList.add('read-message');
-    }
-  }, [currentThread, readChatMessage]);
-
-  const [newMessage, setNewMessage] = useState(null);
-
-  useEffect(() => {
-    setNewMessage(null);
-  }, [currentThread]);
-
-  useEffect(() => {
-    setNewMessage(newMessageSocket?.data.chat);
-  }, [newMessageSocket]);
-
   return (
     <Nav.Link
       eventKey={index}
       onClick={() => {
-        setNewMessage(null);
         fetchMessagesList();
       }}
       className={classNames(
         `chat-contact hover-actions-trigger p-3 read-message`,
         {
-          'read-message':
-            thread.last_message?.is_read ||
-            is_read_message ||
-            currentThread?.last_message?.id ===
-              readChatMessage?.data.last_message_id,
-
-          'unread-message': thread?.id === newMessage,
+          'read-message': thread.last_message?.is_read,
+          'unread-message': !thread.last_message?.is_read,
 
           'blocked-message':
             thread.status === 'closed' || chatStatus?.data.chat_id === thread.id
@@ -169,14 +118,21 @@ const ChatThread = ({ thread, index }) => {
             <div className="chat-contact-content pe-3">
               <LastMessage lastMessage={lastMessage} />
 
-              <FontAwesomeIcon
-                icon={
-                  is_read_message || currentThread ? 'check-double' : 'check'
-                }
-                size="xs"
-                className="position-absolute bottom-4 end-0"
-                color="rgb(182 193 210)"
-              />
+              {thread.last_message?.is_read ? (
+                <FontAwesomeIcon
+                  icon="check-double"
+                  size="xs"
+                  className="position-absolute bottom-4 end-0"
+                  color="rgb(182 193 210)"
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon="check"
+                  size="xs"
+                  className="position-absolute bottom-4 end-0"
+                  color="rgb(182 193 210)"
+                />
+              )}
             </div>
           </div>
         </div>

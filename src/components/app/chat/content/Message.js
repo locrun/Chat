@@ -58,8 +58,7 @@ const Message = ({
           </div>
           {is_my &&
             (is_read_currentMessage.is_read_message ||
-            is_read_currentMessage.is_read ||
-            is_read_currentMessage.currentThread ? (
+            is_read_currentMessage.is_read ? (
               <FontAwesomeIcon icon="check-double" color="rgb(182 193 210)" />
             ) : (
               <FontAwesomeIcon icon="check" color="rgb(182 193 210)" />
