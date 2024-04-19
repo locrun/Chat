@@ -29,11 +29,11 @@ const MessageTextArea = () => {
   const [previewEmoji, setPreviewEmoji] = useState(false);
   const [message, setMessage] = useState('');
   const [documents, setDocuments] = useState([]);
-
   const isClosedChat = chatStatus?.data.status === 'closed';
 
   const isInputAndButtonDisabled =
     isChatClosed ||
+    !currentThread ||
     (isClosedChat && chatStatus?.data.chat_id === currentThread.id);
 
   const {
@@ -166,6 +166,7 @@ const MessageTextArea = () => {
       } else {
         event.preventDefault();
         handleSubmit();
+        setMessage('');
       }
     }
   };

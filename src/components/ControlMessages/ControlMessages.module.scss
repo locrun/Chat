@@ -105,6 +105,16 @@
   color: $white;
   background-color: $turquoise;
 }
+.disabled {
+  color: $black-brown;
+  background-color: $smoky-white;
+  border-color: $smoky-white;
+
+  &:hover {
+    color: $black-brown;
+    background-color: $smoky-white;
+  }
+}
 .openButton {
   max-width: 98px;
   color: $white;

@@ -19,16 +19,12 @@ import { LMSAccounts } from 'api/routes/newLMS';
 import cn from 'classnames';
 
 import s from './AdminChat.module.scss';
-import { Message } from 'types/chat';
-import { checkRoles } from 'helpers/checkRoles';
 
 export const AdminChat = () => {
   const { topics } = useContext(TopicsContext) as TopicsContextType;
 
-  const isChatClient = checkRoles();
   const {
     newMessageSocket,
-    readChatMessage,
     threadsDispatch,
     messages,
     setKey,
@@ -51,42 +47,33 @@ export const AdminChat = () => {
   const [chosenCheckboxes, setChosenCheckboxes] = useState<string[]>([]);
   const [topicType, setTopicType] = useState('');
   const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
-
+  const [isMyThreads, setIsMyThreads] = useState(false);
   useConnectSocket();
 
   useEffect(() => {
-    if (newMessageSocket) {
-      if (
-        !messages.some(
-          (item: Message) => item?.id === newMessageSocket?.data.id
-        ) &&
-        currentThread?.id === newMessageSocket.data.chat
-      ) {
-        messagesDispatch({
-          type: 'SET_MESSAGES',
-          payload: [...messages, newMessageSocket.data]
-        });
-      }
-    }
-    return;
-  }, [newMessageSocket, currentThread]);
+    const getCuratorMessages = async () => {
+      const {
+        data: { results }
+      } = await getCuratorChats({});
 
-  useEffect(() => {
-    if (readChatMessage) {
-      const maps = messages.map((message: Message) => {
-        if (message.id === readChatMessage.data.last_message_id) {
-          return { ...message, is_read: true };
-        }
-        return message;
-      });
-      if (JSON.stringify(maps) !== JSON.stringify(messages)) {
+      const findChatById = results.find(
+        thread => thread.id === newMessageSocket?.data.chat
+      );
+
+      if (findChatById && currentThread?.id === findChatById?.id) {
+        const { data: messages } = await getMessagesListCurator({
+          id: findChatById.id
+        });
+
         messagesDispatch({
           type: 'SET_MESSAGES',
-          payload: maps
+          payload: messages.results
         });
       }
-    }
-  }, [readChatMessage, messages, isChatClient]);
+    };
+
+    getCuratorMessages();
+  }, [newMessageSocket, currentThread]);
 
   const handleChangeRadio = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedRadioValue(event.target.value);
@@ -115,6 +102,10 @@ export const AdminChat = () => {
       });
     });
   };
+
+  useEffect(() => {
+    setIsMyThreads(chosenCheckboxes.includes('my'));
+  }, [chosenCheckboxes]);
 
   useEffect(() => {
     const selectedValues = checkboxList
@@ -232,6 +223,7 @@ export const AdminChat = () => {
       {typeMessages === 'topic' && (
         <ControlMessages
           topics={topics}
+          isMyThreads={isMyThreads}
           handleTypeTopicChange={handleTypeTopicChange}
           unreadMessagesCount={unreadMessageCount}
         />

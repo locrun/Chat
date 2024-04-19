@@ -52,23 +52,24 @@ const Chat = () => {
     if (isChatClient) {
       const { data } = await getClientChats({});
       const thread = data.results.find(thread => thread.id === parseInt(e));
-      setCurrentThread(thread);
+      updateChatThread(thread);
       await markChatMessagesAsReadClient({
         chat_id: thread.id,
         message_id: thread.last_message.id
       });
-      setIsOpenThreadInfo(false);
-      setScrollToBottom(true);
-      setKey(e);
     }
 
     if (!isChatClient) {
       const { data } = await getCuratorChats({});
       const thread = data.results.find(thread => thread.id === parseInt(e));
+      updateChatThread(thread);
       await markChatMessagesAsReadCurator({
         chat_id: thread.id,
         message_id: thread.last_message.id
       });
+    }
+
+    function updateChatThread(thread) {
       setCurrentThread(thread);
       setIsOpenThreadInfo(false);
       setScrollToBottom(true);

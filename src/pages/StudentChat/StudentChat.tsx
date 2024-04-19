@@ -2,27 +2,23 @@ import React, { useEffect, useContext, useState } from 'react';
 import { useConnectSocket } from 'hooks/useConnectSocket';
 import Chat from 'components/app/chat/Chat';
 import Search from 'components/doc-components/Search';
-import { getClientChats } from 'api/routes/clientChat';
+import { getClientChats, getMessagesListClient } from 'api/routes/clientChat';
 import MessageStarting from 'components/message-starting/MessageStarting';
 import { ChatContext } from 'context/Context';
 import { usePage } from 'components/app/pagesProvider/PagesProvider';
 import { PageType } from 'shared/types';
-import s from './StudentChat.module.scss';
 import { getMessagesListCurator } from 'api/routes/curatorChat';
 
-import { Message } from 'types/chat';
-import { checkRoles } from 'helpers/checkRoles';
+import s from './StudentChat.module.scss';
 
 export const StudentChat = () => {
   const {
     newMessageSocket,
-    readChatMessage,
-    currentThread,
     threadsDispatch,
     messages,
     messagesDispatch,
     setKey,
-
+    currentThread,
     setCurrentThread,
     setScrollToBottom,
     isAddNewChat,
@@ -31,41 +27,32 @@ export const StudentChat = () => {
   const [isThreadsEmpty, setIsThreadsEmpty] = useState(false);
   const { changePage } = usePage();
 
-  const isChatClient = checkRoles();
   useConnectSocket();
-  useEffect(() => {
-    if (newMessageSocket) {
-      if (
-        !messages.some(
-          (item: Message) => item?.id === newMessageSocket?.data.id
-        ) &&
-        currentThread?.id === newMessageSocket.data.chat
-      ) {
-        messagesDispatch({
-          type: 'SET_MESSAGES',
-          payload: [...messages, newMessageSocket.data]
-        });
-      }
-    }
-    return;
-  }, [newMessageSocket, currentThread, isChatClient]);
 
   useEffect(() => {
-    if (readChatMessage) {
-      const maps = messages.map((message: Message) => {
-        if (message.id === readChatMessage.data.last_message_id) {
-          return { ...message, is_read: true };
-        }
-        return message;
-      });
-      if (JSON.stringify(maps) !== JSON.stringify(messages)) {
+    const getClientMessages = async () => {
+      const {
+        data: { results }
+      } = await getClientChats({});
+
+      const findChatById = results.find(
+        thread => thread.id === newMessageSocket?.data.chat
+      );
+
+      if (findChatById && currentThread?.id === findChatById?.id) {
+        const { data: messages } = await getMessagesListClient({
+          id: findChatById.id
+        });
+
         messagesDispatch({
           type: 'SET_MESSAGES',
-          payload: maps
+          payload: messages.results
         });
       }
-    }
-  }, [readChatMessage, messages]);
+    };
+
+    getClientMessages();
+  }, [newMessageSocket, currentThread]);
 
   useEffect(() => {
     const fetchClentDialogs = async () => {

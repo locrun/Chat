@@ -29,16 +29,19 @@ export interface ChatManager {
 
 interface ColtrolMessagesProps {
   topics: Topics[];
+  isMyThreads: boolean;
   handleTypeTopicChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   unreadMessagesCount: number;
 }
 
 export const ControlMessages = ({
   topics,
+  isMyThreads,
   handleTypeTopicChange,
   unreadMessagesCount
 }: ColtrolMessagesProps) => {
   const [curatorsList, setCuratorsList] = useState([]);
+
   const { keycloak } = useKeycloak();
 
   const { currentThread, isChatClosed, setIsChatClose } =
@@ -110,7 +113,7 @@ export const ControlMessages = ({
               onChange={e => handleAssignCurator(e)}
             >
               <option className={s.default} disabled hidden>
-                Переадресовать в
+                Переадресовать
               </option>
               {curatorsList.map((item: ChatManager) => {
                 return (
@@ -125,8 +128,15 @@ export const ControlMessages = ({
         {currentThread && (
           <div className={s.buttons}>
             <div className={s.flexCol}>
-              <span className={s.label}>Нет менеджера</span>
-              <button className={s.button} onClick={assignCuratorHandler}>
+              <span className={s.label}>
+                {isMyThreads && keycloak?.idTokenParsed?.preferred_username}
+                {!isMyThreads && 'Нет менеджера'}
+              </span>
+              <button
+                disabled={isMyThreads}
+                className={classnames(s.button, { [s.disabled]: isMyThreads })}
+                onClick={assignCuratorHandler}
+              >
                 Взять себе
               </button>
             </div>

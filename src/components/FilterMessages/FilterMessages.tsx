@@ -55,17 +55,17 @@ export const FilterMessages = ({
   const sortingMessaggesItems = [
     {
       item: 'Старые',
-      value: '-created_at'
+      value: 'created_at'
     },
     {
       item: 'Новые',
-      value: 'created_at'
+      value: '-created_at'
     }
   ];
   const statusMessaggesItems = [
     {
       item: 'Открытые',
-      value: 'new'
+      value: 'open'
     },
 
     isOthers
@@ -84,7 +84,7 @@ export const FilterMessages = ({
     },
     {
       item: 'Отложенные',
-      value: ''
+      value: 'delayed'
     }
   ];
 
