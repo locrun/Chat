@@ -30,7 +30,7 @@ const ChatContentHeader = ({ setHideSidebar, hideSidebar }) => {
 
                 <div className="fs-11 text-400">
                   {(userStatus &&
-                    userStatus.data.user_id === currentThread.client.id &&
+                    userStatus?.data.user_id === currentThread?.client.id &&
                     userStatus?.data.status) ||
                     'offline'}
                 </div>
