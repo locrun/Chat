@@ -7,7 +7,6 @@ import { ChatContext } from 'context/Context';
 import { getCuratorChats } from 'api/routes/curatorChat';
 import { getMessagesListCurator } from 'api/routes/curatorChat';
 import { getMessagesListClient } from 'api/routes/clientChat';
-
 import Flex from 'components/common/Flex';
 import classNames from 'classnames';
 import Avatar from 'components/common/Avatar';
