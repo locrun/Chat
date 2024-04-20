@@ -96,7 +96,7 @@ export const FilterMessages = ({
           <Form.Select
             className={s.select}
             onChange={e => handleTypeMessagesChange(e)}
-            defaultValue=""
+            defaultValue="topic"
           >
             {typeMessagesItems.map(item => {
               return (
