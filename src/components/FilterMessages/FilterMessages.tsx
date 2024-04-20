@@ -1,15 +1,14 @@
-import React, { ChangeEvent, useContext } from 'react';
+import React, { ChangeEvent } from 'react';
 import Form from 'react-bootstrap/Form';
 import RadioButton from 'components/RadioButton/RadioButton';
 import CheckBoxGroup from '../CheckBoxGroup/CheckBoxGroup';
-import { IChat, StatusType } from 'types/chat';
-import { useKeycloak } from '@react-keycloak/web';
-import { ChatContext } from 'context/Context';
+
 import { CheckBoxData } from 'data/checkboxData';
 
 import s from './FilterMessages.module.scss';
 
 interface FilterMessagesProps {
+  isWorkingForOthers: boolean;
   isChecked: boolean;
   checkboxList: CheckBoxData[];
   handleChangeRadio: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -21,6 +20,7 @@ interface FilterMessagesProps {
 
 export const FilterMessages = ({
   isChecked,
+  isWorkingForOthers,
   checkboxList,
   handleChangeRadio,
   handleChangeCheckbox,
@@ -28,16 +28,6 @@ export const FilterMessages = ({
   handleSortingMessagesChange,
   handleStatusMessagesChange
 }: FilterMessagesProps) => {
-  const { threads } = useContext(ChatContext);
-  const { keycloak } = useKeycloak();
-
-  const isOthers = threads.some((chat: IChat) => {
-    return (
-      chat.status === StatusType.IN_PROGRESS &&
-      chat.curator.username === keycloak?.tokenParsed?.preferred_username
-    );
-  });
-
   const typeMessagesItems = [
     {
       item: 'Все сообщения',
@@ -52,6 +42,7 @@ export const FilterMessages = ({
       value: 'order'
     }
   ];
+
   const sortingMessaggesItems = [
     {
       item: 'Старые',
@@ -62,22 +53,22 @@ export const FilterMessages = ({
       value: '-created_at'
     }
   ];
+
   const statusMessaggesItems = [
     {
       item: 'Открытые',
       value: 'open'
     },
-
-    isOthers
+    {
+      item: 'В работе',
+      value: 'in_progress'
+    },
+    isWorkingForOthers
       ? {
-          item: 'В работе',
-          value: 'in_progress'
-        }
-      : {
           item: 'В работе у других',
           value: 'in_progress'
-        },
-
+        }
+      : null,
     {
       item: 'Закрытые',
       value: 'closed'
@@ -86,7 +77,7 @@ export const FilterMessages = ({
       item: 'Отложенные',
       value: 'delayed'
     }
-  ];
+  ].filter(item => item !== null);
 
   return (
     <div className={s.controlsWrapper}>
@@ -96,7 +87,7 @@ export const FilterMessages = ({
           <Form.Select
             className={s.select}
             onChange={e => handleTypeMessagesChange(e)}
-            defaultValue="topic"
+            defaultValue=""
           >
             {typeMessagesItems.map(item => {
               return (
@@ -136,8 +127,8 @@ export const FilterMessages = ({
               </option>
               {statusMessaggesItems.map(status => {
                 return (
-                  <option key={status.item} value={status.value}>
-                    {status.item}
+                  <option key={status?.item} value={status?.value}>
+                    {status?.item}
                   </option>
                 );
               })}

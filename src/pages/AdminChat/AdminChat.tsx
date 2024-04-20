@@ -14,12 +14,11 @@ import {
   getMessagesListCurator
 } from 'api/routes/curatorChat';
 import { checkboxData } from 'data/checkboxData';
-
+import { IChat, StatusType } from 'types/chat';
+import { useKeycloak } from '@react-keycloak/web';
 import { LMSAccounts } from 'api/routes/newLMS';
 import cn from 'classnames';
-
 import s from './AdminChat.module.scss';
-
 export const AdminChat = () => {
   const { topics } = useContext(TopicsContext) as TopicsContextType;
 
@@ -48,7 +47,17 @@ export const AdminChat = () => {
   const [topicType, setTopicType] = useState('');
   const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
   const [isMyThreads, setIsMyThreads] = useState(false);
+  const { threads } = useContext(ChatContext);
+  const { keycloak } = useKeycloak();
+
   useConnectSocket();
+
+  const isWorkingForOthers = threads.some((chat: IChat) => {
+    return (
+      chat.status === StatusType.IN_PROGRESS &&
+      chat.curator.username !== keycloak?.tokenParsed?.preferred_username
+    );
+  });
 
   useEffect(() => {
     const getCuratorMessages = async () => {
@@ -126,47 +135,70 @@ export const AdminChat = () => {
       chosenCheckboxes.length > 0 ? chosenCheckboxes.join(',') : null;
 
     const fetchDialogs = async () => {
+      const chatsArray = [];
+
+      if (selectedValuesString) {
+        chatsArray.push(selectedValuesString);
+      }
+
+      if (selectedRadioValue) {
+        chatsArray.push(selectedRadioValue);
+      }
+
       const params = {
-        chat_type: typeMessages,
-        ordering: messagesByDate,
-        status: statusMessages,
-        chats: selectedValuesString || selectedRadioValue,
-        topic: topicType
+        chat_type: typeMessages ? typeMessages : undefined,
+        ordering: messagesByDate ? messagesByDate : undefined,
+        status: statusMessages ? statusMessages : undefined,
+        chats: chatsArray.length > 0 ? chatsArray.join(',') : undefined,
+        topic: topicType ? topicType : undefined
       };
+
+      if (isWorkingForOthers && statusMessages === 'in_progress') {
+        if (!chatsArray.includes('others')) {
+          chatsArray.push('others');
+        }
+        params.chats = chatsArray.join(',');
+      }
+      const filteredParams = Object.fromEntries(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        Object.entries(params).filter(([_, v]) => v !== undefined)
+      );
 
       const { data: users } = await LMSAccounts();
 
       setLmsUsers(users);
+      if (Object.keys(filteredParams).length > 0) {
+        const { data } = await getCuratorChats(filteredParams);
 
-      const { data } = await getCuratorChats(params);
+        setUnreadMessageCount(data.results.length);
 
-      setUnreadMessageCount(data.results.length);
-
-      threadsDispatch({
-        type: 'SET_DIALOGS',
-        payload: data.results
-      });
-
-      const thread = data.results[0];
-      if (thread && isAddNewChat) {
-        setKey(thread.id);
-        setCurrentThread(thread);
-
-        const { data: messages } = await getMessagesListCurator({
-          id: thread.id
+        threadsDispatch({
+          type: 'SET_DIALOGS',
+          payload: data.results
         });
 
-        messagesDispatch({
-          type: 'SET_MESSAGES',
-          payload: messages.results
-        });
-        setIsAddNewChat(false);
-        setScrollToBottom(true);
+        const thread = data.results[0];
+        if (thread && isAddNewChat) {
+          setKey(thread.id);
+          setCurrentThread(thread);
+
+          const { data: messages } = await getMessagesListCurator({
+            id: thread.id
+          });
+
+          messagesDispatch({
+            type: 'SET_MESSAGES',
+            payload: messages.results
+          });
+          setIsAddNewChat(false);
+          setScrollToBottom(true);
+        }
       }
     };
 
     fetchDialogs();
   }, [
+    isWorkingForOthers,
     typeMessages,
     messagesByDate,
     statusMessages,
@@ -213,6 +245,7 @@ export const AdminChat = () => {
       <FilterMessages
         checkboxList={checkboxList}
         isChecked={selectedRadioValue === 'all'}
+        isWorkingForOthers={isWorkingForOthers}
         handleChangeRadio={handleChangeRadio}
         handleChangeCheckbox={handleChangeCheckbox}
         handleTypeMessagesChange={handleTypeMessagesChange}
