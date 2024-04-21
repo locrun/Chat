@@ -26,6 +26,7 @@ const ChatThread = ({ thread, index }) => {
   } = useContext(ChatContext);
 
   const isClient = checkRoles();
+
   useEffect(() => {
     const fetchDialogs = async () => {
       const { data } = await getCuratorChats({});
@@ -62,14 +63,23 @@ const ChatThread = ({ thread, index }) => {
     ? user.profile_image.image_url_medium
     : thread.topic.logo;
 
-  const getFormattedDate = time => {
+  const getFormattedDate = (time, isClient) => {
     if (!time) {
       return '';
     }
-    const monthName = new Intl.DateTimeFormat('ru-RU', {
-      month: 'long'
-    }).format(new Date(time));
-    return monthName.charAt(0).toUpperCase() + monthName.slice(1);
+    if (isClient) {
+      const formattedDate = new Intl.DateTimeFormat('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      }).format(new Date(time));
+      return formattedDate;
+    } else {
+      const monthName = new Intl.DateTimeFormat('ru-RU', {
+        month: 'long'
+      }).format(new Date(time));
+      return monthName.charAt(0).toUpperCase() + monthName.slice(1);
+    }
   };
 
   const lastMessage =
@@ -111,7 +121,7 @@ const ChatThread = ({ thread, index }) => {
               {user ? user.name : thread.topic.title}
             </h6>
             <span className="message-time fs-11">
-              {getFormattedDate(thread.last_message?.created_at)}
+              {getFormattedDate(thread.last_message?.created_at, isClient)}
             </span>
           </Flex>
           <div className="min-w-0">
