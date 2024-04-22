@@ -80,6 +80,19 @@ export const ControlMessages = ({
     };
     fetchCuratorList();
   }, []);
+  const getFormattedDate = (time: string) => {
+    const date = new Date(time);
+    const day = date.toLocaleString('ru-RU', { weekday: 'short' });
+    const capitalizedDay = day.charAt(0).toUpperCase() + day.slice(1);
+    const formattedDate = `${capitalizedDay} ${date.toLocaleDateString(
+      'ru-RU',
+      { day: '2-digit', month: '2-digit', year: '2-digit' }
+    )}. ${date.toLocaleTimeString('ru-RU', {
+      hour: '2-digit',
+      minute: '2-digit'
+    })}`;
+    return formattedDate;
+  };
 
   return (
     <div className={s.container}>
@@ -142,7 +155,10 @@ export const ControlMessages = ({
             </div>
             <div className={s.flexCol}>
               <span className={s.label}>
-                Открыт <span className={s.date}>Пн 09.10.23. 14:41</span>
+                Открыт{' '}
+                <span className={s.date}>
+                  {getFormattedDate(currentThread.created_at)}
+                </span>
               </span>
               <button
                 className={classnames(s.button, s.openButton)}
