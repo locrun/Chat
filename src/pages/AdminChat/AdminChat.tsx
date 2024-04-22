@@ -23,6 +23,9 @@ export const AdminChat = () => {
   const { topics } = useContext(TopicsContext) as TopicsContextType;
 
   const {
+    limit,
+    setLimit,
+    setQuentutyChats,
     newMessageSocket,
     threadsDispatch,
     messages,
@@ -150,7 +153,8 @@ export const AdminChat = () => {
         ordering: messagesByDate ? messagesByDate : undefined,
         status: statusMessages ? statusMessages : undefined,
         chats: chatsArray.length > 0 ? chatsArray.join(',') : undefined,
-        topic: topicType ? topicType : undefined
+        topic: topicType ? topicType : undefined,
+        limit: limit
       };
 
       if (isWorkingForOthers && statusMessages === 'in_progress') {
@@ -169,7 +173,7 @@ export const AdminChat = () => {
       setLmsUsers(users);
       if (Object.keys(filteredParams).length > 0) {
         const { data } = await getCuratorChats(filteredParams);
-
+        setQuentutyChats(data.count);
         setUnreadMessageCount(data.results.length);
 
         threadsDispatch({
@@ -198,6 +202,7 @@ export const AdminChat = () => {
 
     fetchDialogs();
   }, [
+    limit,
     isWorkingForOthers,
     typeMessages,
     messagesByDate,
@@ -233,6 +238,7 @@ export const AdminChat = () => {
   const handleStatusMessagesChange = (
     event: ChangeEvent<HTMLSelectElement>
   ) => {
+    setLimit(10);
     setStatusMessages(event.target.value);
   };
 

@@ -19,7 +19,7 @@ const ChatContentBody = ({ thread }) => {
     setScrollToBottom
   } = useContext(ChatContext);
 
-  const sortedMessages = messages.sort((a, b) => {
+  const sortedMessages = messages?.sort((a, b) => {
     return new Date(a.created_at) - new Date(b.created_at);
   });
 

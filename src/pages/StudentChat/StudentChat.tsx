@@ -7,7 +7,6 @@ import MessageStarting from 'components/message-starting/MessageStarting';
 import { ChatContext } from 'context/Context';
 import { usePage } from 'components/app/pagesProvider/PagesProvider';
 import { PageType } from 'shared/types';
-import { getMessagesListCurator } from 'api/routes/curatorChat';
 
 import s from './StudentChat.module.scss';
 
@@ -71,10 +70,6 @@ export const StudentChat = () => {
       if (thread && isAddNewChat) {
         setKey(thread.id);
         setCurrentThread(thread);
-
-        const { data: messages } = await getMessagesListCurator({
-          id: thread.id
-        });
 
         messagesDispatch({
           type: 'SET_MESSAGES',

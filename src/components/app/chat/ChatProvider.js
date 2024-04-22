@@ -27,6 +27,8 @@ const ChatProvider = ({ children }) => {
   const [currentLmsUser, setCurrentLmsUser] = useState(null);
   const [isChatClosed, setIsChatClose] = useState(false);
 
+  const [limit, setLimit] = useState(10);
+  const [quentityChats, setQuentutyChats] = useState(null);
   const getUser = thread => {
     let user = {};
     if (thread.type === 'group') {
@@ -44,6 +46,10 @@ const ChatProvider = ({ children }) => {
   };
 
   const value = {
+    limit,
+    setLimit,
+    quentityChats,
+    setQuentutyChats,
     users,
     userStatus,
     setUserStatus,

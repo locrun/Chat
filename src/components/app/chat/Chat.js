@@ -12,6 +12,8 @@ import ChatSidebar from './sidebar/ChatSidebar';
 
 const Chat = () => {
   const {
+    limit,
+    setQuentutyChats,
     threadsDispatch,
     readChatMessage,
     newMessageSocket,
@@ -29,7 +31,8 @@ const Chat = () => {
   useEffect(() => {
     const fetchChats = async () => {
       if (isChatClient) {
-        const { data } = await getClientChats({});
+        const { data } = await getClientChats({ limit });
+        setQuentutyChats(data.count);
         threadsDispatch({
           type: 'SET_DIALOGS',
           payload: data.results
@@ -44,8 +47,8 @@ const Chat = () => {
       }
     };
 
-    if (newMessageSocket || readChatMessage) fetchChats();
-  }, [newMessageSocket, isChatClient, readChatMessage]);
+    if (newMessageSocket || readChatMessage || limit) fetchChats();
+  }, [newMessageSocket, isChatClient, readChatMessage, limit]);
 
   const handleSelect = async e => {
     setHideSidebar(false);
@@ -53,9 +56,10 @@ const Chat = () => {
     if (isChatClient) {
       const { data } = await getClientChats({});
       const thread = data.results.find(thread => thread.id === parseInt(e));
+
       updateChatThread(thread);
 
-      if (thread)
+      if (thread && thread.last_message?.id)
         await markChatMessagesAsReadClient({
           chat_id: thread.id,
           message_id: thread.last_message.id
@@ -65,11 +69,12 @@ const Chat = () => {
     if (!isChatClient) {
       const { data } = await getCuratorChats({});
       const thread = data.results.find(thread => thread.id === parseInt(e));
+
       updateChatThread(thread);
-      if (thread)
+      if (thread && thread.last_message?.id)
         await markChatMessagesAsReadCurator({
-          chat_id: thread?.id,
-          message_id: thread?.last_message.id
+          chat_id: thread.id,
+          message_id: thread.last_message.id
         });
     }
 
