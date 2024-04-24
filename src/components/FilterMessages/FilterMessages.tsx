@@ -8,7 +8,6 @@ import { CheckBoxData } from 'data/checkboxData';
 import s from './FilterMessages.module.scss';
 
 interface FilterMessagesProps {
-  isWorkingForOthers: boolean;
   isChecked: boolean;
   checkboxList: CheckBoxData[];
   handleChangeRadio: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -20,7 +19,6 @@ interface FilterMessagesProps {
 
 export const FilterMessages = ({
   isChecked,
-  isWorkingForOthers,
   checkboxList,
   handleChangeRadio,
   handleChangeCheckbox,
@@ -63,12 +61,12 @@ export const FilterMessages = ({
       item: 'В работе',
       value: 'in_progress'
     },
-    isWorkingForOthers
-      ? {
-          item: 'В работе у других',
-          value: 'in_progress'
-        }
-      : null,
+
+    {
+      item: 'В работе у других',
+      value: 'is_working_for_others'
+    },
+
     {
       item: 'Закрытые',
       value: 'closed'
@@ -77,7 +75,7 @@ export const FilterMessages = ({
       item: 'Отложенные',
       value: 'delayed'
     }
-  ].filter(item => item !== null);
+  ];
 
   return (
     <div className={s.controlsWrapper}>

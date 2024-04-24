@@ -41,11 +41,11 @@ export const arrayReducer = (state, action) => {
       if (id !== 0 && !id) {
         return state;
       }
-      if (isAddToEnd) {
+      if (isAddToEnd && state) {
         const filteredState = state.filter(item => item.id !== id);
         return [...filteredState, payload];
       }
-      if (isUpdatedStart) {
+      if (isUpdatedStart && state) {
         const filteredState = state.filter(item => item.id !== id);
         return [payload, ...filteredState];
       }

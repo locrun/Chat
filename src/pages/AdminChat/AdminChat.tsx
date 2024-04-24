@@ -62,6 +62,8 @@ export const AdminChat = () => {
     );
   });
 
+  //console.log('isWorkingForOthers', isWorkingForOthers);
+
   useEffect(() => {
     const getCuratorMessages = async () => {
       const {
@@ -138,30 +140,21 @@ export const AdminChat = () => {
       chosenCheckboxes.length > 0 ? chosenCheckboxes.join(',') : null;
 
     const fetchDialogs = async () => {
-      const chatsArray = [];
-
-      if (selectedValuesString) {
-        chatsArray.push(selectedValuesString);
-      }
-
-      if (selectedRadioValue) {
-        chatsArray.push(selectedRadioValue);
-      }
-
       const params = {
         chat_type: typeMessages ? typeMessages : undefined,
         ordering: messagesByDate ? messagesByDate : undefined,
         status: statusMessages ? statusMessages : undefined,
-        chats: chatsArray.length > 0 ? chatsArray.join(',') : undefined,
+        chats:
+          selectedValuesString || selectedRadioValue
+            ? selectedValuesString || selectedRadioValue
+            : undefined,
         topic: topicType ? topicType : undefined,
         limit: limit
       };
 
-      if (isWorkingForOthers && statusMessages === 'in_progress') {
-        if (!chatsArray.includes('others')) {
-          chatsArray.push('others');
-        }
-        params.chats = chatsArray.join(',');
+      if (isWorkingForOthers && statusMessages === 'is_working_for_others') {
+        params.status = 'in_progress';
+        params.chats = 'others';
       }
       const filteredParams = Object.fromEntries(
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -251,7 +244,6 @@ export const AdminChat = () => {
       <FilterMessages
         checkboxList={checkboxList}
         isChecked={selectedRadioValue === 'all'}
-        isWorkingForOthers={isWorkingForOthers}
         handleChangeRadio={handleChangeRadio}
         handleChangeCheckbox={handleChangeCheckbox}
         handleTypeMessagesChange={handleTypeMessagesChange}
