@@ -14,8 +14,6 @@ import {
   getMessagesListCurator
 } from 'api/routes/curatorChat';
 import { checkboxData } from 'data/checkboxData';
-import { IChat, StatusType } from 'types/chat';
-import { useKeycloak } from '@react-keycloak/web';
 import { LMSAccounts } from 'api/routes/newLMS';
 import cn from 'classnames';
 import s from './AdminChat.module.scss';
@@ -49,20 +47,10 @@ export const AdminChat = () => {
   const [chosenCheckboxes, setChosenCheckboxes] = useState<string[]>([]);
   const [topicType, setTopicType] = useState('');
   const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
+
   const [isMyThreads, setIsMyThreads] = useState(false);
-  const { threads } = useContext(ChatContext);
-  const { keycloak } = useKeycloak();
 
   useConnectSocket();
-
-  const isWorkingForOthers = threads.some((chat: IChat) => {
-    return (
-      chat.status === StatusType.IN_PROGRESS &&
-      chat.curator.username !== keycloak?.tokenParsed?.preferred_username
-    );
-  });
-
-  //console.log('isWorkingForOthers', isWorkingForOthers);
 
   useEffect(() => {
     const getCuratorMessages = async () => {
@@ -140,7 +128,7 @@ export const AdminChat = () => {
       chosenCheckboxes.length > 0 ? chosenCheckboxes.join(',') : null;
 
     const fetchDialogs = async () => {
-      const params = {
+      let params = {
         chat_type: typeMessages ? typeMessages : undefined,
         ordering: messagesByDate ? messagesByDate : undefined,
         status: statusMessages ? statusMessages : undefined,
@@ -151,11 +139,34 @@ export const AdminChat = () => {
         topic: topicType ? topicType : undefined,
         limit: limit
       };
+      //TODO
+      // «В работе у себя» - ?status=in_progress&chats=my
+      // «В работе у других» - ?status=in_progress&chats=others
+      // if (threads.length) {
+      //   const isWorkingForOthers = threads?.some((chat: IChat) => {
+      //     return (
+      //       chat.status === StatusType.IN_PROGRESS &&
+      //       chat.curator.username !== keycloak?.tokenParsed?.preferred_username
+      //     );
+      //   });
+      //   setWorkingOthers(isWorkingForOthers);
 
-      if (isWorkingForOthers && statusMessages === 'is_working_for_others') {
-        params.status = 'in_progress';
-        params.chats = 'others';
+      //   if (isWorkingForOthers && params.status === 'is_working_for_others') {
+      //     params = {
+      //       ...params,
+      //       status: 'in_progress',
+      //       chats: 'others'
+      //     };
+      //   }
+      // }
+      if (statusMessages === 'in_progress') {
+        params = {
+          ...params,
+          status: 'in_progress',
+          chats: 'my'
+        };
       }
+
       const filteredParams = Object.fromEntries(
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         Object.entries(params).filter(([_, v]) => v !== undefined)
@@ -196,7 +207,6 @@ export const AdminChat = () => {
     fetchDialogs();
   }, [
     limit,
-    isWorkingForOthers,
     typeMessages,
     messagesByDate,
     statusMessages,
