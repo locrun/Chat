@@ -15,15 +15,24 @@ import {
 } from 'api/routes/curatorChat';
 import { checkboxData } from 'data/checkboxData';
 import { LMSAccounts } from 'api/routes/newLMS';
+
 import cn from 'classnames';
 import s from './AdminChat.module.scss';
+
 export const AdminChat = () => {
   const { topics } = useContext(TopicsContext) as TopicsContextType;
 
   const {
+    newChat,
+    setTotalChatsCount,
+    searchValue,
     limit,
-    setLimit,
-    setQuentutyChats,
+    limitMessages,
+    setPreviousMessages,
+    socketDeletedMessage,
+    socketUpdatedMessage,
+    readChatMessage,
+    socketAssignCurator,
     newMessageSocket,
     threadsDispatch,
     messages,
@@ -31,13 +40,12 @@ export const AdminChat = () => {
     currentThread,
     setCurrentThread,
     messagesDispatch,
-    setScrollToBottom,
-    isAddNewChat,
-    setIsAddNewChat,
     setLmsUsers,
     profileCardVisible,
     currentLmsUser
   } = useContext(ChatContext);
+  useConnectSocket();
+
   const [checkboxList, setCheckboxList] = useState(checkboxData);
 
   const [typeMessages, setTypeMessages] = useState('topic');
@@ -46,25 +54,78 @@ export const AdminChat = () => {
   const [selectedRadioValue, setSelectedRadioValue] = useState<string>('');
   const [chosenCheckboxes, setChosenCheckboxes] = useState<string[]>([]);
   const [topicType, setTopicType] = useState('');
-  const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
-
-  const [isMyThreads, setIsMyThreads] = useState(false);
-
-  useConnectSocket();
 
   useEffect(() => {
-    const getCuratorMessages = async () => {
+    const fetchLazyLoadingMessages = async () => {
+      if (currentThread) {
+        const { data } = await getMessagesListCurator({
+          limit: limitMessages,
+          id: currentThread?.id
+        });
+        setPreviousMessages(data.previous);
+        messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: data.results
+        });
+      }
+    };
+    fetchLazyLoadingMessages();
+  }, [currentThread, limitMessages]);
+
+  useEffect(() => {
+    const fetchChats = async () => {
       const {
         data: { results }
       } = await getCuratorChats({});
 
-      const findChatById = results.find(
-        thread => thread.id === newMessageSocket?.data.chat
-      );
+      threadsDispatch({
+        type: 'SET_DIALOGS',
+        payload: results
+      });
+    };
 
-      if (findChatById && currentThread?.id === findChatById?.id) {
+    readChatMessage && fetchChats();
+  }, [readChatMessage]);
+
+  useEffect(() => {
+    const fetchChats = async () => {
+      const {
+        data: { results }
+      } = await getCuratorChats({});
+
+      threadsDispatch({
+        type: 'SET_DIALOGS',
+        payload: results
+      });
+      const currentCuratorChat = results.find(
+        thread => thread.id === newChat?.data?.chat_id
+      )!;
+
+      setCurrentThread(currentCuratorChat);
+
+      messagesDispatch({
+        type: 'SET_MESSAGES',
+        payload: []
+      });
+    };
+
+    fetchChats();
+    setKey(newChat?.data.chat_id);
+  }, [newChat]);
+
+  useEffect(() => {
+    const fetchChats = async () => {
+      const {
+        data: { results }
+      } = await getCuratorChats({});
+
+      threadsDispatch({
+        type: 'SET_DIALOGS',
+        payload: results
+      });
+      if (newMessageSocket?.data?.chat_id === currentThread?.id) {
         const { data: messages } = await getMessagesListCurator({
-          id: findChatById.id
+          id: newMessageSocket?.data?.chat_id
         });
 
         messagesDispatch({
@@ -74,8 +135,74 @@ export const AdminChat = () => {
       }
     };
 
-    getCuratorMessages();
+    newMessageSocket && fetchChats();
   }, [newMessageSocket, currentThread]);
+
+  useEffect(() => {
+    const fetchChats = async () => {
+      const {
+        data: { results }
+      } = await getCuratorChats({});
+
+      threadsDispatch({
+        type: 'SET_DIALOGS',
+        payload: results
+      });
+      if (socketDeletedMessage?.data?.chat_id === currentThread?.id) {
+        const { data: messages } = await getMessagesListCurator({
+          id: socketDeletedMessage?.data?.chat_id
+        });
+
+        messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: messages.results
+        });
+      }
+    };
+
+    socketDeletedMessage && fetchChats();
+  }, [socketDeletedMessage, currentThread]);
+
+  useEffect(() => {
+    const fetchChats = async () => {
+      const {
+        data: { results }
+      } = await getCuratorChats({});
+
+      threadsDispatch({
+        type: 'SET_DIALOGS',
+        payload: results
+      });
+      if (socketUpdatedMessage?.data?.chat_id === currentThread?.id) {
+        const { data: messages } = await getMessagesListCurator({
+          id: socketUpdatedMessage?.data?.chat_id
+        });
+
+        messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: messages.results
+        });
+      }
+    };
+
+    socketUpdatedMessage && fetchChats();
+  }, [socketUpdatedMessage, currentThread]);
+
+  useEffect(() => {
+    const fetchChats = async () => {
+      const {
+        data: { results }
+      } = await getCuratorChats({});
+
+      const currentCuratorChat = results.find(
+        thread => thread.id === socketAssignCurator?.data?.chat_id
+      )!;
+
+      setCurrentThread(currentCuratorChat);
+    };
+
+    socketAssignCurator && fetchChats();
+  }, [socketAssignCurator]);
 
   const handleChangeRadio = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedRadioValue(event.target.value);
@@ -106,10 +233,6 @@ export const AdminChat = () => {
   };
 
   useEffect(() => {
-    setIsMyThreads(chosenCheckboxes.includes('my'));
-  }, [chosenCheckboxes]);
-
-  useEffect(() => {
     const selectedValues = checkboxList
       .filter(checkbox => checkbox.isChecked)
       .map(checkbox => checkbox.value);
@@ -137,6 +260,7 @@ export const AdminChat = () => {
             ? selectedValuesString || selectedRadioValue
             : undefined,
         topic: topicType ? topicType : undefined,
+        search: searchValue ? searchValue : undefined,
         limit: limit
       };
       //TODO
@@ -177,36 +301,20 @@ export const AdminChat = () => {
       setLmsUsers(users);
       if (Object.keys(filteredParams).length > 0) {
         const { data } = await getCuratorChats(filteredParams);
-        setQuentutyChats(data.count);
-        setUnreadMessageCount(data.results.length);
+
+        setTotalChatsCount(data.count);
 
         threadsDispatch({
           type: 'SET_DIALOGS',
           payload: data.results
         });
-
-        const thread = data.results[0];
-        if (thread && isAddNewChat) {
-          setKey(thread.id);
-          setCurrentThread(thread);
-
-          const { data: messages } = await getMessagesListCurator({
-            id: thread.id
-          });
-
-          messagesDispatch({
-            type: 'SET_MESSAGES',
-            payload: messages.results
-          });
-          setIsAddNewChat(false);
-          setScrollToBottom(true);
-        }
       }
     };
 
     fetchDialogs();
   }, [
     limit,
+    searchValue,
     typeMessages,
     messagesByDate,
     statusMessages,
@@ -215,18 +323,6 @@ export const AdminChat = () => {
     topicType,
     messages
   ]);
-
-  /* TODO: wait changes
-  const getUnreadMessages = (threads: ChatList[]) => {
-    let unreadMessage = 0;
-    threads.forEach(thread => {
-      if (thread.unread_messages_count) {
-        unreadMessage += thread.unread_messages_count;
-      }
-    });
-
-    setUnreadMessageCount(unreadMessage);
-  };*/
 
   const handleTypeMessagesChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setTypeMessages(event.target.value);
@@ -241,7 +337,6 @@ export const AdminChat = () => {
   const handleStatusMessagesChange = (
     event: ChangeEvent<HTMLSelectElement>
   ) => {
-    setLimit(10);
     setStatusMessages(event.target.value);
   };
 
@@ -264,9 +359,7 @@ export const AdminChat = () => {
       {typeMessages === 'topic' && (
         <ControlMessages
           topics={topics}
-          isMyThreads={isMyThreads}
           handleTypeTopicChange={handleTypeTopicChange}
-          unreadMessagesCount={unreadMessageCount}
         />
       )}
 

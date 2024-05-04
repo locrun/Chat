@@ -10,55 +10,92 @@ import { PageType } from 'shared/types';
 
 import s from './StudentChat.module.scss';
 
+export interface Socket {
+  event_type: string;
+  data: {
+    chat?: number;
+    chat_id?: number;
+    created_at: string;
+    files: [];
+    id: number;
+    is_read: boolean;
+    message_type: string;
+    sender: number;
+    text: string;
+  };
+}
+
 export const StudentChat = () => {
   const {
+    limit,
+    limitMessages,
+    setPreviousMessages,
+    searchValue,
+    setTotalChatsCount,
+    newChat,
+    socketDeletedMessage,
+    socketUpdatedMessage,
     newMessageSocket,
+    readChatMessage,
     threadsDispatch,
-    messages,
     messagesDispatch,
-    setKey,
-    currentThread,
-    setCurrentThread,
-    setScrollToBottom,
-    isAddNewChat,
-    setIsAddNewChat
+    currentThread
   } = useContext(ChatContext);
-  const [isThreadsEmpty, setIsThreadsEmpty] = useState(false);
-  const { changePage } = usePage();
 
   useConnectSocket();
+  const { changePage } = usePage();
+  const [isThreadsEmpty, setIsThreadsEmpty] = useState(false);
 
   useEffect(() => {
-    const getClientMessages = async () => {
+    const fetchLazyLoadingMessages = async () => {
+      if (currentThread) {
+        const { data } = await getMessagesListClient({
+          limit: limitMessages,
+          id: currentThread?.id
+        });
+        setPreviousMessages(data.previous);
+        messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: data.results
+        });
+      }
+    };
+    fetchLazyLoadingMessages();
+  }, [currentThread, limitMessages]);
+
+  useEffect(() => {
+    const fetchChats = async () => {
+      const { data } = await getClientChats({ search: searchValue, limit });
+      setTotalChatsCount(data.count);
+
+      threadsDispatch({
+        type: 'SET_DIALOGS',
+        payload: data.results
+      });
+    };
+
+    fetchChats();
+  }, [searchValue, limit]);
+
+  useEffect(() => {
+    const fetchChats = async () => {
       const {
         data: { results }
       } = await getClientChats({});
 
-      const findChatById = results.find(
-        thread => thread.id === newMessageSocket?.data.chat
-      );
-
-      if (findChatById && currentThread?.id === findChatById?.id) {
-        const { data: messages } = await getMessagesListClient({
-          id: findChatById.id
-        });
-
-        messagesDispatch({
-          type: 'SET_MESSAGES',
-          payload: messages.results
-        });
-      }
+      threadsDispatch({
+        type: 'SET_DIALOGS',
+        payload: results
+      });
     };
 
-    getClientMessages();
-  }, [newMessageSocket, currentThread]);
+    readChatMessage && fetchChats();
+  }, [readChatMessage]);
 
   useEffect(() => {
-    const fetchClentDialogs = async () => {
-      const params = {};
-
-      const { data } = await getClientChats(params);
-
+    const fetchChats = async () => {
+      const { data } = await getClientChats({});
+      setTotalChatsCount(data.count);
       if (data.results.length === 0) setIsThreadsEmpty(true);
 
       threadsDispatch({
@@ -66,23 +103,89 @@ export const StudentChat = () => {
         payload: data.results
       });
 
-      const thread = data.results[0];
-      if (thread && isAddNewChat) {
-        setKey(thread.id);
-        setCurrentThread(thread);
+      messagesDispatch({
+        type: 'SET_MESSAGES',
+        payload: []
+      });
+    };
+
+    fetchChats();
+  }, [newChat]);
+
+  useEffect(() => {
+    const fetchChats = async () => {
+      const {
+        data: { results }
+      } = await getClientChats({});
+
+      threadsDispatch({
+        type: 'SET_DIALOGS',
+        payload: results
+      });
+      if (newMessageSocket?.data?.chat_id === currentThread?.id) {
+        const { data: messages } = await getMessagesListClient({
+          id: newMessageSocket.data.chat_id
+        });
 
         messagesDispatch({
           type: 'SET_MESSAGES',
           payload: messages.results
         });
-
-        setIsAddNewChat(false);
-        setScrollToBottom(true);
       }
     };
 
-    fetchClentDialogs();
-  }, [messages]);
+    newMessageSocket && fetchChats();
+  }, [newMessageSocket, currentThread]);
+
+  useEffect(() => {
+    const fetchChats = async () => {
+      const {
+        data: { results }
+      } = await getClientChats({});
+
+      threadsDispatch({
+        type: 'SET_DIALOGS',
+        payload: results
+      });
+      if (socketDeletedMessage?.data?.chat_id === currentThread?.id) {
+        const { data: messages } = await getMessagesListClient({
+          id: socketDeletedMessage?.data?.chat_id
+        });
+
+        messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: messages.results
+        });
+      }
+    };
+
+    socketDeletedMessage && fetchChats();
+  }, [socketDeletedMessage, currentThread]);
+
+  useEffect(() => {
+    const fetchChats = async () => {
+      const {
+        data: { results }
+      } = await getClientChats({});
+
+      threadsDispatch({
+        type: 'SET_DIALOGS',
+        payload: results
+      });
+      if (socketUpdatedMessage?.data?.chat_id === currentThread?.id) {
+        const { data: messages } = await getMessagesListClient({
+          id: socketUpdatedMessage?.data?.chat_id
+        });
+
+        messagesDispatch({
+          type: 'SET_MESSAGES',
+          payload: messages.results
+        });
+      }
+    };
+
+    socketUpdatedMessage && fetchChats();
+  }, [socketUpdatedMessage, currentThread]);
 
   return (
     <div className={s.container}>

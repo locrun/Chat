@@ -38,9 +38,16 @@ export interface ChatList {
   last_message: LastMessage;
 }
 
+export interface Comments {
+  chat: number;
+  text: string;
+}
+
 export interface Curator {
   id: number;
-  is_online: string;
+  username: string;
+  is_online?: string;
+  name?: string;
 }
 export interface Client {
   id: number;

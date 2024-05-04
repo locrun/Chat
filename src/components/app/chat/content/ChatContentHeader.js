@@ -8,7 +8,7 @@ import { ChatContext } from 'context/Context';
 import profileInfo from 'assets/img/chat/ProfileInfo.svg';
 import s from './content.module.scss';
 
-const ChatContentHeader = ({ setHideSidebar, hideSidebar }) => {
+const ChatContentHeader = ({ setHideSidebar, hideSidebar, isClient }) => {
   const { userStatus, currentThread, setProfileCardVisible } =
     useContext(ChatContext);
   return (
@@ -36,14 +36,16 @@ const ChatContentHeader = ({ setHideSidebar, hideSidebar }) => {
                 </div>
               </div>
             </Col>
-            <Col xs="auto">
-              <img
-                src={profileInfo}
-                alt="info"
-                className={s.profileInfoIcon}
-                onClick={() => setProfileCardVisible(true)}
-              />
-            </Col>
+            {!isClient && (
+              <Col xs="auto">
+                <img
+                  src={profileInfo}
+                  alt="info"
+                  className={s.profileInfoIcon}
+                  onClick={() => setProfileCardVisible(true)}
+                />
+              </Col>
+            )}
           </Row>
         </div>
       )}
@@ -54,6 +56,7 @@ const ChatContentHeader = ({ setHideSidebar, hideSidebar }) => {
 ChatContentHeader.propTypes = {
   thread: PropTypes.object.isRequired,
   setHideSidebar: PropTypes.func.isRequired,
+  isClient: PropTypes.bool,
   hideSidebar: PropTypes.bool
 };
 

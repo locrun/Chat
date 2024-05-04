@@ -10,10 +10,17 @@ import { Files } from './Files/Files';
 const Message = ({
   avatar,
   message,
+  files,
   time,
   is_my,
-  files,
-  is_read_currentMessage
+  isClient,
+  isEditing,
+  setIsEditing,
+  editedMessage,
+  setEditedMessage,
+  data,
+  onDeleteMessage,
+  onUpdateMessage
 }) => {
   const date = new Date(time);
   const hours = date.getHours().toString().padStart(2, '0');
@@ -29,20 +36,44 @@ const Message = ({
     >
       <div>
         <div className={s.messageWrapper}>
+          {is_my && !isClient && (
+            <div className={s.messagesOptions}>
+              <FontAwesomeIcon
+                icon="edit"
+                className="cursor-pointer chat-option-hover"
+                onClick={onUpdateMessage}
+              />
+              <FontAwesomeIcon
+                icon="trash-alt"
+                className="cursor-pointer chat-option-hover"
+                onClick={onDeleteMessage}
+              />
+            </div>
+          )}
+
           <div
             className={classNames(s.messageBlock, {
               [s.isMyMessage]: is_my
             })}
           >
             {!is_my && <Avatar size="l" className="me-2" src={avatar} />}
-            {message && (
-              <div
-                className={classNames(s.message, {
-                  [s.isMy]: is_my && message,
-                  [s.another]: !is_my && message
-                })}
-              >
-                <p>{message}</p>
+
+            {isEditing && is_my && data.messageId === data.id ? (
+              <input
+                type="text"
+                value={editedMessage}
+                onChange={e => setEditedMessage(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') {
+                    onUpdateMessage;
+                    setIsEditing(false);
+                  }
+                }}
+                onBlur={() => setIsEditing(false)}
+              />
+            ) : (
+              <div className={is_my ? s.myMessage : s.otherMessage}>
+                {message}
               </div>
             )}
           </div>
@@ -57,8 +88,7 @@ const Message = ({
             <span>{NewTime}</span>
           </div>
           {is_my &&
-            (is_read_currentMessage.is_read_message ||
-            is_read_currentMessage.is_read ? (
+            (data.is_read_message || data.is_read ? (
               <FontAwesomeIcon icon="check-double" color="rgb(182 193 210)" />
             ) : (
               <FontAwesomeIcon icon="check" color="rgb(182 193 210)" />
@@ -73,22 +103,20 @@ Message.propTypes = {
   time: PropTypes.string.isRequired,
   is_my: PropTypes.bool,
   files: PropTypes.array,
-  is_read_currentMessage: PropTypes.shape({
+  onClick: PropTypes.func,
+  isClient: PropTypes.bool,
+  isEditing: PropTypes.bool,
+  editedMessage: PropTypes.string,
+  setIsEditing: PropTypes.func,
+  setEditedMessage: PropTypes.func,
+  onDeleteMessage: PropTypes.func,
+  onUpdateMessage: PropTypes.func,
+
+  data: PropTypes.shape({
+    id: PropTypes.number,
+    messageId: PropTypes.number,
     is_read_message: PropTypes.bool,
-    is_read: PropTypes.bool,
-    currentThread: PropTypes.shape({
-      id: PropTypes.number,
-      chat_type: PropTypes.string,
-      created_at: PropTypes.string,
-      last_message: PropTypes.any,
-      status: PropTypes.string,
-      topic: PropTypes.shape({
-        id: PropTypes.number,
-        title: PropTypes.string,
-        logo: PropTypes.string
-      }),
-      unread_messages_count: PropTypes.number
-    })
+    is_read: PropTypes.bool
   }),
   avatar: PropTypes.string
 };

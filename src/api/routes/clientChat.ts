@@ -8,7 +8,6 @@ import {
   ClientCreateChatPayload,
   MarkCharReadPayload,
   ClientCreateChatResponce,
-  ClientChatList,
   ClientTopicResponce
 } from 'shared/types/client';
 import { Message, CreateMessagePayload } from 'shared/types';
@@ -16,7 +15,7 @@ import { AxiosPaginatedResponse } from 'types/api';
 
 export const getClientChats = (
   params: ChatPayloadParams
-): AxiosPromise<AxiosPaginatedResponse<ClientChatList>> => {
+): AxiosPromise<AxiosPaginatedResponse> => {
   return Apis.client_api.get(endpoints_client.chats_lists, { params });
 };
 

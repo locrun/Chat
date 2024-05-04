@@ -10,14 +10,17 @@ import ChatContactsSearch from './ChatContactSearch';
 import classNames from 'classnames';
 
 const ChatSidebar = ({ hideSidebar, threads }) => {
-  const { quentityChats, limit, setLimit } = useContext(ChatContext);
+  const { setLimit, limit, totalChatsCount } = useContext(ChatContext);
 
   const { ref, inView } = useInView({
     threshold: 0
   });
+
   useEffect(() => {
     if (inView) {
-      if (limit < quentityChats) setLimit(prev => prev + 10);
+      if (limit < totalChatsCount) {
+        setLimit(limit => limit + 10);
+      }
     }
   }, [inView]);
 
@@ -30,7 +33,7 @@ const ChatSidebar = ({ hideSidebar, threads }) => {
               <ChatThread thread={thread} index={thread.id} key={thread.id} />
             ))}
           </Nav>
-          {threads.length > 0 && <div ref={ref}></div>}
+          {threads.length > 0 && <div ref={ref} style={{ height: '10px' }} />}
         </SimpleBarReact>
       </div>
       <ChatContactsSearch />

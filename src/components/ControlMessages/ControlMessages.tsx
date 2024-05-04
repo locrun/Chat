@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 
 import { useKeycloak } from '@react-keycloak/web';
 import { Topics } from 'types/topics';
-import { assignCurator } from 'api/routes/curatorChat';
+import { setAssignCurator } from 'api/routes/curatorChat';
 import { ChatContext } from 'context/Context';
 import { closeCurrentDialog } from 'api/routes/curatorChat';
 import { AssignCuratorParams } from 'shared/types/curator';
@@ -29,40 +29,43 @@ export interface ChatManager {
 
 interface ColtrolMessagesProps {
   topics: Topics[];
-  isMyThreads: boolean;
   handleTypeTopicChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  unreadMessagesCount: number;
 }
 
 export const ControlMessages = ({
   topics,
-  isMyThreads,
-  handleTypeTopicChange,
-  unreadMessagesCount
+  handleTypeTopicChange
 }: ColtrolMessagesProps) => {
   const [curatorsList, setCuratorsList] = useState([]);
 
   const { keycloak } = useKeycloak();
 
-  const { currentThread, isChatClosed, setIsChatClose } =
-    useContext(ChatContext);
+  const {
+    socketAssignCurator,
+    setSocketAssignCurator,
+    totalChatsCount,
+    currentThread,
+    isChatClosed,
+    setIsChatClose
+  } = useContext(ChatContext);
 
-  const assignCuratorHandler = () => {
+  const assignThreadToSelf = async () => {
     const params: AssignCuratorParams = {
       chat: currentThread.id,
       curator: keycloak.idTokenParsed?.preferred_username
     };
 
-    if (currentThread) assignCurator(params);
+    await setAssignCurator(params);
   };
 
-  const handleAssignCurator = (event: ChangeEvent<HTMLSelectElement>) => {
+  const assignThreadToUser = async (event: ChangeEvent<HTMLSelectElement>) => {
     const params: AssignCuratorParams = {
-      chat: currentThread.id,
+      chat: currentThread?.id,
       curator: event.target.value
     };
 
-    if (currentThread) assignCurator(params);
+    await setAssignCurator(params);
+    event.target.value = 'Переадресовать';
   };
 
   const deleteDialogHandler = () => {
@@ -94,6 +97,10 @@ export const ControlMessages = ({
     return formattedDate;
   };
 
+  useEffect(() => {
+    setSocketAssignCurator(null);
+  }, [currentThread]);
+
   return (
     <div className={s.container}>
       <div className={s.controlsWrapper}>
@@ -116,14 +123,14 @@ export const ControlMessages = ({
                   );
                 })}
               </Form.Select>
-              <div className={s.unreadCount}>{unreadMessagesCount}</div>
+              <div className={s.unreadCount}>{totalChatsCount}</div>
             </div>
           </div>
           <div className={s.redirectSelect}>
             <Form.Select
               className={s.select}
-              defaultValue="Переадресовать в"
-              onChange={e => handleAssignCurator(e)}
+              defaultValue="Переадресовать"
+              onChange={e => assignThreadToUser(e)}
             >
               <option className={s.default} disabled hidden>
                 Переадресовать
@@ -142,26 +149,35 @@ export const ControlMessages = ({
           <div className={s.buttons}>
             <div className={s.flexCol}>
               <span className={s.label}>
-                {isMyThreads && keycloak?.idTokenParsed?.preferred_username}
-                {!isMyThreads && 'Нет менеджера'}
+                {currentThread.curator || socketAssignCurator
+                  ? currentThread.curator?.username ||
+                    keycloak.idTokenParsed?.preferred_username
+                  : 'Нет менеджера'}
               </span>
               <button
-                disabled={isMyThreads}
-                className={classnames(s.button, { [s.disabled]: isMyThreads })}
-                onClick={assignCuratorHandler}
+                disabled={
+                  currentThread.curator || socketAssignCurator || isChatClosed
+                }
+                className={classnames(s.button, {
+                  [s.disabled]:
+                    currentThread.curator || socketAssignCurator || isChatClosed
+                })}
+                onClick={assignThreadToSelf}
               >
                 Взять себе
               </button>
             </div>
             <div className={s.flexCol}>
               <span className={s.label}>
-                Открыт{' '}
+                Открыт &nbsp;
                 <span className={s.date}>
                   {getFormattedDate(currentThread.created_at)}
                 </span>
               </span>
               <button
-                className={classnames(s.button, s.openButton)}
+                className={classnames(s.button, s.openButton, {
+                  [s.disabled]: isChatClosed
+                })}
                 onClick={deleteDialogHandler}
                 disabled={isChatClosed}
               >

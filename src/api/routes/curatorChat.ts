@@ -3,7 +3,7 @@ import { endpoints_curator } from 'api/endpoints';
 import Apis from '..';
 import {
   ChatInfo,
-  ChatList,
+  Comments,
   ChatFilterParams,
   CuratorTopicsResponse,
   OrderCreationPayload,
@@ -23,11 +23,11 @@ import {
 
 export const getCuratorChats = (
   params: ChatFilterParams
-): AxiosPromise<AxiosPaginatedResponse<ChatList>> => {
+): AxiosPromise<AxiosPaginatedResponse> => {
   return Apis.curator_api.get(endpoints_curator.chats_lists, { params });
 };
 
-export const assignCurator = (data: AssignCuratorParams) => {
+export const setAssignCurator = (data: AssignCuratorParams) => {
   return Apis.curator_api.post(endpoints_curator.assign_curator, data);
 };
 
@@ -35,6 +35,14 @@ export const createCuratorChats = (
   data: OrderCreationPayload
 ): AxiosPromise<OrderCreationResponse> => {
   return Apis.curator_api.post(endpoints_curator.create_chats, data);
+};
+
+export const createCommnets = (data: Comments): AxiosPromise => {
+  return Apis.curator_api.post(endpoints_curator.create_commnets, data);
+};
+
+export const getCommnets = (id: number): AxiosPromise => {
+  return Apis.curator_api.get(endpoints_curator.commnets_lists(id));
 };
 
 export const getMessagesListCurator = ({
@@ -78,7 +86,7 @@ export const updateMessage = (
   return Apis.curator_api.put(endpoints_curator.update_message(id), params);
 };
 export const deleteMessage = (id: number): AxiosPromise => {
-  return Apis.curator_api.put(endpoints_curator.delete_message(id));
+  return Apis.curator_api.delete(endpoints_curator.delete_message(id));
 };
 
 export const getCuratorTopics = (params: {

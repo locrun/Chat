@@ -1,10 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { checkRoles } from 'helpers/checkRoles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LastMessage from './LastMessage';
 import { ChatContext } from 'context/Context';
-import { getCuratorChats } from 'api/routes/curatorChat';
 import { getMessagesListCurator } from 'api/routes/curatorChat';
 import { getMessagesListClient } from 'api/routes/clientChat';
 import Flex from 'components/common/Flex';
@@ -17,29 +16,14 @@ import { getUserLMS } from 'helpers/getUserLMS';
 const ChatThread = ({ thread, index }) => {
   const {
     newMessageSocket,
+    setTotalMessagesCount,
     userStatus,
     chatStatus,
-    newChat,
-    threadsDispatch,
     messagesDispatch,
     setCurrentLmsUser
   } = useContext(ChatContext);
 
   const isClient = checkRoles();
-
-  useEffect(() => {
-    const fetchDialogs = async () => {
-      const { data } = await getCuratorChats({});
-      if (data)
-        threadsDispatch({
-          type: 'SET_DIALOGS',
-          payload: data?.results
-        });
-    };
-    if (newChat && newChat?.data) {
-      fetchDialogs();
-    }
-  }, [newChat]);
 
   const fetchMessagesList = async () => {
     try {
@@ -48,6 +32,8 @@ const ChatThread = ({ thread, index }) => {
       const { data } = isClient
         ? await getMessagesListClient({ id: thread.id })
         : await getMessagesListCurator({ id: thread.id });
+
+      setTotalMessagesCount(data.count);
 
       messagesDispatch({
         type: 'SET_MESSAGES',
@@ -59,6 +45,7 @@ const ChatThread = ({ thread, index }) => {
   };
 
   const user = getUserLMS(thread.client);
+
   let userAvatar = user?.profile_image?.image_url_medium
     ? user.profile_image.image_url_medium
     : thread.topic.logo;

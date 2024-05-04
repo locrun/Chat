@@ -8,10 +8,12 @@ import { arrayReducer } from 'reducers/arrayReducer';
 const ChatProvider = ({ children }) => {
   const [userStatus, setUserStatus] = useState(null);
   const [chatStatus, setChatStatus] = useState(null);
-  const [readChatMessage, setReadChatMessage] = useState(null);
   const [newChat, setNewChat] = useState(null);
-  const [assignCurator, setAssignCurator] = useState(null);
+  const [readChatMessage, setReadChatMessage] = useState(null);
+  const [socketAssignCurator, setSocketAssignCurator] = useState(null);
   const [newMessageSocket, setNewMessageSocket] = useState(null);
+  const [socketDeletedMessage, setSocketDeletedMessage] = useState(null);
+  const [socketUpdatedMessage, setSocketUpdatedMessage] = useState(null);
 
   const [messages, messagesDispatch] = useReducer(arrayReducer, []);
   const [threads, threadsDispatch] = useReducer(arrayReducer, []);
@@ -21,14 +23,19 @@ const ChatProvider = ({ children }) => {
   const [isOpenThreadInfo, setIsOpenThreadInfo] = useState(false);
   const [scrollToBottom, setScrollToBottom] = useState(true);
   const [key, setKey] = useState(0);
-  const [isAddNewChat, setIsAddNewChat] = useState(false);
   const [lmsUsers, setLmsUsers] = useState([]);
   const [profileCardVisible, setProfileCardVisible] = useState(false);
   const [currentLmsUser, setCurrentLmsUser] = useState(null);
   const [isChatClosed, setIsChatClose] = useState(false);
 
+  const [searchValue, setSearchValue] = useState('');
+
   const [limit, setLimit] = useState(10);
-  const [quentityChats, setQuentutyChats] = useState(null);
+  const [limitMessages, setLimitMessages] = useState(0);
+  const [previousMessages, setPreviousMessages] = useState(null);
+  const [totalMessagesCount, setTotalMessagesCount] = useState(null);
+  const [totalChatsCount, setTotalChatsCount] = useState(null);
+
   const getUser = thread => {
     let user = {};
     if (thread.type === 'group') {
@@ -48,8 +55,20 @@ const ChatProvider = ({ children }) => {
   const value = {
     limit,
     setLimit,
-    quentityChats,
-    setQuentutyChats,
+    limitMessages,
+    setLimitMessages,
+    previousMessages,
+    setPreviousMessages,
+    totalChatsCount,
+    setTotalChatsCount,
+    searchValue,
+    setSearchValue,
+    socketUpdatedMessage,
+    setSocketUpdatedMessage,
+    socketDeletedMessage,
+    setSocketDeletedMessage,
+    totalMessagesCount,
+    setTotalMessagesCount,
     users,
     userStatus,
     setUserStatus,
@@ -59,8 +78,8 @@ const ChatProvider = ({ children }) => {
     setReadChatMessage,
     newChat,
     setNewChat,
-    assignCurator,
-    setAssignCurator,
+    socketAssignCurator,
+    setSocketAssignCurator,
     newMessageSocket,
     setNewMessageSocket,
     groups,
@@ -81,8 +100,6 @@ const ChatProvider = ({ children }) => {
     setScrollToBottom,
     key,
     setKey,
-    isAddNewChat,
-    setIsAddNewChat,
     lmsUsers,
     setLmsUsers,
     profileCardVisible,

@@ -13,7 +13,9 @@ export const useConnectSocket = () => {
     setNewMessageSocket,
     setReadChatMessage,
     setNewChat,
-    setAssignCurator
+    setSocketAssignCurator,
+    setSocketDeletedMessage,
+    setSocketUpdatedMessage
   } = useContext(ChatContext);
 
   useEffect(() => {
@@ -41,13 +43,19 @@ export const useConnectSocket = () => {
         }
 
         if (data.event_type === 'assign_curator') {
-          setAssignCurator({ ...data });
+          setSocketAssignCurator({ ...data });
         }
         if (data.event_type === 'read_chat_message') {
           setReadChatMessage({ ...data });
         }
         if (data.event_type === 'update_chat_status') {
           setChatStatus({ ...data });
+        }
+        if (data.event_type === 'delete_message') {
+          setSocketDeletedMessage({ ...data });
+        }
+        if (data.event_type === 'update_message') {
+          setSocketUpdatedMessage({ ...data });
         }
       };
 

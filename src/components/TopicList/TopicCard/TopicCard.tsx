@@ -14,15 +14,29 @@ interface TopicCardProps {
 
 export const TopicCard = ({ topics }: TopicCardProps) => {
   const { changePage } = usePage();
-  const { setIsAddNewChat } = useContext(ChatContext);
+  const {
+    setKey,
+    setCurrentThread,
+    setReadChatMessage,
+    setSocketAssignCurator,
+    setNewMessageSocket,
+    setSocketDeletedMessage,
+    setSocketUpdatedMessage
+  } = useContext(ChatContext);
 
   const handleNewChatDialog = async (id: number) => {
-    await createClientChats({
+    const { data } = await createClientChats({
       topic: id
     });
 
-    setIsAddNewChat(true);
+    setKey(data.id);
+    setCurrentThread(data);
     changePage(PageType.CHAT);
+    setReadChatMessage(null);
+    setSocketAssignCurator(null);
+    setNewMessageSocket(null);
+    setSocketDeletedMessage(null);
+    setSocketUpdatedMessage(null);
   };
 
   return (

@@ -1,15 +1,39 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useContext, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
+import { createCommnets, getCommnets } from 'api/routes/curatorChat';
+import { ChatContext } from 'context/Context';
 import { CommentList } from './CommentList/CommentList';
-import { commentList } from 'data/comments/commnets';
 import s from './CommentForm.module.scss';
 
 export const CommentForm = () => {
+  const { currentThread } = useContext(ChatContext);
+  const [commentList, setCommentList] = useState([]);
   const [comment, setComment] = useState('');
 
-  const submitHandler = (e: FormEvent) => {
+  useEffect(() => {
+    const fetchComments = async () => {
+      const {
+        data: { results }
+      } = await getCommnets(currentThread.id);
+      setCommentList(results);
+    };
+    fetchComments();
+  }, [currentThread]);
+
+  const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(comment);
+
+    try {
+      if (comment) {
+        await createCommnets({
+          chat: currentThread.id,
+          text: comment
+        });
+        setComment('');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -28,7 +52,7 @@ export const CommentForm = () => {
           Добавить
         </button>
       </form>
-      <CommentList data={commentList} title={'комментарии'} />
+      <CommentList data={commentList} />
     </>
   );
 };

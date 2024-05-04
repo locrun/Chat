@@ -1,22 +1,18 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { checkRoles } from 'helpers/checkRoles';
-import Flex from 'components/common/Flex';
+import React, { useContext, useState } from 'react';
+import { Card, Tab } from 'react-bootstrap';
+import { ChatContext } from 'context/Context';
 import { markChatMessagesAsReadClient } from 'api/routes/clientChat';
 import { markChatMessagesAsReadCurator } from 'api/routes/curatorChat';
 import { getCuratorChats } from 'api/routes/curatorChat';
 import { getClientChats } from 'api/routes/clientChat';
-import { ChatContext } from 'context/Context';
-import { Card, Tab } from 'react-bootstrap';
+import Flex from 'components/common/Flex';
+import { checkRoles } from 'helpers/checkRoles';
 import ChatContent from './content/ChatContent';
 import ChatSidebar from './sidebar/ChatSidebar';
 
 const Chat = () => {
   const {
-    limit,
-    setQuentutyChats,
-    threadsDispatch,
-    readChatMessage,
-    newMessageSocket,
+    setLimitMessages,
     setCurrentThread,
     threads,
     setIsOpenThreadInfo,
@@ -28,31 +24,9 @@ const Chat = () => {
 
   const [hideSidebar, setHideSidebar] = useState(false);
 
-  useEffect(() => {
-    const fetchChats = async () => {
-      if (isChatClient) {
-        const { data } = await getClientChats({ limit });
-        setQuentutyChats(data.count);
-        threadsDispatch({
-          type: 'SET_DIALOGS',
-          payload: data.results
-        });
-      }
-      if (!isChatClient) {
-        const { data } = await getCuratorChats({});
-        threadsDispatch({
-          type: 'SET_DIALOGS',
-          payload: data.results
-        });
-      }
-    };
-
-    if (newMessageSocket || readChatMessage || limit) fetchChats();
-  }, [newMessageSocket, isChatClient, readChatMessage, limit]);
-
   const handleSelect = async e => {
     setHideSidebar(false);
-
+    setLimitMessages(0);
     if (isChatClient) {
       const { data } = await getClientChats({});
       const thread = data.results.find(thread => thread.id === parseInt(e));
@@ -71,6 +45,7 @@ const Chat = () => {
       const thread = data.results.find(thread => thread.id === parseInt(e));
 
       updateChatThread(thread);
+
       if (thread && thread.last_message?.id)
         await markChatMessagesAsReadCurator({
           chat_id: thread.id,

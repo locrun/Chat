@@ -10,6 +10,8 @@ export interface PaginatedLinks<T = any> {
 
 export interface AxiosPaginatedResponse<T = any> {
   links: PaginatedLinks;
+  next: T | null;
+  previous: T | null;
   count: number;
   results: T[];
 }

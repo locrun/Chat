@@ -21,6 +21,8 @@ export const endpoints_curator = {
   mark_as_read_curator: (chat_id: number, message_id: number) =>
     `/chats/${chat_id}/messages/${message_id}/read/`,
   chats_messages: (id: number) => `/chats/${id}/messages/`,
+  create_commnets: '/chats/comments/',
+  commnets_lists: (id: number) => `/chats/${id}/comments/`,
   get_note: (id: number) => `/chats/${id}/note/`,
   update_note: (id: number) => `/chats/${id}/note/`
 };

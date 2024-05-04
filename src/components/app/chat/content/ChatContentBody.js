@@ -1,27 +1,50 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import Message from './Message';
+import { useInView } from 'react-intersection-observer';
 import SimpleBarReact from 'simplebar-react';
 import ThreadInfo from './ThreadInfo';
 import { ChatContext } from 'context/Context';
-
+import { checkRoles } from 'helpers/checkRoles';
 import { getUserLMS } from 'helpers/getUserLMS';
+import Message from './Message';
 import NewDay from './NewDay';
+import { deleteMessage, updateMessage } from 'api/routes/curatorChat';
 
 const ChatContentBody = ({ thread }) => {
   const messagesEndRef = useRef();
+  const scrollableNodeRef = React.createRef();
 
   const {
+    totalMessagesCount,
+    limitMessages,
+    setLimitMessages,
     readChatMessage,
+    setNewMessageSocket,
     currentThread,
     messages,
     scrollToBottom,
     setScrollToBottom
   } = useContext(ChatContext);
 
+  const { ref, inView } = useInView({
+    threshold: 0
+  });
+
+  const isClient = checkRoles();
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedMessage, setEditedMessage] = useState('');
+  const [messageId, setMessageId] = useState(null);
   const sortedMessages = messages?.sort((a, b) => {
     return new Date(a.created_at) - new Date(b.created_at);
   });
+
+  useEffect(() => {
+    if (inView) {
+      if (limitMessages < totalMessagesCount) {
+        setLimitMessages(prev => prev + 10);
+      }
+    }
+  }, [inView]);
 
   useEffect(() => {
     if (scrollToBottom) {
@@ -53,13 +76,53 @@ const ChatContentBody = ({ thread }) => {
 
   const is_read_message = currentThread?.id === readChatMessage?.data.chat_id;
 
+  const onDeleteMessage = async id => {
+    try {
+      await deleteMessage(id);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    const params = {
+      text: editedMessage,
+      message_type: 'text'
+    };
+
+    const fetchUpdateMessage = async () => {
+      try {
+        await updateMessage(messageId, params);
+        setEditedMessage('');
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    setNewMessageSocket(null);
+    !isEditing && messageId && editedMessage && fetchUpdateMessage();
+  }, [editedMessage, messageId, isEditing]);
+
+  const onUpdateMessage = async id => {
+    setMessageId(id);
+    setIsEditing(true);
+  };
+
   return (
     <div className="chat-content-body" style={{ display: 'inherit' }}>
       <ThreadInfo thread={thread} isOpenThreadInfo={true} />
-      <SimpleBarReact style={{ height: '100%' }}>
+      <SimpleBarReact
+        scrollableNodeProps={{ ref: scrollableNodeRef }}
+        style={{ height: '100%' }}
+      >
+        {sortedMessages.length > 0 && (
+          <div ref={ref} style={{ background: 'red' }} />
+        )}
         <div className="chat-content-scroll-area">
           {sortedMessages?.map(
-            ({ text, created_at, is_my_message, files, is_read }, index) => {
+            (
+              { text, created_at, is_my_message, files, is_read, id },
+              index
+            ) => {
               return (
                 <div key={index}>
                   {checkDayDiff(created_at)}
@@ -69,11 +132,20 @@ const ChatContentBody = ({ thread }) => {
                     files={files}
                     avatar={userAvatar}
                     is_my={is_my_message}
-                    is_read_currentMessage={{
-                      currentThread,
+                    data={{
+                      id,
+                      messageId,
                       is_read_message,
                       is_read
                     }}
+                    setNewMessageSocket={setNewMessageSocket}
+                    isClient={isClient}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    editedMessage={editedMessage}
+                    setEditedMessage={setEditedMessage}
+                    onDeleteMessage={() => onDeleteMessage(id)}
+                    onUpdateMessage={() => onUpdateMessage(id)}
                   />
                 </div>
               );

@@ -106,10 +106,10 @@
   background-color: $turquoise;
 }
 .disabled {
-  color: $black-brown;
-  background-color: $smoky-white;
-  border-color: $smoky-white;
-
+  color: $black-brown !important;
+  background-color: $smoky-white !important;
+  border-color: $smoky-white !important;
+  cursor: default !important;
   &:hover {
     color: $black-brown;
     background-color: $smoky-white;

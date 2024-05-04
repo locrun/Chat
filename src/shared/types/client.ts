@@ -4,8 +4,8 @@ export interface ChatPayloadParams {
   topic?: string;
   ordering?: string;
   search?: string;
-  limit?: number;
-  offset?: string;
+  limit?: number | null;
+  offset?: number | null;
 }
 
 export interface ClientCreateChatPayload {

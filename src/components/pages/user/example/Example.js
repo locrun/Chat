@@ -1,10 +1,8 @@
 import React from 'react';
 import Search from '../../../doc-components/Search';
 
-import * as ReactBootstrap from 'react-bootstrap';
-import { Button, Row, Col, Form } from 'react-bootstrap';
+import { Row, Col, Form } from 'react-bootstrap';
 import { Dropdowns } from 'components/dropdown';
-import ProfileUserCard from 'components/ProfileUserCard/ProfileUserCard';
 import { ServiceCards } from 'components/TopicList/TopicList';
 import MessageStarting from '../../../message-starting/MessageStarting';
 import { LittleMenu } from 'components/littleMenu';
@@ -196,7 +194,7 @@ const Example = () => {
         </Col>
       </Row>
       <MessageStarting />
-      <ProfileUserCard />
+
       <ServiceCards />
       <Search />
     </div>
