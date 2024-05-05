@@ -7,7 +7,7 @@ import { arrayReducer } from 'reducers/arrayReducer';
 
 const ChatProvider = ({ children }) => {
   const [userStatus, setUserStatus] = useState(null);
-  const [chatStatus, setChatStatus] = useState(null);
+  const [socketChatStatus, setSocketChatStatus] = useState(null);
   const [newChat, setNewChat] = useState(null);
   const [readChatMessage, setReadChatMessage] = useState(null);
   const [socketAssignCurator, setSocketAssignCurator] = useState(null);
@@ -72,8 +72,8 @@ const ChatProvider = ({ children }) => {
     users,
     userStatus,
     setUserStatus,
-    chatStatus,
-    setChatStatus,
+    socketChatStatus,
+    setSocketChatStatus,
     readChatMessage,
     setReadChatMessage,
     newChat,

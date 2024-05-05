@@ -29,10 +29,10 @@ export const StudentChat = () => {
   const {
     limit,
     limitMessages,
-    setPreviousMessages,
     searchValue,
     setTotalChatsCount,
     newChat,
+    socketChatStatus,
     socketDeletedMessage,
     socketUpdatedMessage,
     newMessageSocket,
@@ -53,7 +53,7 @@ export const StudentChat = () => {
           limit: limitMessages,
           id: currentThread?.id
         });
-        setPreviousMessages(data.previous);
+
         messagesDispatch({
           type: 'SET_MESSAGES',
           payload: data.results
@@ -61,7 +61,7 @@ export const StudentChat = () => {
       }
     };
     fetchLazyLoadingMessages();
-  }, [currentThread, limitMessages]);
+  }, [limitMessages]);
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -89,8 +89,8 @@ export const StudentChat = () => {
       });
     };
 
-    readChatMessage && fetchChats();
-  }, [readChatMessage]);
+    (readChatMessage || currentThread) && fetchChats();
+  }, [readChatMessage, currentThread]);
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -186,6 +186,21 @@ export const StudentChat = () => {
 
     socketUpdatedMessage && fetchChats();
   }, [socketUpdatedMessage, currentThread]);
+
+  useEffect(() => {
+    const fetchChats = async () => {
+      const {
+        data: { results }
+      } = await getClientChats({});
+
+      threadsDispatch({
+        type: 'SET_DIALOGS',
+        payload: results
+      });
+    };
+
+    socketChatStatus && fetchChats();
+  }, [socketChatStatus]);
 
   return (
     <div className={s.container}>

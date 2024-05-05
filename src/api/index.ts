@@ -10,8 +10,7 @@ const createApiInstance = (role: string) => {
       Authorization: `${role}_` + roleNumber,
       Accept: 'application/json',
       'Content-Type': 'application/json'
-    },
-    withCredentials: true
+    }
   });
 };
 

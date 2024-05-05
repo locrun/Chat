@@ -84,8 +84,8 @@ export const AdminChat = () => {
       });
     };
 
-    readChatMessage && fetchChats();
-  }, [readChatMessage]);
+    (readChatMessage || currentThread) && fetchChats();
+  }, [readChatMessage, currentThread]);
 
   useEffect(() => {
     const fetchChats = async () => {

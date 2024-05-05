@@ -17,7 +17,7 @@ import { INPUT_FILE_FORMATS } from 'constants';
 
 const MessageTextArea = () => {
   const {
-    chatStatus,
+    socketChatStatus,
     messagesDispatch,
     threadsDispatch,
     currentThread,
@@ -29,12 +29,12 @@ const MessageTextArea = () => {
   const [previewEmoji, setPreviewEmoji] = useState(false);
   const [message, setMessage] = useState('');
   const [documents, setDocuments] = useState([]);
-  const isClosedChat = chatStatus?.data.status === 'closed';
+  const isClosedChat = socketChatStatus?.data.status === 'closed';
 
   const isInputAndButtonDisabled =
     isChatClosed ||
     !currentThread ||
-    (isClosedChat && chatStatus?.data.chat_id === currentThread.id);
+    (isClosedChat && socketChatStatus?.data.chat_id === currentThread.id);
 
   const {
     config: { isDark }

@@ -18,7 +18,6 @@ const ChatThread = ({ thread, index }) => {
     newMessageSocket,
     setTotalMessagesCount,
     userStatus,
-    chatStatus,
     messagesDispatch,
     setCurrentLmsUser
   } = useContext(ChatContext);
@@ -85,9 +84,7 @@ const ChatThread = ({ thread, index }) => {
         {
           'read-message': thread.last_message?.is_read,
           'unread-message': !thread.last_message?.is_read,
-
-          'blocked-message':
-            thread.status === 'closed' || chatStatus?.data.chat_id === thread.id
+          'blocked-message': thread.status === 'closed'
         }
       )}
     >

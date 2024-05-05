@@ -3,8 +3,8 @@ import { Card, Tab } from 'react-bootstrap';
 import { ChatContext } from 'context/Context';
 import { markChatMessagesAsReadClient } from 'api/routes/clientChat';
 import { markChatMessagesAsReadCurator } from 'api/routes/curatorChat';
-import { getCuratorChats } from 'api/routes/curatorChat';
-import { getClientChats } from 'api/routes/clientChat';
+// import { getCuratorChats } from 'api/routes/curatorChat';
+// import { getClientChats } from 'api/routes/clientChat';
 import Flex from 'components/common/Flex';
 import { checkRoles } from 'helpers/checkRoles';
 import ChatContent from './content/ChatContent';
@@ -12,9 +12,9 @@ import ChatSidebar from './sidebar/ChatSidebar';
 
 const Chat = () => {
   const {
+    threads,
     setLimitMessages,
     setCurrentThread,
-    threads,
     setIsOpenThreadInfo,
     setScrollToBottom,
     key,
@@ -28,28 +28,24 @@ const Chat = () => {
     setHideSidebar(false);
     setLimitMessages(0);
     if (isChatClient) {
-      const { data } = await getClientChats({});
-      const thread = data.results.find(thread => thread.id === parseInt(e));
+      const thread = threads.find(thread => thread.id === parseInt(e));
 
       updateChatThread(thread);
 
-      if (thread && thread.last_message?.id)
+      if (thread && thread.last_message && !thread.last_message?.is_read)
         await markChatMessagesAsReadClient({
-          chat_id: thread.id,
-          message_id: thread.last_message.id
+          chat_id: thread?.id,
+          message_id: thread?.last_message?.id
         });
     }
 
     if (!isChatClient) {
-      const { data } = await getCuratorChats({});
-      const thread = data.results.find(thread => thread.id === parseInt(e));
-
+      const thread = threads.find(thread => thread.id === parseInt(e));
       updateChatThread(thread);
-
-      if (thread && thread.last_message?.id)
+      if (thread && thread.last_message && !thread.last_message?.is_read)
         await markChatMessagesAsReadCurator({
-          chat_id: thread.id,
-          message_id: thread.last_message.id
+          chat_id: thread?.id,
+          message_id: thread?.last_message?.id
         });
     }
 

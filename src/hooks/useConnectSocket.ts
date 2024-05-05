@@ -9,7 +9,7 @@ export const useConnectSocket = () => {
 
   const {
     setUserStatus,
-    setChatStatus,
+    setSocketChatStatus,
     setNewMessageSocket,
     setReadChatMessage,
     setNewChat,
@@ -49,7 +49,7 @@ export const useConnectSocket = () => {
           setReadChatMessage({ ...data });
         }
         if (data.event_type === 'update_chat_status') {
-          setChatStatus({ ...data });
+          setSocketChatStatus({ ...data });
         }
         if (data.event_type === 'delete_message') {
           setSocketDeletedMessage({ ...data });
