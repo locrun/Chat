@@ -89,8 +89,8 @@ export const StudentChat = () => {
       });
     };
 
-    (readChatMessage || currentThread) && fetchChats();
-  }, [readChatMessage, currentThread]);
+    readChatMessage && fetchChats();
+  }, [readChatMessage]);
 
   useEffect(() => {
     const fetchChats = async () => {

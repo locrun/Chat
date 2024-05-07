@@ -35,7 +35,6 @@ export const AdminChat = () => {
     socketAssignCurator,
     newMessageSocket,
     threadsDispatch,
-    messages,
     setKey,
     currentThread,
     setCurrentThread,
@@ -84,8 +83,8 @@ export const AdminChat = () => {
       });
     };
 
-    (readChatMessage || currentThread) && fetchChats();
-  }, [readChatMessage, currentThread]);
+    readChatMessage && fetchChats();
+  }, [readChatMessage]);
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -286,7 +285,6 @@ export const AdminChat = () => {
       );
 
       const { data: users } = await LMSAccounts();
-      console.log('users', users);
 
       setLmsUsers(users);
       if (Object.keys(filteredParams).length > 0) {
@@ -310,8 +308,7 @@ export const AdminChat = () => {
     statusMessages,
     selectedRadioValue,
     chosenCheckboxes,
-    topicType,
-    messages
+    topicType
   ]);
 
   const handleTypeMessagesChange = (event: ChangeEvent<HTMLSelectElement>) => {

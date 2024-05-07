@@ -27,26 +27,29 @@ const Chat = () => {
   const handleSelect = async e => {
     setHideSidebar(false);
     setLimitMessages(0);
+
     if (isChatClient) {
       const thread = threads.find(thread => thread.id === parseInt(e));
 
-      updateChatThread(thread);
-
-      if (thread && thread.last_message && !thread.last_message?.is_read)
+      if (thread && thread.last_message && !thread.last_message.is_read) {
         await markChatMessagesAsReadClient({
           chat_id: thread?.id,
           message_id: thread?.last_message?.id
         });
+      }
+      updateChatThread(thread);
     }
 
     if (!isChatClient) {
       const thread = threads.find(thread => thread.id === parseInt(e));
-      updateChatThread(thread);
-      if (thread && thread.last_message && !thread.last_message?.is_read)
+
+      if (thread && thread.last_message && !thread.last_message?.is_read) {
         await markChatMessagesAsReadCurator({
           chat_id: thread?.id,
           message_id: thread?.last_message?.id
         });
+      }
+      updateChatThread(thread);
     }
 
     function updateChatThread(thread) {
