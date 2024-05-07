@@ -78,11 +78,14 @@ export const ControlMessages = ({
   useEffect(() => {
     const fetchCuratorList = async () => {
       const { data: keycloak } = await fetchAccessTokenKeycloak();
+
       const { data } = await getAdminMembers(keycloak.access_token);
+
       setCuratorsList(data);
     };
     fetchCuratorList();
   }, []);
+
   const getFormattedDate = (time: string) => {
     const date = new Date(time);
     const day = date.toLocaleString('ru-RU', { weekday: 'short' });

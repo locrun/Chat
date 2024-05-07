@@ -263,26 +263,15 @@ export const AdminChat = () => {
         search: searchValue ? searchValue : undefined,
         limit: limit
       };
-      //TODO
-      // «В работе у себя» - ?status=in_progress&chats=my
-      // «В работе у других» - ?status=in_progress&chats=others
-      // if (threads.length) {
-      //   const isWorkingForOthers = threads?.some((chat: IChat) => {
-      //     return (
-      //       chat.status === StatusType.IN_PROGRESS &&
-      //       chat.curator.username !== keycloak?.tokenParsed?.preferred_username
-      //     );
-      //   });
-      //   setWorkingOthers(isWorkingForOthers);
 
-      //   if (isWorkingForOthers && params.status === 'is_working_for_others') {
-      //     params = {
-      //       ...params,
-      //       status: 'in_progress',
-      //       chats: 'others'
-      //     };
-      //   }
-      // }
+      if (statusMessages === 'is_working_for_others') {
+        params = {
+          ...params,
+          status: 'in_progress',
+          chats: 'others'
+        };
+      }
+
       if (statusMessages === 'in_progress') {
         params = {
           ...params,
@@ -297,6 +286,7 @@ export const AdminChat = () => {
       );
 
       const { data: users } = await LMSAccounts();
+      console.log('users', users);
 
       setLmsUsers(users);
       if (Object.keys(filteredParams).length > 0) {

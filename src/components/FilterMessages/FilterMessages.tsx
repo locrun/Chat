@@ -64,7 +64,7 @@ export const FilterMessages = ({
 
     {
       item: 'В работе у других',
-      value: 'in_progress'
+      value: 'is_working_for_others'
     },
 
     {
