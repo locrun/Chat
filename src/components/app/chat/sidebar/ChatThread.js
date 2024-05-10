@@ -23,13 +23,17 @@ const ChatThread = ({ thread, index }) => {
     setCurrentLmsUser
   } = useContext(ChatContext);
 
-  const isClient = checkRoles();
+  const isChatClient = checkRoles();
 
   const fetchMessagesList = async () => {
+    messagesDispatch({
+      type: 'SET_MESSAGES',
+      payload: []
+    });
     try {
       setCurrentLmsUser(user ? user : {});
 
-      const { data } = isClient
+      const { data } = isChatClient
         ? await getMessagesListClient({ id: thread.id })
         : await getMessagesListCurator({ id: thread.id });
 
@@ -85,7 +89,9 @@ const ChatThread = ({ thread, index }) => {
         {
           'read-message': thread.last_message?.is_read,
           'unread-message': !thread.last_message?.is_read,
-          'blocked-message': socketChatStatus || thread.status === 'closed'
+          'blocked-message':
+            socketChatStatus?.data.chat_id === thread.id ||
+            thread.status === 'closed'
         }
       )}
     >
@@ -106,7 +112,7 @@ const ChatThread = ({ thread, index }) => {
               {user ? user.name : thread.topic.title}
             </h6>
             <span className="message-time fs-11">
-              {getFormattedDate(thread.last_message?.created_at, isClient)}
+              {getFormattedDate(thread.last_message?.created_at, isChatClient)}
             </span>
           </Flex>
           <div className="min-w-0">

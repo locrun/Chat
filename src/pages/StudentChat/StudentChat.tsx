@@ -32,7 +32,6 @@ export const StudentChat = () => {
     searchValue,
     setTotalChatsCount,
     newChat,
-    socketChatStatus,
     socketDeletedMessage,
     socketUpdatedMessage,
     newMessageSocket,
@@ -186,21 +185,6 @@ export const StudentChat = () => {
 
     socketUpdatedMessage && fetchChats();
   }, [socketUpdatedMessage, currentThread]);
-
-  useEffect(() => {
-    const fetchChats = async () => {
-      const {
-        data: { results }
-      } = await getClientChats({});
-
-      threadsDispatch({
-        type: 'SET_DIALOGS',
-        payload: results
-      });
-    };
-
-    socketChatStatus && fetchChats();
-  }, [socketChatStatus]);
 
   return (
     <div className={s.container}>

@@ -70,7 +70,7 @@ export const AdminChat = () => {
       }
     };
     fetchLazyLoadingMessages();
-  }, [currentThread, limitMessages]);
+  }, [limitMessages]);
 
   useEffect(() => {
     const fetchChats = async () => {

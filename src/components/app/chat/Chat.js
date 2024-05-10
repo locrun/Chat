@@ -19,7 +19,6 @@ const Chat = () => {
     setKey
   } = useContext(ChatContext);
   const isChatClient = checkRoles();
-
   const [hideSidebar, setHideSidebar] = useState(false);
 
   const handleSelect = async e => {
@@ -40,6 +39,7 @@ const Chat = () => {
           message_id: thread?.last_message?.id
         });
       }
+
       updateChatThread(thread);
     }
 

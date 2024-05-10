@@ -4,6 +4,7 @@ import { Topics } from 'types/topics';
 import { createClientChats } from 'api/routes/clientChat';
 import { usePage } from 'components/app/pagesProvider/PagesProvider';
 import { PageType } from 'shared/types';
+import { useResetSocketsData } from 'helpers/socketResetHelpers';
 
 import s from './TopicCard.module.scss';
 import createMarkup from 'helpers/createMarkup';
@@ -14,16 +15,8 @@ interface TopicCardProps {
 
 export const TopicCard = ({ topics }: TopicCardProps) => {
   const { changePage } = usePage();
-  const {
-    setKey,
-    setCurrentThread,
-    setReadChatMessage,
-    setSocketChatStatus,
-    setSocketAssignCurator,
-    setNewMessageSocket,
-    setSocketDeletedMessage,
-    setSocketUpdatedMessage
-  } = useContext(ChatContext);
+  const { setKey, setCurrentThread } = useContext(ChatContext);
+  const resetSocketsData = useResetSocketsData();
 
   const handleNewChatDialog = async (id: number) => {
     const { data } = await createClientChats({
@@ -33,12 +26,7 @@ export const TopicCard = ({ topics }: TopicCardProps) => {
     setKey(data.id);
     setCurrentThread(data);
     changePage(PageType.CHAT);
-    setReadChatMessage(null);
-    setSocketAssignCurator(null);
-    setNewMessageSocket(null);
-    setSocketDeletedMessage(null);
-    setSocketChatStatus(null);
-    setSocketUpdatedMessage(null);
+    resetSocketsData();
   };
 
   return (

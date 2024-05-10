@@ -7,8 +7,8 @@ import { arrayReducer } from 'reducers/arrayReducer';
 
 const ChatProvider = ({ children }) => {
   const [userStatus, setUserStatus] = useState(null);
-  const [socketChatStatus, setSocketChatStatus] = useState(null);
   const [newChat, setNewChat] = useState(null);
+  const [socketChatStatus, setSocketChatStatus] = useState(null);
   const [readChatMessage, setReadChatMessage] = useState(null);
   const [socketAssignCurator, setSocketAssignCurator] = useState(null);
   const [newMessageSocket, setNewMessageSocket] = useState(null);
@@ -19,7 +19,6 @@ const ChatProvider = ({ children }) => {
   const [threads, threadsDispatch] = useReducer(arrayReducer, []);
   const [currentThread, setCurrentThread] = useState(null);
   const [textAreaInitialHeight, setTextAreaInitialHeight] = useState(32);
-  const [activeThreadId, setActiveThreadId] = useState(null);
   const [isOpenThreadInfo, setIsOpenThreadInfo] = useState(false);
   const [scrollToBottom, setScrollToBottom] = useState(true);
   const [key, setKey] = useState(0);
@@ -86,8 +85,6 @@ const ChatProvider = ({ children }) => {
     threads,
     getUser,
     messages,
-    activeThreadId,
-    setActiveThreadId,
     threadsDispatch,
     messagesDispatch,
     textAreaInitialHeight,
