@@ -29,6 +29,7 @@ export const AdminChat = () => {
     limit,
     limitMessages,
     setPreviousMessages,
+    setSocketChatStatus,
     socketDeletedMessage,
     socketUpdatedMessage,
     readChatMessage,
@@ -110,6 +111,7 @@ export const AdminChat = () => {
 
     fetchChats();
     setKey(newChat?.data.chat_id);
+    setSocketChatStatus(null);
   }, [newChat]);
 
   useEffect(() => {

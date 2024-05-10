@@ -3,8 +3,6 @@ import { Card, Tab } from 'react-bootstrap';
 import { ChatContext } from 'context/Context';
 import { markChatMessagesAsReadClient } from 'api/routes/clientChat';
 import { markChatMessagesAsReadCurator } from 'api/routes/curatorChat';
-// import { getCuratorChats } from 'api/routes/curatorChat';
-// import { getClientChats } from 'api/routes/clientChat';
 import Flex from 'components/common/Flex';
 import { checkRoles } from 'helpers/checkRoles';
 import ChatContent from './content/ChatContent';
@@ -31,7 +29,12 @@ const Chat = () => {
     if (isChatClient) {
       const thread = threads.find(thread => thread.id === parseInt(e));
 
-      if (thread && thread.last_message && !thread.last_message.is_read) {
+      if (
+        thread &&
+        thread.last_message &&
+        !thread.last_message?.is_my_message &&
+        !thread.last_message?.is_read
+      ) {
         await markChatMessagesAsReadClient({
           chat_id: thread?.id,
           message_id: thread?.last_message?.id
@@ -43,7 +46,12 @@ const Chat = () => {
     if (!isChatClient) {
       const thread = threads.find(thread => thread.id === parseInt(e));
 
-      if (thread && thread.last_message && !thread.last_message?.is_read) {
+      if (
+        thread &&
+        thread.last_message &&
+        !thread.last_message?.is_my_message &&
+        !thread.last_message?.is_read
+      ) {
         await markChatMessagesAsReadCurator({
           chat_id: thread?.id,
           message_id: thread?.last_message?.id

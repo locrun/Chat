@@ -18,6 +18,7 @@ export const TopicCard = ({ topics }: TopicCardProps) => {
     setKey,
     setCurrentThread,
     setReadChatMessage,
+    setSocketChatStatus,
     setSocketAssignCurator,
     setNewMessageSocket,
     setSocketDeletedMessage,
@@ -36,6 +37,7 @@ export const TopicCard = ({ topics }: TopicCardProps) => {
     setSocketAssignCurator(null);
     setNewMessageSocket(null);
     setSocketDeletedMessage(null);
+    setSocketChatStatus(null);
     setSocketUpdatedMessage(null);
   };
 

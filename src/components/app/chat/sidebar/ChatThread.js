@@ -15,6 +15,7 @@ import { getUserLMS } from 'helpers/getUserLMS';
 
 const ChatThread = ({ thread, index }) => {
   const {
+    socketChatStatus,
     newMessageSocket,
     setTotalMessagesCount,
     userStatus,
@@ -84,7 +85,7 @@ const ChatThread = ({ thread, index }) => {
         {
           'read-message': thread.last_message?.is_read,
           'unread-message': !thread.last_message?.is_read,
-          'blocked-message': thread.status === 'closed'
+          'blocked-message': socketChatStatus || thread.status === 'closed'
         }
       )}
     >

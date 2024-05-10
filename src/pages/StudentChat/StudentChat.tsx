@@ -116,7 +116,7 @@ export const StudentChat = () => {
     const fetchChats = async () => {
       const {
         data: { results }
-      } = await getClientChats({});
+      } = await getClientChats({ search: searchValue });
 
       threadsDispatch({
         type: 'SET_DIALOGS',
