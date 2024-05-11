@@ -17,6 +17,7 @@ const ChatThread = ({ thread, index }) => {
   const {
     socketChatStatus,
     newMessageSocket,
+    setMessagesLoading,
     setTotalMessagesCount,
     userStatus,
     messagesDispatch,
@@ -32,7 +33,7 @@ const ChatThread = ({ thread, index }) => {
     });
     try {
       setCurrentLmsUser(user ? user : {});
-
+      setMessagesLoading(true);
       const { data } = isChatClient
         ? await getMessagesListClient({ id: thread.id })
         : await getMessagesListCurator({ id: thread.id });
@@ -45,6 +46,8 @@ const ChatThread = ({ thread, index }) => {
       });
     } catch (error) {
       console.log(error);
+    } finally {
+      setMessagesLoading(false);
     }
   };
 
