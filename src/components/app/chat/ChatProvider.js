@@ -30,10 +30,12 @@ const ChatProvider = ({ children }) => {
   const [searchValue, setSearchValue] = useState('');
 
   const [limit, setLimit] = useState(10);
-  const [limitMessages, setLimitMessages] = useState(0);
+  const [limitMessages, setLimitMessages] = useState(null);
   const [previousMessages, setPreviousMessages] = useState(null);
   const [totalMessagesCount, setTotalMessagesCount] = useState(null);
   const [totalChatsCount, setTotalChatsCount] = useState(null);
+
+  const [messagesLoading, setMessagesLoading] = useState(false);
 
   const getUser = thread => {
     let user = {};
@@ -56,6 +58,8 @@ const ChatProvider = ({ children }) => {
     setLimit,
     limitMessages,
     setLimitMessages,
+    messagesLoading,
+    setMessagesLoading,
     previousMessages,
     setPreviousMessages,
     totalChatsCount,

@@ -8,6 +8,7 @@ import { checkRoles } from 'helpers/checkRoles';
 import { getUserLMS } from 'helpers/getUserLMS';
 import Message from './Message';
 import NewDay from './NewDay';
+import { MessageSkeleton } from 'components/Skeletons/MessageSkeleton/MessageSkeleton';
 import { deleteMessage, updateMessage } from 'api/routes/curatorChat';
 
 const ChatContentBody = ({ thread }) => {
@@ -17,7 +18,8 @@ const ChatContentBody = ({ thread }) => {
   const {
     totalMessagesCount,
     limitMessages,
-    setLimitMessages,
+    messagesLoading,
+    //setLimitMessages,
     readChatMessage,
     setNewMessageSocket,
     currentThread,
@@ -34,26 +36,27 @@ const ChatContentBody = ({ thread }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedMessage, setEditedMessage] = useState('');
   const [messageId, setMessageId] = useState(null);
-  const sortedMessages = messages?.sort((a, b) => {
-    return new Date(a.created_at) - new Date(b.created_at);
-  });
+
+  const sortedMessages = messages?.sort(
+    (a, b) => new Date(a.created_at) - new Date(b.created_at)
+  );
 
   useEffect(() => {
     if (inView) {
       if (limitMessages < totalMessagesCount) {
-        setLimitMessages(prev => prev + 10);
+        //setLimitMessages(prev => prev + 10);
       }
     }
-  }, [inView]);
+  }, [inView, sortedMessages]);
 
   useEffect(() => {
-    if (scrollToBottom) {
+    if (scrollToBottom && sortedMessages.length > 0) {
       setTimeout(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
       }, 500);
       setScrollToBottom(false);
     }
-  }, [scrollToBottom]);
+  }, [scrollToBottom, sortedMessages]);
 
   let prevDay = null;
 
@@ -114,8 +117,14 @@ const ChatContentBody = ({ thread }) => {
         scrollableNodeProps={{ ref: scrollableNodeRef }}
         style={{ height: '100%' }}
       >
-        {sortedMessages.length > 0 && (
-          <div ref={ref} style={{ background: 'red' }} />
+        {messagesLoading && <MessageSkeleton />}
+        {sortedMessages.length >= 10 && (
+          <div
+            ref={ref}
+            style={{
+              height: '10px'
+            }}
+          />
         )}
         <div className="chat-content-scroll-area">
           {sortedMessages?.map(

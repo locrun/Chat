@@ -28,6 +28,7 @@ export interface Socket {
 export const StudentChat = () => {
   const {
     limit,
+    setMessagesLoading,
     limitMessages,
     searchValue,
     setTotalChatsCount,
@@ -48,15 +49,22 @@ export const StudentChat = () => {
   useEffect(() => {
     const fetchLazyLoadingMessages = async () => {
       if (currentThread) {
-        const { data } = await getMessagesListClient({
-          limit: limitMessages,
-          id: currentThread?.id
-        });
+        try {
+          setMessagesLoading(true);
+          const { data } = await getMessagesListClient({
+            limit: limitMessages,
+            id: currentThread?.id
+          });
 
-        messagesDispatch({
-          type: 'SET_MESSAGES',
-          payload: data.results
-        });
+          messagesDispatch({
+            type: 'SET_MESSAGES',
+            payload: data.results
+          });
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setMessagesLoading(false);
+        }
       }
     };
     fetchLazyLoadingMessages();

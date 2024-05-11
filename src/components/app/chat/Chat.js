@@ -23,7 +23,7 @@ const Chat = () => {
 
   const handleSelect = async e => {
     setHideSidebar(false);
-    setLimitMessages(0);
+    setLimitMessages(null);
 
     if (isChatClient) {
       const thread = threads.find(thread => thread.id === parseInt(e));
