@@ -56,6 +56,15 @@ export const AdminChat = () => {
   const [topicType, setTopicType] = useState('');
 
   useEffect(() => {
+    const fetchUsers = async () => {
+      const { data: users } = await LMSAccounts();
+
+      setLmsUsers(users);
+    };
+    fetchUsers();
+  }, []);
+
+  useEffect(() => {
     const fetchLazyLoadingMessages = async () => {
       if (currentThread) {
         const { data } = await getMessagesListCurator({
@@ -286,9 +295,6 @@ export const AdminChat = () => {
         Object.entries(params).filter(([_, v]) => v !== undefined)
       );
 
-      const { data: users } = await LMSAccounts();
-
-      setLmsUsers(users);
       if (Object.keys(filteredParams).length > 0) {
         const { data } = await getCuratorChats(filteredParams);
 
