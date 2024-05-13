@@ -5,7 +5,8 @@ export const getAdminMembers = async (access_token: string) => {
     `https://keycloak.new-lms.ru/admin/realms/openedx/groups/${process.env.REACT_APP_UUID}/members`,
     {
       headers: {
-        Authorization: `Bearer ${access_token}`
+        Authorization: `Bearer ${access_token}`,
+        'Access-Control-Allow-Origin': '*'
       }
     }
   );

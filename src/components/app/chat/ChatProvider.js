@@ -29,7 +29,7 @@ const ChatProvider = ({ children }) => {
 
   const [searchValue, setSearchValue] = useState('');
 
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(50);
   const [limitMessages, setLimitMessages] = useState(null);
   const [previousMessages, setPreviousMessages] = useState(null);
   const [totalMessagesCount, setTotalMessagesCount] = useState(null);
