@@ -6,7 +6,9 @@ export const getAdminMembers = async (access_token: string) => {
     {
       headers: {
         Authorization: `Bearer ${access_token}`,
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers':
+          'Origin, X-Requested-With, Content-Type, Accept, Authorization'
       }
     }
   );
