@@ -12,9 +12,7 @@ export const fetchAccessTokenKeycloak = async () => {
     {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers':
-          'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+        'Access-Control-Allow-Origin': 'https://chat-deploy-5frh.vercel.app/'
       }
     }
   );
