@@ -12,6 +12,8 @@ export const fetchAccessTokenKeycloak = async () => {
     {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
+        ' Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
         'Cache-Control': null,
         'X-Requested-With': null
       }
