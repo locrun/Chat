@@ -111,6 +111,7 @@
   "devDependencies": {
     "@automattic/webpack-rtl-plugin": "^6.0.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/keycloak-js": "^3.4.1",
     "@types/mini-css-extract-plugin": "^2.5.1",
     "@typescript-eslint/eslint-plugin": "^7.1.0",
     "archiver": "^6.0.1",

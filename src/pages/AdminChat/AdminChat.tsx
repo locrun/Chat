@@ -18,6 +18,8 @@ import { LMSAccounts } from 'api/routes/newLMS';
 
 import cn from 'classnames';
 import s from './AdminChat.module.scss';
+import { fetchAccessTokenKeycloak } from 'api/routes/tokenKeycloak';
+import { getAdminMembers } from 'api/routes/getAdminMembers';
 
 export const AdminChat = () => {
   const { topics } = useContext(TopicsContext) as TopicsContextType;
@@ -62,6 +64,23 @@ export const AdminChat = () => {
       setLmsUsers(users);
     };
     fetchUsers();
+  }, []);
+
+  useEffect(() => {
+    const pingInterval = setInterval(() => {
+      const fetchCuratorList = async () => {
+        const { data: keycloak } = await fetchAccessTokenKeycloak();
+
+        const { data } = await getAdminMembers(keycloak.access_token);
+
+        console.log('data', data);
+      };
+      fetchCuratorList();
+    }, 150000);
+
+    return () => {
+      clearInterval(pingInterval);
+    };
   }, []);
 
   useEffect(() => {

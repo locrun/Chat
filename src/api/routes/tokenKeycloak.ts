@@ -7,15 +7,11 @@ export const fetchAccessTokenKeycloak = async () => {
   params.append('client_secret', process.env.REACT_APP_CLIENT_SECRET ?? '');
 
   return await axios.post(
-    'https://keycloak.new-lms.ru/realms/master/protocol/openid-connect/token',
+    'https://keycloak.new-lms.ru/realms/openedx/protocol/openid-connect/token',
     params,
     {
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        ' Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-        'Cache-Control': null,
-        'X-Requested-With': null
+        'Content-Type': 'application/x-www-form-urlencoded'
       }
     }
   );
