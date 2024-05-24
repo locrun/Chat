@@ -29,7 +29,7 @@ export const fetchAccessTokenKeycloak = async () => {
 
 tokenKeycloakApi.interceptors.request.use(function (config) {
   if (typeof window !== 'undefined') {
-    const store: any = localStorage?.getItem('persist:root');
+    const store = localStorage?.getItem('persist:root');
     if (store && JSON.parse(store)?.tokens) {
       const token = JSON.parse(JSON.parse(store).tokens);
 
