@@ -39,12 +39,14 @@
   min-width: 294px;
 }
 .sortingSelectWrapper {
-  min-width: 142px;
+  min-width: 134px;
+  max-width: 134px;
   margin-right: 10px;
 }
 
 .statusSelectWrapper {
   min-width: 134px;
+  max-width: 134px;
 }
 .label {
   font-size: 10px;

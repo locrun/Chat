@@ -70,13 +70,17 @@ export const AdminChat = () => {
     const pingInterval = setInterval(() => {
       const fetchCuratorList = async () => {
         const { data: keycloak } = await fetchAccessTokenKeycloak();
+        localStorage.setItem(
+          'persist:root',
+          JSON.stringify({ tokens: JSON.stringify(keycloak) })
+        );
 
         const { data } = await getAdminMembers(keycloak.access_token);
 
         console.log('data', data);
       };
       fetchCuratorList();
-    }, 150000);
+    }, 840000);
 
     return () => {
       clearInterval(pingInterval);
@@ -329,6 +333,7 @@ export const AdminChat = () => {
     fetchDialogs();
   }, [
     limit,
+    socketAssignCurator,
     searchValue,
     typeMessages,
     messagesByDate,

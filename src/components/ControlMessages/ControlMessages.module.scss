@@ -5,12 +5,12 @@
   margin-bottom: 30px;
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
   flex-wrap: wrap;
   border-top: 1px solid $gainsborough;
 }
 
 .selectGroup {
+  margin-right: 128px;
   display: flex;
   align-items: flex-end;
   gap: 110px;
@@ -41,9 +41,10 @@
   }
 }
 .buttons {
+  //margin-left: 128px;
+  //margin-right: 110px;
   display: flex;
   gap: 25px;
-  margin-right: 110px;
 }
 
 .topicsSelect {
