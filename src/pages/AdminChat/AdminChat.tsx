@@ -95,10 +95,6 @@ export const AdminChat = () => {
   }, []);
 
   useEffect(() => {
-    console.log('lmsUsers');
-  }, [lmsUsers]);
-
-  useEffect(() => {
     const fetchLazyLoadingMessages = async () => {
       if (currentThread) {
         const { data } = await getMessagesListCurator({
