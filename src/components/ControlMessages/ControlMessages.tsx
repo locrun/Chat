@@ -7,7 +7,7 @@ import { setAssignCurator } from 'api/routes/curatorChat';
 import { ChatContext } from 'context/Context';
 import { closeCurrentDialog } from 'api/routes/curatorChat';
 import { AssignCuratorParams } from 'shared/types/curator';
-import { fetchAccessTokenKeycloak } from 'api/routes/tokenKeycloak';
+import { fetchAccessTokenKeycloak } from 'api/index';
 import { getAdminMembers } from 'api/routes/getAdminMembers';
 import classnames from 'classnames';
 import s from './ControlMessages.module.scss';
@@ -77,12 +77,12 @@ export const ControlMessages = ({
 
   useEffect(() => {
     const fetchCuratorList = async () => {
-      const { data: keycloak } = await fetchAccessTokenKeycloak();
+      const access_token = await fetchAccessTokenKeycloak();
       localStorage.setItem(
         'persist:root',
-        JSON.stringify({ tokens: JSON.stringify(keycloak) })
+        JSON.stringify({ tokens: JSON.stringify(access_token) })
       );
-      const { data } = await getAdminMembers(keycloak.access_token);
+      const { data } = await getAdminMembers(access_token);
 
       setCuratorsList(data);
     };

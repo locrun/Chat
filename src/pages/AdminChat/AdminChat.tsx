@@ -18,7 +18,7 @@ import { LMSAccounts } from 'api/routes/newLMS';
 
 import cn from 'classnames';
 import s from './AdminChat.module.scss';
-import { fetchAccessTokenKeycloak } from 'api/routes/tokenKeycloak';
+import { fetchAccessTokenKeycloak } from 'api/index';
 import { getAdminMembers } from 'api/routes/getAdminMembers';
 
 export const AdminChat = () => {
@@ -69,13 +69,13 @@ export const AdminChat = () => {
   useEffect(() => {
     const pingInterval = setInterval(() => {
       const fetchCuratorList = async () => {
-        const { data: keycloak } = await fetchAccessTokenKeycloak();
+        const access_token = await fetchAccessTokenKeycloak();
         localStorage.setItem(
           'persist:root',
-          JSON.stringify({ tokens: JSON.stringify(keycloak) })
+          JSON.stringify({ tokens: JSON.stringify(access_token) })
         );
 
-        const { data } = await getAdminMembers(keycloak.access_token);
+        const { data } = await getAdminMembers(access_token);
 
         console.log('data', data);
       };
