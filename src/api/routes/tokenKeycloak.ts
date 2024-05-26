@@ -26,17 +26,3 @@ export const fetchAccessTokenKeycloak = async () => {
     throw error;
   }
 };
-
-tokenKeycloakApi.interceptors.request.use(function (config) {
-  if (typeof window !== 'undefined') {
-    const store = localStorage?.getItem('persist:root');
-    if (store && JSON.parse(store)?.tokens) {
-      const token = JSON.parse(JSON.parse(store).tokens);
-
-      if (token && token.access !== '' && config.headers) {
-        config.headers['Authorization'] = `jwt ${token.access}`;
-      }
-    }
-  }
-  return config;
-});

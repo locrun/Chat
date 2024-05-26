@@ -80,12 +80,23 @@ export const AdminChat = () => {
         console.log('data', data);
       };
       fetchCuratorList();
+
+      const fetchUsers = async () => {
+        const { data: users } = await LMSAccounts();
+
+        setLmsUsers(users);
+      };
+      fetchUsers();
     }, 840000);
 
     return () => {
       clearInterval(pingInterval);
     };
   }, []);
+
+  useEffect(() => {
+    console.log('lmsUsers');
+  }, [lmsUsers]);
 
   useEffect(() => {
     const fetchLazyLoadingMessages = async () => {
