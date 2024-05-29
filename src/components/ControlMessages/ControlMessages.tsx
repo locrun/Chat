@@ -7,8 +7,8 @@ import { setAssignCurator } from 'api/routes/curatorChat';
 import { ChatContext } from 'context/Context';
 import { closeCurrentDialog } from 'api/routes/curatorChat';
 import { AssignCuratorParams } from 'shared/types/curator';
-import { fetchAccessTokenKeycloak } from 'api/index';
-import { getAdminMembers } from 'api/routes/getAdminMembers';
+import { fetchAccessTokenKeycloak } from 'api/tokenKeycloak';
+import { getAdminMembers } from 'api/getAdminMembers';
 import classnames from 'classnames';
 import s from './ControlMessages.module.scss';
 

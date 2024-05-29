@@ -18,8 +18,8 @@ import { LMSAccounts } from 'api/routes/newLMS';
 
 import cn from 'classnames';
 import s from './AdminChat.module.scss';
-import { fetchAccessTokenKeycloak } from 'api/index';
-import { getAdminMembers } from 'api/routes/getAdminMembers';
+import { fetchAccessTokenKeycloak } from 'api/tokenKeycloak';
+import { getAdminMembers } from 'api/getAdminMembers';
 
 export const AdminChat = () => {
   const { topics } = useContext(TopicsContext) as TopicsContextType;
